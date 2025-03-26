@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:web": "next build",
+    "build:ext": "cd extension/popup && npm install && npm run build",
+    "build:copy": "rm -rf dist && mkdir dist && cp extension/manifest.json dist/ && cp extension/background.js dist/ && cp -R extension/icons dist/icons && cp -R extension/popup/dist/* dist/",
+    "build:all": "npm run build:web && npm run build:ext && npm run build:copy"
   },
   "dependencies": {
     "react": "^19.0.0",
