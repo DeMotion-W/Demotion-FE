@@ -6,10 +6,13 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
+    "dev:ext": "cd extension/popup && npm run dev",
+    "use:manifest:dev": "cp extension/manifest.dev.json extension/manifest.json",
+    "use:manifest:prod": "cp extension/manifest.prod.json extension/manifest.json",
     "build:web": "next build",
     "build:ext": "cd extension/popup && npm install && npm run build",
-    "build:copy": "rm -rf dist && mkdir dist && cp extension/manifest.json dist/ && cp extension/background.js dist/ && cp -R extension/icons dist/icons && cp -R extension/popup/dist/* dist/",
-    "build:all": "npm run build:web && npm run build:ext && npm run build:copy"
+    "build:copy": "rm -rf dist && mkdir dist && cp extension/manifest.json dist/ && cp extension/background.js dist/ && cp extension/content.js dist/ && cp -R extension/icons dist/icons && cp -R extension/popup/dist/* dist/",
+    "build:all": "npm run build:web && npm run use:manifest:prod && npm run build:ext && npm run build:copy"
   },
   "dependencies": {
     "react": "^19.0.0",

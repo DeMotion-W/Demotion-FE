@@ -1,9 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "Demotion-FE",
+  "name": "Demotion",
   "version": "1.0.0",
   "description": "Demotion 확장 프로그램",
-  "permissions": ["tabs", "sidePanel", "notifications"],
+  "permissions": [
+    "tabs",
+    "scripting",
+    "sidePanel",
+    "activeTab",
+    "notifications"
+  ],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_title": "Demotion",
@@ -24,6 +30,13 @@
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "web_accessible_resources": [
     {
       "resources": ["index.html", "icons/*"],
