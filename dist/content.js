@@ -18,12 +18,19 @@ chrome.runtime.onMessage.addListener(
         document.body.style.cursor = "crosshair";
         document.addEventListener("click", onClick);
       }
+
+      sendResponse({ success: true });
+      return true;
     }
 
     if (msg.type === "stop-capture") {
       isCapturing = false;
       document.body.style.cursor = "default";
       document.removeEventListener("click", onClick);
+
+      sendResponse({ success: true });
+      return true;
     }
+    return false;
   }
 );

@@ -69,18 +69,20 @@ export default function Capture() {
   };
 
   return (
-    <div className="flex flex-col p-4 space-y-2">
-      <h2 className="text-center text-blue-600 text-lg">
-        📸 캡처 기능 페이지
-      </h2>
+    <div className="flex flex-col p-4 space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-center text-[#1F2937] text-lg">
+          📸 캡처 기능 페이지
+        </h2>
+        <button
+          className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+          onClick={handleLogout}
+        >
+          로그아웃
+        </button>
+      </div>
       <button
-        className="p-2 bg-red-500 text-white rounded"
-        onClick={handleLogout}
-      >
-        로그아웃
-      </button>
-      <button
-        className="w-full p-2 bg-blue-500 text-white rounded"
+        className="w-full p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
         onClick={startCapture}
       >
         화면 캡처 시작!
