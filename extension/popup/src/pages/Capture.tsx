@@ -1,4 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { CaptureData } from "../type";
 import { AuthDispatchContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +14,19 @@ export default function Capture() {
   const [captures, setCaptures] = useState<CaptureData[]>(
     []
   );
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const tabs = await chrome.tabs.query({});
+
+    tabs.forEach((tab) => {
+      if (tab.id && !tab.url?.startsWith("chrome://")) {
+        chrome.tabs.sendMessage(tab.id, {
+          type: "stop-capture",
+        });
+      }
+    });
+
     dispatch?.({ type: "LOGOUT" });
     nav("/");
   };
@@ -19,15 +35,21 @@ export default function Capture() {
     const tabs = await chrome.tabs.query({});
 
     tabs.forEach((tab) => {
-      if (tab.id) {
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: ["content.js"],
-        });
-
-        chrome.tabs.sendMessage(tab.id, {
-          type: "start-capture",
-        });
+      if (tab.id && !tab.url?.startsWith("chrome://")) {
+        chrome.scripting.executeScript(
+          {
+            target: { tabId: tab.id },
+            files: ["content.js"],
+          },
+          () => {
+            chrome.tabs.sendMessage(tab.id!, {
+              type: "start-capture",
+            });
+          }
+        );
+      } else {
+        //주의 문구 뜨도록
+        //크롬 시작화면이나 설정화면처럼 캡처 못하는 화면들 처리
       }
     });
   };
@@ -59,7 +81,7 @@ export default function Capture() {
     tabs.forEach((tab) => {
       if (tab.id && !tab.url?.startsWith("chrome://")) {
         chrome.tabs.sendMessage(tab.id, {
-          type: "start-capture",
+          type: "stop-capture",
         });
       }
     });
@@ -72,7 +94,7 @@ export default function Capture() {
     <div className="flex flex-col p-4 space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-center text-[#1F2937] text-lg">
-          📸 캡처 기능 페이지
+          캡처 기능 페이지
         </h2>
         <button
           className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
@@ -85,26 +107,53 @@ export default function Capture() {
         className="w-full p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
         onClick={startCapture}
       >
-        화면 캡처 시작!
+        📸 화면 캡처 시작!
       </button>
-      <div className="relative w-full max-h-[300px] overflow-y-auto space-y-2">
+      <div className="w-full overflow-y-auto space-y-2">
         {captures.map((c, i) => (
           <div
             key={i}
-            className="border rounded overflow-hidden flex justify-center items-center bg-white"
+            className="relative border rounded overflow-hidden flex justify-center items-center bg-white"
           >
             <img
+              ref={(el: HTMLImageElement | null) => {
+                imgRefs.current[i] = el;
+              }}
               src={c.image}
+              onLoad={(e) => {
+                const img = e.currentTarget;
+                setCaptures((prev) =>
+                  prev.map((cap, idx) =>
+                    idx === i
+                      ? {
+                          ...cap,
+                          width: img.naturalWidth,
+                          height: img.naturalHeight,
+                        }
+                      : cap
+                  )
+                );
+              }}
               className="max-h-[200px] object-contain"
             />
-            <div
-              className="absolute w-3 h-3 bg-red-500 rounded-full"
-              style={{
-                top: `${(c.y / 1080) * 100}%`,
-                left: `${(c.x / 1920) * 100}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-            />
+            {c.width && c.height && imgRefs.current[i] && (
+              <div
+                className="absolute w-3 h-3 bg-red-500 rounded-full"
+                style={{
+                  top: `${
+                    c.y *
+                    (imgRefs.current[i]!.offsetHeight /
+                      c.height)
+                  }px`,
+                  left: `${
+                    c.x *
+                    (imgRefs.current[i]!.offsetWidth /
+                      c.width)
+                  }px`,
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            )}
           </div>
         ))}
       </div>
