@@ -1,37 +1,42 @@
 import { useContext } from "react";
+import { Resolver } from "react-hook-form";
 import { AuthDispatchContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../schema/loginSchema";
-import { LoginForm } from "../type";
+import { loginSchema } from "../../../../shared/schema/loginSchema";
+import { LoginForm } from "../../../../shared/type";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { onLogIn } from "../api/auth/login";
 
 export default function Login() {
   const dispatch = useContext(AuthDispatchContext);
   const nav = useNavigate();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(
+      loginSchema
+    ) as Resolver<LoginForm>,
   });
 
-  // const handleLogin = (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   const fakeToken = "demo-token-123";
-  //   dispatch?.({ type: "LOGIN", token: fakeToken });
-  //   nav("/capture");
-  // };
-  const onSubmit = (data: LoginForm) => {
+  const onSubmit = async (data: LoginForm) => {
     console.log("로그인 정보:", data);
-    const fakeToken = "demo-token-123";
-    dispatch?.({ type: "LOGIN", token: fakeToken });
-    nav("/capture");
+    try {
+      const response = await onLogIn(data);
+      const token = response?.data.accessToken;
+
+      dispatch?.({ type: "LOGIN", token });
+      nav("/capture");
+    } catch (error) {
+      alert(
+        "로그인 실패! 이메일 또는 비밀번호를 확인해주세요."
+      );
+      console.error(error);
+    }
   };
 
   return (
@@ -47,6 +52,7 @@ export default function Login() {
           className="flex flex-col justify-center"
         >
           <InputField
+            label="이메일"
             type="email"
             placeholder="이메일을 입력하세요"
             {...register("email")}
@@ -54,6 +60,7 @@ export default function Login() {
           />
 
           <InputField
+            label="비밀번호"
             type="password"
             placeholder="비밀번호를 입력하세요"
             {...register("password")}

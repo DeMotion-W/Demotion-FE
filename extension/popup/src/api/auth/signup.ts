@@ -2,24 +2,20 @@ import axios from "axios";
 import {
   AuthCredentials,
   SignupSuccessResponse,
-} from "../../type";
-import { SIGNUP_PATH } from "../../constants/api";
+} from "../../../../../shared/type";
+import { SIGNUP_PATH } from "../../../../../shared/constants/api";
+import { httpClientForCredentials } from "..";
 
 export async function signup({
+  name,
   email,
   password,
 }: AuthCredentials): Promise<SignupSuccessResponse> {
   try {
-    const baseUrl = import.meta.env.VITE_SERVER_API_URL;
-    const response =
-      await axios.post<SignupSuccessResponse>(
-        `${baseUrl}${SIGNUP_PATH}`,
-        {
-          email,
-          password,
-        }
-      );
-
+    const response = await httpClientForCredentials.post(
+      SIGNUP_PATH,
+      { name, email, password }
+    );
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {

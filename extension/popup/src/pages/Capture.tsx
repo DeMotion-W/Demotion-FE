@@ -7,6 +7,8 @@ import {
 import { CaptureData } from "../type";
 import { AuthDispatchContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import CapturedImageList from "../components/CapturedImageList";
+import { onSilentRefresh } from "../api/auth/login";
 
 export default function Capture() {
   const dispatch = useContext(AuthDispatchContext);
@@ -16,9 +18,16 @@ export default function Capture() {
   );
   const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSilentRefresh(nav);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [nav]);
+
   const handleLogout = async () => {
     const tabs = await chrome.tabs.query({});
-
     tabs.forEach((tab) => {
       if (tab.id && !tab.url?.startsWith("chrome://")) {
         chrome.tabs.sendMessage(tab.id, {
@@ -33,7 +42,6 @@ export default function Capture() {
 
   const startCapture = async () => {
     const tabs = await chrome.tabs.query({});
-
     tabs.forEach((tab) => {
       if (tab.id && !tab.url?.startsWith("chrome://")) {
         chrome.scripting.executeScript(
@@ -54,16 +62,6 @@ export default function Capture() {
     });
   };
 
-  useEffect(() => {
-    if (!chrome?.runtime?.onMessage?.addListener) return;
-
-    chrome.runtime.onMessage.addListener((msg) => {
-      if (msg.type === "captured-image") {
-        setCaptures((prev) => [...prev, msg.data]);
-      }
-    });
-  }, []);
-
   const completeCapture = async () => {
     const res = await fetch(
       "https://e459c8ba-203e-4e58-b6a3-9efa401c5f18.mock.pstmn.io/image",
@@ -77,7 +75,6 @@ export default function Capture() {
     console.log("서버 응답:", data);
 
     const tabs = await chrome.tabs.query({});
-
     tabs.forEach((tab) => {
       if (tab.id && !tab.url?.startsWith("chrome://")) {
         chrome.tabs.sendMessage(tab.id, {
@@ -89,6 +86,16 @@ export default function Capture() {
     alert("캡처 데이터 업로드 완료!");
     setCaptures([]);
   };
+
+  useEffect(() => {
+    if (!chrome?.runtime?.onMessage?.addListener) return;
+
+    chrome.runtime.onMessage.addListener((msg) => {
+      if (msg.type === "captured-image") {
+        setCaptures((prev) => [...prev, msg.data]);
+      }
+    });
+  }, []);
 
   return (
     <div className="flex flex-col p-4 space-y-6">
@@ -109,60 +116,17 @@ export default function Capture() {
       >
         📸 화면 캡처 시작!
       </button>
-      <div className="w-full overflow-y-auto space-y-2">
-        {captures.map((c, i) => (
-          <div
-            key={i}
-            className="relative border rounded overflow-hidden flex justify-center items-center bg-white"
-          >
-            <img
-              ref={(el: HTMLImageElement | null) => {
-                imgRefs.current[i] = el;
-              }}
-              src={c.image}
-              onLoad={(e) => {
-                const img = e.currentTarget;
-                setCaptures((prev) =>
-                  prev.map((cap, idx) =>
-                    idx === i
-                      ? {
-                          ...cap,
-                          width: img.naturalWidth,
-                          height: img.naturalHeight,
-                        }
-                      : cap
-                  )
-                );
-              }}
-              className="max-h-[200px] object-contain"
-            />
-            {c.width && c.height && imgRefs.current[i] && (
-              <div
-                className="absolute w-3 h-3 bg-red-500 rounded-full"
-                style={{
-                  top: `${
-                    c.y *
-                    (imgRefs.current[i]!.offsetHeight /
-                      c.height)
-                  }px`,
-                  left: `${
-                    c.x *
-                    (imgRefs.current[i]!.offsetWidth /
-                      c.width)
-                  }px`,
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-            )}
-          </div>
-        ))}
-      </div>
+      <CapturedImageList
+        captures={captures}
+        imgRefs={imgRefs}
+        setCaptures={setCaptures}
+      />
       {captures.length > 0 && (
         <button
           className="w-full p-2 bg-green-500 text-white rounded"
           onClick={completeCapture}
         >
-          ✅ 완료 (서버 전송)
+          데모 생성
         </button>
       )}
     </div>

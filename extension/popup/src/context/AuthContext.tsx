@@ -4,12 +4,14 @@ import {
   ReactNode,
   useReducer,
 } from "react";
-import { AuthAction, AuthState } from "../type";
+import {
+  AuthAction,
+  AuthState,
+} from "../../../../shared/type";
 
 function reducer(state: AuthState, action: AuthAction) {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("token", action.token);
       return {
         ...state,
         token: action.token,
@@ -33,10 +35,9 @@ export default function AuthProvider({
 }: {
   children: ReactNode;
 }) {
-  const initialToken = localStorage.getItem("token");
   const [state, dispatch] = useReducer(reducer, {
-    token: initialToken,
-    loggedIn: !!initialToken,
+    token: null,
+    loggedIn: false,
   });
 
   return (

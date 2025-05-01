@@ -1,33 +1,24 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { httpClientForCredentials } from "..";
-import { AuthCredentials } from "../../type";
 import { NavigateFunction } from "react-router-dom";
 import {
   LOG_IN_PATH,
   TOKEN_REFRESH_PATH,
-} from "../../constants/api";
+} from "../../../../../shared/constants/api";
+import { LoginForm } from "../../../../../shared/type";
+import { setAccessToken } from "../../utils/auth";
 
-let refreshTimer: NodeJS.Timeout | null = null;
+//let refreshTimer: NodeJS.Timeout | null = null;
 
-export const onLogInSuccess = (response: AxiosResponse) => {
-  const { accessToken } = response.data;
-  httpClientForCredentials.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${accessToken}`;
-
-  if (refreshTimer) clearTimeout(refreshTimer);
-
-  //  AccessToken 만료 1분전에 RefreshToken으로 AccessToken을 받아오는 함수를 실행하는 코드
-};
-
-export const onLogIn = async (params: AuthCredentials) => {
+export const onLogIn = async (params: LoginForm) => {
   try {
     const response = await httpClientForCredentials.post(
       LOG_IN_PATH,
       params
     );
     if (response.status === 200) {
-      onLogInSuccess(response);
+      const { accessToken } = response.data;
+      setAccessToken(accessToken);
       return response;
     }
   } catch (error) {
@@ -36,15 +27,32 @@ export const onLogIn = async (params: AuthCredentials) => {
   }
 };
 
+// export const onLogInSuccess = (response: AxiosResponse) => {
+//   const { accessToken } = response.data;
+//   setAccessToken(accessToken);
+
+//   if (refreshTimer) clearTimeout(refreshTimer);
+
+//   refreshTimer = setTimeout(() => {
+//     onSilentRefresh(nav("/capture")); // navigateFunction은 필요 시 외부 주입
+//   }, (expiresIn - 60) * 1000);
+// };
+
 export const onSilentRefresh = async (
   navigate: NavigateFunction
 ) => {
   try {
+    console.log("🔄 silent refresh 요청 시작");
+
     const response = await httpClientForCredentials.post(
       TOKEN_REFRESH_PATH
     );
+
+    console.log("✅ silent refresh 응답:", response.data);
+
     if (response.status === 200) {
-      onLogInSuccess(response);
+      const { accessToken } = response.data;
+      setAccessToken(accessToken);
     }
   } catch (error) {
     const axiosError = error as AxiosError;
