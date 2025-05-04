@@ -67,7 +67,7 @@ export default function DemoListView({
               )
             }
             disabled={currentPage === 1}
-            className="px-2 text-gray-500"
+            className="px-2 text-gray-500 cursor-pointer"
           >
             〈
           </button>
@@ -76,7 +76,7 @@ export default function DemoListView({
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`w-8 h-8 text-sm ${
+              className={`w-8 h-8 text-sm cursor-pointer ${
                 currentPage === i + 1
                   ? "text-[#191F28]"
                   : "text-[#8B95A1] hover:bg-gray-100"
@@ -93,7 +93,7 @@ export default function DemoListView({
               )
             }
             disabled={currentPage === totalPages}
-            className="px-2 text-gray-500"
+            className="px-2 text-gray-500 cursor-pointer"
           >
             〉
           </button>

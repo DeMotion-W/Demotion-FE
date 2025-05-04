@@ -42,7 +42,7 @@ export default function CreateDemoPopup({
       </div>
       <button
         onClick={onClose}
-        className="text-center w-full mt-4 bg-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-tight text-white py-3 rounded-3xl"
+        className="text-center w-full mt-4 bg-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-tight text-white py-3 rounded-3xl cursor-pointer"
       >
         Got it!
       </button>

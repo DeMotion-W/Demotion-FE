@@ -38,7 +38,7 @@ export default function SortDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="px-4 py-3 border border-[#E2E6EB] rounded-lg bg-white shadow-sm flex items-center justify-center gap-3 min-w-[110px] text-[#191F28] text-base font-medium font-['Pretendard'] leading-tight"
+        className="px-4 py-3 border border-[#E2E6EB] rounded-lg bg-white shadow-sm flex items-center justify-center gap-3 min-w-[110px] text-[#191F28] text-base font-medium font-['Pretendard'] leading-tight cursor-pointer"
       >
         {selected}
         <svg

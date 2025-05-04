@@ -16,7 +16,7 @@ export default function NewDemoButton() {
       <button
         ref={buttonRef}
         onClick={handleClick}
-        className="px-4 py-2 bg-[#333D4B] text-white rounded-full"
+        className="px-4 py-2 bg-[#333D4B] text-white rounded-full cursor-pointer"
       >
         + New Demo
       </button>

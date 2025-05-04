@@ -1,8 +1,19 @@
-export default function Button({ label, onClick }) {
+export default function Button({
+  label,
+  bgColor,
+  textColor,
+  width,
+  onClick,
+}) {
   return (
     <button
       onClick={onClick}
-      className="bg-[#333D4B] py-4 px-4 text-center justify-center rounded-3xl text-[#FFFFFF] text-base font-semibold font-['Montserrat'] leading-tight"
+      className="py-3 px-6 text-center justify-center rounded-3xl text-base font-semibold font-['Montserrat'] leading-tight cursor-pointer"
+      style={{
+        backgroundColor: bgColor,
+        color: textColor,
+        width: width || "auto",
+      }}
     >
       {label}
     </button>
