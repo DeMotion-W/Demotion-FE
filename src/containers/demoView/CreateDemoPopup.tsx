@@ -9,7 +9,7 @@ export default function CreateDemoPopup({
     <div className="w-[360px] p-6 bg-white rounded-[20px] shadow-xl border border-gray-200">
       <div className="mb-5">
         <Image
-          src="/image/demo.png"
+          src="/images/demo.png"
           alt="Demotion Logo"
           width={37}
           height={33}

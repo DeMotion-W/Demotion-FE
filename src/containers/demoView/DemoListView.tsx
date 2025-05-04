@@ -4,14 +4,18 @@ import { useState } from "react";
 import { ITEMS_PER_PAGE } from "@/constants";
 import SortDropdown from "@/components/DropDown/SortDropDown";
 import DemoCard from "./DemoCard";
+import { Demo } from "@/types";
 
 export default function DemoListView({
   demoList,
 }: {
-  demoList: { title: string; date: string }[];
+  demoList: Demo[];
 }) {
   const [sortOrder, setSortOrder] = useState("최신순");
   const [currentPage, setCurrentPage] = useState(1);
+  const [openMenuId, setOpenMenuId] = useState<
+    number | null
+  >(null);
 
   const totalPages = Math.ceil(
     demoList.length / ITEMS_PER_PAGE
@@ -42,8 +46,15 @@ export default function DemoListView({
           {currentItems.map((demo, i) => (
             <DemoCard
               key={i}
+              id={demo.id}
               title={demo.title}
               date={demo.date}
+              isMenuOpen={openMenuId === demo.id}
+              onToggleMenu={() =>
+                setOpenMenuId((prev) =>
+                  prev === demo.id ? null : demo.id
+                )
+              }
             />
           ))}
         </div>
