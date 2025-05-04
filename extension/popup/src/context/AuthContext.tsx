@@ -18,7 +18,6 @@ function reducer(state: AuthState, action: AuthAction) {
         loggedIn: true,
       };
     case "LOGOUT":
-      localStorage.removeItem("token");
       return { token: null, loggedIn: false };
     default:
       return state;

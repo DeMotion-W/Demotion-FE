@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
   title: "Demotion",
@@ -13,7 +14,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="min-w-[1280px] overflow-x-auto">
+        <div className="flex w-full min-h-screen">
+          <Sidebar />
+          <main className="flex-1 flex justify-center">
+            <div className="w-full max-w-[1280px] px-[40px]">
+              {children}
+            </div>
+          </main>
+        </div>
+      </body>
     </html>
   );
 }
