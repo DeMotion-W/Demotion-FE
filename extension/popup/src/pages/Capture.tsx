@@ -9,6 +9,7 @@ import { AuthDispatchContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import CapturedImageList from "../components/CapturedImageList";
 import { onSilentRefresh } from "../api/auth/login";
+import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
 
 export default function Capture() {
   const dispatch = useContext(AuthDispatchContext);
@@ -63,28 +64,22 @@ export default function Capture() {
   };
 
   const completeCapture = async () => {
-    const res = await fetch(
-      "https://e459c8ba-203e-4e58-b6a3-9efa401c5f18.mock.pstmn.io/image",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(captures),
-      }
-    );
-    const data = await res.json();
-    console.log("서버 응답:", data);
+    try {
+      await uploadAndCreateDemo(captures);
 
-    const tabs = await chrome.tabs.query({});
-    tabs.forEach((tab) => {
-      if (tab.id && !tab.url?.startsWith("chrome://")) {
-        chrome.tabs.sendMessage(tab.id, {
-          type: "stop-capture",
-        });
-      }
-    });
+      const tabs = await chrome.tabs.query({});
+      tabs.forEach((tab) => {
+        if (tab.id && !tab.url?.startsWith("chrome://")) {
+          chrome.tabs.sendMessage(tab.id, {
+            type: "stop-capture",
+          });
+        }
+      });
 
-    alert("캡처 데이터 업로드 완료!");
-    setCaptures([]);
+      setCaptures([]);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   useEffect(() => {
