@@ -7,13 +7,17 @@ import InputField from "../components/InputField";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import VerificationInput from "../components/VerificationInput";
+import { useState } from "react";
 
 export default function Signup() {
   const nav = useNavigate();
+  const [isEmailVerified, setIsEmailVerified] =
+    useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<SignupForm>({
     resolver: yupResolver(
       signupSchema
@@ -64,7 +68,12 @@ export default function Signup() {
             errorMessage={errors.name?.message}
           />
 
-          <VerificationInput />
+          <VerificationInput
+            register={register}
+            error={errors.email?.message}
+            email={watch("email")}
+            setIsVerified={setIsEmailVerified}
+          />
 
           <InputField
             label="비밀번호"
@@ -85,7 +94,7 @@ export default function Signup() {
           <Button
             label="가입하기"
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || !isEmailVerified}
           />
         </form>
       </div>

@@ -10,12 +10,6 @@ if (!window.__demotionInitialized) {
       x: e.clientX / viewportWidth,
       y: e.clientY / viewportHeight,
     });
-    // const dpr = window.devicePixelRatio || 1;
-    // chrome.runtime.sendMessage({
-    //   type: "capture-click",
-    //   x: e.clientX * dpr,
-    //   y: e.clientY * dpr,
-    // });
   };
 
   window.__demotionCaptureState = {

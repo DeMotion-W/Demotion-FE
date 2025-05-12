@@ -11,10 +11,11 @@ export default function Button({
 }: Props) {
   return (
     <button
-      className={`w-full py-2 rounded-md text-sm font-semibold transition-colors mt-6 ${
+      disabled={disabled}
+      className={`w-full py-2 rounded-lg text-sm font-semibold font-['Pretendard'] transition-colors mt-6 ${
         disabled
-          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-          : "bg-blue-500 text-white hover:bg-blue-600"
+          ? "bg-[#D0D7DD] text-[#FFFFFF] cursor-not-allowed"
+          : "bg-[#369AFF] text-[#FFFFFF] hover:bg-blue-600"
       }`}
       {...props}
     >

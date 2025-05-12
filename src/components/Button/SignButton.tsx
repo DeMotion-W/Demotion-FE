@@ -11,10 +11,11 @@ export default function SignButton({
 }: Props) {
   return (
     <button
+      disabled={disabled}
       className={`w-full text-center py-4 rounded-md text-base font-semibold font-['Pretendard'] leading-tight transition-colors mt-6 ${
         disabled
-          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-          : "bg-[#369AFF] text-white hover:bg-[#197bde]"
+          ? "bg-[#D0D7DD] text-[#FFFFFF] cursor-not-allowed"
+          : "bg-[#369AFF] text-[#FFFFFF] hover:bg-blue-600"
       }`}
       {...props}
     >

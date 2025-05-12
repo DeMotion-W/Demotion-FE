@@ -1,14 +1,27 @@
 "use client";
 
+import { SignupForm } from "@shared/type";
 // import {
 //   EMAIL_VERIFICATION_CONFIRM_PATH,
 //   EMAIL_VERIFICATION_REQUEST_PATH,
 // } from "../../../../shared/constants/api";
 // import axios from "axios";
 import { useState } from "react";
+import { UseFormRegister } from "react-hook-form";
 
-export default function VerificationInput() {
-  const [email, setEmail] = useState("");
+type Props = {
+  register: UseFormRegister<SignupForm>;
+  email: string;
+  error?: string;
+  setIsVerified: (value: boolean) => void;
+};
+
+export default function VerificationInput({
+  register,
+  email,
+  error,
+  setIsVerified,
+}: Props) {
   const [code, setCode] = useState("");
   const [step, setStep] = useState<
     "idle" | "sent" | "verified"
@@ -68,6 +81,7 @@ export default function VerificationInput() {
       setStep("verified");
       setMessage("인증번호가 확인되었습니다.");
       setMessageType("success");
+      setIsVerified(true);
     } else {
       setMessage("인증번호가 올바르지 않습니다.");
       setMessageType("error");
@@ -108,8 +122,7 @@ export default function VerificationInput() {
       <div className="flex gap-2 justify-center">
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register("email")}
           className="flex-1 border border-gray-300 rounded border-1 rounded-lg p-2 text-sm font-normal font-['Pretendard'] leading-relaxed"
           placeholder="이메일을 입력해 주세요."
         />
@@ -128,6 +141,10 @@ export default function VerificationInput() {
             : "전송"}
         </button>
       </div>
+
+      {error && (
+        <p className="text-red-500 text-xs">{error}</p>
+      )}
 
       {step !== "idle" && (
         <div className="flex gap-2">
