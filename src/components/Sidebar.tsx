@@ -7,7 +7,11 @@ import Image from "next/image";
 import { user } from "@/mock/user";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Demotions", icon: LayoutGrid },
+  {
+    href: "/demotions",
+    label: "Demotions",
+    icon: LayoutGrid,
+  },
   { href: "/insight", label: "Insight", icon: BarChart2 },
   { href: "/leads", label: "Leads", icon: Users },
 ];
