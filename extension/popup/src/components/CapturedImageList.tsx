@@ -43,7 +43,35 @@ export default function CapturedImageList({
             }}
             className="max-h-[200px] object-contain"
           />
-          {c.width && c.height && imgRefs.current[i] && (
+          {c.x != null &&
+            c.y != null &&
+            imgRefs.current[i] &&
+            (() => {
+              const img = imgRefs.current[i]!;
+              const frameWidth =
+                img.parentElement!.offsetWidth;
+              const frameHeight =
+                img.parentElement!.offsetHeight;
+
+              const offsetX =
+                c.x * img.offsetWidth +
+                (frameWidth - img.offsetWidth) / 2;
+              const offsetY =
+                c.y * img.offsetHeight +
+                (frameHeight - img.offsetHeight) / 2;
+
+              return (
+                <div
+                  className="absolute w-3 h-3 bg-red-500 rounded-full"
+                  style={{
+                    top: `${offsetY}px`,
+                    left: `${offsetX}px`,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              );
+            })()}
+          {/* {c.width && c.height && imgRefs.current[i] && (
             <div
               className="absolute w-3 h-3 bg-red-500 rounded-full"
               style={{
@@ -58,7 +86,7 @@ export default function CapturedImageList({
                 transform: "translate(-50%, -50%)",
               }}
             />
-          )}
+          )} */}
         </div>
       ))}
     </div>

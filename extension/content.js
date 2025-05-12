@@ -2,10 +2,13 @@ if (!window.__demotionInitialized) {
   window.__demotionInitialized = true;
 
   const handleClick = (e) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
     chrome.runtime.sendMessage({
       type: "capture-click",
-      x: e.clientX,
-      y: e.clientY,
+      x: e.clientX / viewportWidth,
+      y: e.clientY / viewportHeight,
     });
   };
 

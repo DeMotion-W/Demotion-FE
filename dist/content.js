@@ -2,11 +2,20 @@ if (!window.__demotionInitialized) {
   window.__demotionInitialized = true;
 
   const handleClick = (e) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
     chrome.runtime.sendMessage({
       type: "capture-click",
-      x: e.clientX,
-      y: e.clientY,
+      x: e.clientX / viewportWidth,
+      y: e.clientY / viewportHeight,
     });
+    // const dpr = window.devicePixelRatio || 1;
+    // chrome.runtime.sendMessage({
+    //   type: "capture-click",
+    //   x: e.clientX * dpr,
+    //   y: e.clientY * dpr,
+    // });
   };
 
   window.__demotionCaptureState = {

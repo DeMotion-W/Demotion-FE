@@ -41,6 +41,16 @@ export default function Capture() {
     nav("/");
   };
 
+  useEffect(() => {
+    if (!chrome?.runtime?.onMessage?.addListener) return;
+
+    chrome.runtime.onMessage.addListener((msg) => {
+      if (msg.type === "captured-image") {
+        setCaptures((prev) => [...prev, msg.data]);
+      }
+    });
+  }, []);
+
   const startCapture = async () => {
     const tabs = await chrome.tabs.query({});
     tabs.forEach((tab) => {
@@ -81,16 +91,6 @@ export default function Capture() {
       alert(error);
     }
   };
-
-  useEffect(() => {
-    if (!chrome?.runtime?.onMessage?.addListener) return;
-
-    chrome.runtime.onMessage.addListener((msg) => {
-      if (msg.type === "captured-image") {
-        setCaptures((prev) => [...prev, msg.data]);
-      }
-    });
-  }, []);
 
   return (
     <div className="flex flex-col p-4 space-y-6">
