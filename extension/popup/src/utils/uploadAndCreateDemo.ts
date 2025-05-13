@@ -4,7 +4,7 @@ import {
   ScreenshotMetadata,
 } from "../type";
 import { getAccessToken } from "../utils/auth";
-import { httpClientForCredentials } from "../api";
+import { httpClientForCredentials } from "../api/httpClientForCredentials";
 import axios from "axios";
 import {
   DEMO_CREATE_PATH,
@@ -25,7 +25,7 @@ export async function uploadAndCreateDemo(
         { fileNames: filenames },
         {
           headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
+            Authorization: getAccessToken(),
           },
         }
       );

@@ -5,17 +5,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signupSchema } from "@shared/schema/signupSchema";
 import { SignupForm } from "@shared/type";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import InputField from "@/components/Input/InputField";
 import VerificationInput from "@/components/Input/VerificationInput";
 import SignButton from "@/components/Button/SignButton";
 
 export default function Page() {
   const router = useRouter();
+  const [isEmailVerified, setIsEmailVerified] =
+    useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<SignupForm>({
     resolver: yupResolver(signupSchema),
     mode: "onChange",
@@ -64,7 +68,12 @@ export default function Page() {
             errorMessage={errors.name?.message}
           />
 
-          <VerificationInput />
+          <VerificationInput
+            register={register}
+            error={errors.email?.message}
+            email={watch("email")}
+            setIsVerified={setIsEmailVerified}
+          />
 
           <InputField
             label="비밀번호"
@@ -85,7 +94,7 @@ export default function Page() {
           <SignButton
             label="가입하기"
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || !isEmailVerified}
           />
         </form>
       </div>

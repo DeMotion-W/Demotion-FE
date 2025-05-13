@@ -4,7 +4,7 @@ import {
   SignupSuccessResponse,
 } from "../../../../../shared/type";
 import { SIGNUP_PATH } from "../../../../../shared/constants/api";
-import { httpClientForCredentials } from "..";
+import { httpClientForCredentials } from "../httpClientForCredentials";
 
 export async function signup({
   name,

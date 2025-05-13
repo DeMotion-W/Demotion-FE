@@ -1,5 +1,5 @@
-import { AxiosError } from "axios";
-import { httpClientForCredentials } from "..";
+import axios, { AxiosError } from "axios";
+import { httpClientForCredentials } from "../httpClientForCredentials";
 import { NavigateFunction } from "react-router-dom";
 import {
   LOG_IN_PATH,
@@ -21,9 +21,11 @@ export const onLogIn = async (params: LoginForm) => {
       setAccessToken(accessToken);
       return response;
     }
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    throw axiosError;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response) {
+      const { message } = error.response.data;
+      throw new Error(message);
+    }
   }
 };
 
@@ -42,13 +44,13 @@ export const onSilentRefresh = async (
   navigate: NavigateFunction
 ) => {
   try {
-    console.log("🔄 silent refresh 요청 시작");
+    console.log("silent refresh 요청 시작");
 
     const response = await httpClientForCredentials.post(
       TOKEN_REFRESH_PATH
     );
 
-    console.log("✅ silent refresh 응답:", response.data);
+    console.log("silent refresh 응답:", response.data);
 
     if (response.status === 200) {
       const { accessToken } = response.data;

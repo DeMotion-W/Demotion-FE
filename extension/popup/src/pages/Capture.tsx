@@ -8,8 +8,14 @@ import { CaptureData } from "../type";
 import { AuthDispatchContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import CapturedImageList from "../components/CapturedImageList";
-import { onSilentRefresh } from "../api/auth/login";
 import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
+import { httpClientForCredentials } from "../api/httpClientForCredentials";
+import axios from "axios";
+import {
+  clearAccessToken,
+  getAccessToken,
+} from "../utils/auth";
+import { LOG_OUT_PATH } from "../../../../shared/constants/api";
 
 export default function Capture() {
   const dispatch = useContext(AuthDispatchContext);
@@ -18,14 +24,6 @@ export default function Capture() {
     []
   );
   const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onSilentRefresh(nav);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [nav]);
 
   const handleLogout = async () => {
     const tabs = await chrome.tabs.query({});
@@ -36,6 +34,32 @@ export default function Capture() {
         });
       }
     });
+
+    try {
+      await httpClientForCredentials.post(
+        LOG_OUT_PATH,
+        {},
+        { withCredentials: true }
+      );
+      console.log("로그아웃 성공");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        const { message } = error.response.data;
+        throw new Error(message);
+      }
+    }
+
+    clearAccessToken();
+    console.log(
+      "accessToken after logout:",
+      getAccessToken()
+    );
+    console.log(
+      "Authorization header after logout:",
+      httpClientForCredentials.defaults.headers.common[
+        "Authorization"
+      ]
+    );
 
     dispatch?.({ type: "LOGOUT" });
     nav("/");

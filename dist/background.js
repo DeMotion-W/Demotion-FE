@@ -52,16 +52,27 @@ chrome.sidePanel
 
 chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg.type === "capture-click") {
-    chrome.tabs.captureVisibleTab().then((screenshot) => {
-      chrome.runtime.sendMessage({
-        type: "captured-image",
-        data: {
-          image: screenshot,
-          x: msg.x,
-          y: msg.y,
-        },
+    chrome.tabs
+      .captureVisibleTab()
+      .then((screenshot) => {
+        chrome.runtime.sendMessage({
+          type: "captured-image",
+          data: {
+            image: screenshot,
+            x: msg.x,
+            y: msg.y,
+          },
+        });
+        sendResponse({ success: true });
+      })
+      .catch((err) => {
+        sendResponse({
+          success: false,
+          error: err.message,
+        });
       });
-    });
+
+    return true;
   }
 
   if (msg.type === "start-capture") {

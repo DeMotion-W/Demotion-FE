@@ -1,8 +1,6 @@
 import axios from "axios";
-import {
-  getAccessToken,
-  setAccessToken,
-} from "../utils/auth";
+import { setAccessToken } from "../utils/auth";
+import { TOKEN_REFRESH_PATH } from "../../../../shared/constants/api";
 
 export const httpClientForCredentials = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API_URL,
@@ -14,12 +12,10 @@ httpClientForCredentials.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    const isLoggedIn = !!getAccessToken();
-
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      isLoggedIn
+      !!originalRequest.url.includes(TOKEN_REFRESH_PATH)
     ) {
       originalRequest._retry = true;
 

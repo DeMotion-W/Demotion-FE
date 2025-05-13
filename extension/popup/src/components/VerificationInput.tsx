@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { SignupForm } from "../../../../shared/type";
 import { UseFormRegister } from "react-hook-form";
-// import {
-//   EMAIL_VERIFICATION_CONFIRM_PATH,
-//   EMAIL_VERIFICATION_REQUEST_PATH,
-// } from "../../../../shared/constants/api";
-// import axios from "axios";
-// import { httpClientForCredentials } from "../api";
+import {
+  EMAIL_VERIFICATION_CONFIRM_PATH,
+  EMAIL_VERIFICATION_REQUEST_PATH,
+} from "../../../../shared/constants/api";
+import axios from "axios";
+import { httpClientPublic } from "../api/httpClientPublic";
 
 type Props = {
   register: UseFormRegister<SignupForm>;
@@ -37,80 +37,84 @@ export default function VerificationInput({
       return;
     }
 
-    // 임시 테스트
-    setTimeout(() => {
-      setStep("sent");
-      setMessage(
-        "입력하신 이메일로 인증번호가 전송되었습니다."
-      );
-      setMessageType("info");
-    }, 500);
-
-    // try {
-    //   const res = await httpClientForCredentials.post(
-    //     EMAIL_VERIFICATION_REQUEST_PATH,
-    //     {
-    //       email,
-    //     }
-    //   );
+    // // 임시 테스트
+    // setTimeout(() => {
     //   setStep("sent");
-    //   setMessage(res.data.message);
-    // } catch (err) {
-    //   if (axios.isAxiosError(err)) {
-    //     setMessage(err.response?.data?.message);
-    //     setMessageType("error");
-    //   } else {
-    //     alert("알 수 없는 오류가 발생했습니다.");
-    //   }
-    // }
+    //   setMessage(
+    //     "입력하신 이메일로 인증번호가 전송되었습니다."
+    //   );
+    //   setMessageType("info");
+    // }, 500);
+
+    try {
+      const res = await httpClientPublic.post(
+        EMAIL_VERIFICATION_REQUEST_PATH,
+        {
+          email,
+        }
+      );
+      setStep("sent");
+      setMessage(res.data.message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        const { message } = error.response.data;
+
+        setMessage(message);
+        setMessageType("error");
+      } else {
+        setMessage("알 수 없는 오류가 발생했습니다.");
+        setMessageType("error");
+      }
+    }
   };
 
   const handleVerifyCode = async () => {
     setMessage("");
     setMessageType("info");
 
-    if (code.length !== 6) {
-      setMessage("6자리 인증번호를 입력해주세요.");
+    if (code.length !== 8) {
+      setMessage("8자리 인증번호를 입력해주세요.");
       setMessageType("error");
       return;
     }
 
-    // 임시 테스트
-    if (code === "123456") {
+    // // 임시 테스트
+    // if (code === "123456") {
+    //   setStep("verified");
+    //   setMessage("인증번호가 확인되었습니다.");
+    //   setMessageType("success");
+    //   setIsVerified(true);
+    // } else {
+    //   setMessage("인증번호가 올바르지 않습니다.");
+    //   setMessageType("error");
+    // }
+
+    try {
+      const res = await httpClientPublic.post(
+        EMAIL_VERIFICATION_CONFIRM_PATH,
+        {
+          email,
+          verificationCode: code,
+        }
+      );
+
       setStep("verified");
-      setMessage("인증번호가 확인되었습니다.");
+      setMessage(res.data.message);
       setMessageType("success");
       setIsVerified(true);
-    } else {
-      setMessage("인증번호가 올바르지 않습니다.");
-      setMessageType("error");
+
+      // res.data.resetToken 필요 시 전달
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        const { message } = error.response.data;
+
+        setMessage(message || "인증 실패");
+        setMessageType("error");
+      } else {
+        setMessage("알 수 없는 오류가 발생했습니다.");
+        setMessageType("error");
+      }
     }
-
-    // try {
-    //   const res = await httpClientForCredentials.post(
-    //     EMAIL_VERIFICATION_CONFIRM_PATH,
-    //     {
-    //       email,
-    //       verificationCode: code,
-    //     }
-    //   );
-
-    //   setStep("verified");
-    //   setMessage(res.data.message);
-    //   setMessageType("success");
-
-    //   // res.data.resetToken 필요 시 전달
-    // } catch (err) {
-    //   if (axios.isAxiosError(err)) {
-    //     setMessage(
-    //       err.response?.data?.message || "인증 실패"
-    //     );
-    //     setMessageType("error");
-    //   } else {
-    //     setMessage("알 수 없는 오류가 발생했습니다.");
-    //     setMessageType("error");
-    //   }
-    // }
   };
 
   return (
