@@ -21,7 +21,7 @@ export const onLogIn = async (params: LoginForm) => {
       setAccessToken(accessToken);
       return response;
     }
-  } catch (error: unknown) {
+  } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       const { message } = error.response.data;
       throw new Error(message);

@@ -1,10 +1,10 @@
 import axios from "axios";
+import { httpClientForCredentials } from "../httpClientForCredentials";
 import {
   AuthCredentials,
   SignupSuccessResponse,
-} from "../../../../../shared/type";
-import { SIGNUP_PATH } from "../../../../../shared/constants/api";
-import { httpClientForCredentials } from "../httpClientForCredentials";
+} from "@shared/type";
+import { SIGNUP_PATH } from "@shared/constants/api";
 
 export async function signup({
   name,

@@ -9,6 +9,7 @@ import InputField from "@/components/Input/InputField";
 import SignButton from "@/components/Button/SignButton";
 import Image from "next/image";
 import Link from "next/link";
+import { onLogIn } from "@/api/auth/login";
 
 export default function LoginPage() {
   const {
@@ -22,9 +23,8 @@ export default function LoginPage() {
   const router = useRouter();
 
   const onSubmit = async (data: LoginForm) => {
-    console.log("errors", errors);
     try {
-      //await login(data);
+      const response = await onLogIn(data);
       router.push("/demotions");
     } catch (error) {
       alert(
@@ -57,7 +57,7 @@ export default function LoginPage() {
         />
         <InputField
           label="비밀번호"
-          type="text"
+          type="password"
           placeholder="비밀번호를 입력하세요"
           {...register("password")}
           errorMessage={errors.password?.message}

@@ -19,16 +19,20 @@ export async function uploadAndCreateDemo(
       (_, i) => `uuid-step${i + 1}.png`
     );
 
-    const { data: presigned }: { data: PresignedResponse } =
-      await httpClientForCredentials.post(
-        PRESIGNED_URL_PATH,
-        { fileNames: filenames },
-        {
-          headers: {
-            Authorization: getAccessToken(),
-          },
-        }
-      );
+    // const { data: presigned }: { data: PresignedResponse } =
+    const res = await httpClientForCredentials.post(
+      PRESIGNED_URL_PATH,
+      { fileNames: filenames },
+      {
+        headers: {
+          Authorization: getAccessToken(),
+        },
+      }
+    );
+
+    console.log("🔥 API 응답 구조:", res.data);
+
+    const presigned = res.data as PresignedResponse;
 
     await Promise.all(
       presigned.files.map(async (file, i) => {
@@ -66,14 +70,14 @@ export async function uploadAndCreateDemo(
         payload,
         {
           headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
+            Authorization: getAccessToken(),
           },
         }
       );
 
     const demoId = demoRes.demoId;
     chrome.tabs.create({
-      url: `https://localhost:3000/${demoId}`,
+      url: `http://localhost:3000/demo/${demoId}`,
     });
   } catch (error) {
     console.error("❌ uploadAndCreateDemo error:", error);
