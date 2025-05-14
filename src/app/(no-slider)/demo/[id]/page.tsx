@@ -11,7 +11,7 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // const { id } = await params;
+  const { id } = await params;
   //const res = await getDemoDetail(id);
   // const cookieStore = await cookies();
   // const refreshToken =
@@ -42,7 +42,7 @@ export default async function Page({
 
   return (
     <>
-      <DemoDetailView initialData={demoMock} />
+      <DemoDetailView initialData={demoMock} demoId={id} />
     </>
   );
 }
