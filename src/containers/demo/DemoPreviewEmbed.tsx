@@ -1,3 +1,5 @@
+"use client";
+
 import { ScreenshotData } from "@/types";
 import { useEffect, useState } from "react";
 import ThumbnailCanvas from "./ThumbnailCanvas";

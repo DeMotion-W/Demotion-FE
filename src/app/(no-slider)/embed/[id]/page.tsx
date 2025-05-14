@@ -7,9 +7,10 @@ export const dynamic = "force-dynamic"; // 공유 시 캐싱 방지용
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { title } = await getDemoDetail(params.id);
+  const { id } = await params;
+  const { title } = await getDemoDetail(id);
   return {
     title: `${title} - Demo Preview`,
   };
@@ -18,10 +19,11 @@ export async function generateMetadata({
 export default async function EmbedPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const { title, description, screenshots } =
-    await getDemoDetail(params.id);
+    await getDemoDetail(id);
 
   return (
     <html>

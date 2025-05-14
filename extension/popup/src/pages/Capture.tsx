@@ -8,7 +8,7 @@ import { CaptureData } from "../type";
 import { AuthDispatchContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import CapturedImageList from "../components/CapturedImageList";
-//import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
+import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
 import { httpClientForCredentials } from "../api/httpClientForCredentials";
 import axios from "axios";
 import {
@@ -16,7 +16,7 @@ import {
   getAccessToken,
 } from "../utils/auth";
 import { LOG_OUT_PATH } from "../../../../shared/constants/api";
-import { uploadAndCreateDemoTestMode } from "../utils/uploadAndCreateDemoTestMode";
+//import { uploadAndCreateDemoTestMode } from "../utils/uploadAndCreateDemoTestMode";
 
 export default function Capture() {
   const dispatch = useContext(AuthDispatchContext);
@@ -100,7 +100,7 @@ export default function Capture() {
 
   const completeCapture = async () => {
     try {
-      await uploadAndCreateDemoTestMode(captures);
+      await uploadAndCreateDemo(captures);
 
       const tabs = await chrome.tabs.query({});
       tabs.forEach((tab) => {
