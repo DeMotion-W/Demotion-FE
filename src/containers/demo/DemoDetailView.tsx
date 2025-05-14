@@ -8,8 +8,10 @@ import HeaderBar from "./HeaderBar";
 
 export default function DemoDetailView({
   initialData,
+  demoId,
 }: {
   initialData: DemoData;
+  demoId: string;
 }) {
   const [mode, setMode] = useState<"edit" | "preview">(
     "preview"
@@ -74,6 +76,7 @@ export default function DemoDetailView({
     <div className="flex flex-col min-h-screen">
       <HeaderBar
         title={title}
+        demoId={demoId}
         editable={mode === "edit"}
         onChangeTitle={setTitle}
         onSave={handleSave}

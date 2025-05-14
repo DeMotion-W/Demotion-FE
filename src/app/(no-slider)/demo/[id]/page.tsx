@@ -10,7 +10,7 @@ export default async function Page({
   //const res = await getDemoDetail(id);
   return (
     <>
-      <DemoDetailView initialData={demoMock} />
+      <DemoDetailView initialData={demoMock} demoId={id} />
     </>
   );
 }
