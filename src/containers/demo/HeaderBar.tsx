@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   title: string;
-  demoId: string;
   editable?: boolean;
   onChangeTitle?: (value: string) => void;
   onSave?: () => void;
@@ -11,22 +10,11 @@ type Props = {
 
 export default function HeaderBar({
   title,
-  demoId,
   editable = false,
   onChangeTitle,
   onSave,
 }: Props) {
   const router = useRouter();
-
-  const handleShare = async () => {
-    const embedCode = `<iframe src="http://localhost:3000/embed/${demoId}" width="100%" height="700" style="border:none;" allowfullscreen></iframe>`;
-    try {
-      await navigator.clipboard.writeText(embedCode);
-      alert("✅ 임베드 코드가 복사되었습니다!");
-    } catch (err) {
-      alert("❌ 복사에 실패했어요. 다시 시도해주세요.");
-    }
-  };
 
   return (
     <header className="w-full h-20 px-8 py-5 flex items-center justify-between bg-[#191F28] text-[#FFFFFF]">
@@ -43,10 +31,7 @@ export default function HeaderBar({
       </div>
 
       <div className="flex gap-2 items-center">
-        <button
-          onClick={handleShare}
-          className="h-10 px-4 py-1 rounded-full text-sm font-semibold border border-[#4E5968] bg-[#191F28] font-['Montserrat'] leading-tight cursor-pointer"
-        >
+        <button className="h-10 px-4 py-1 rounded-full text-sm font-semibold border border-[#4E5968] bg-[#191F28] font-['Montserrat'] leading-tight cursor-pointer">
           Share
         </button>
         <button
