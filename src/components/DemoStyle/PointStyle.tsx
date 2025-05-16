@@ -28,7 +28,7 @@ export default function PointStyle({
           }}
         />
         <div
-          className="px-4 py-3 text-sm rounded-xl max-w-[240px] text-center z-10"
+          className="px-5 py-4 text-base rounded-xl max-w-[240px] text-center z-10"
           style={{
             backgroundColor: buttonBgColor,
             color: buttonText

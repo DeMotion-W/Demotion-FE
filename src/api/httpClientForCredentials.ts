@@ -20,9 +20,7 @@ httpClientForCredentials.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          `${
-            import.meta.env.VITE_SERVER_API_URL
-          }/api/auth/login-refresh`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login-refresh`,
           {},
           { withCredentials: true }
         );

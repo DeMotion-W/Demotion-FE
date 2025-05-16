@@ -4,7 +4,7 @@ export default function NoSliderLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-w-[1280px] w-full min-h-screen bg-white">
+    <div className="w-full h-screen overflow-hidden bg-white">
       {children}
     </div>
   );

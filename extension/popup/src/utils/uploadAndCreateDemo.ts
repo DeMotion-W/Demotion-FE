@@ -76,8 +76,9 @@ export async function uploadAndCreateDemo(
       );
 
     const demoId = demoRes.demoId;
+    const siteUrl = import.meta.env.VITE_SITE_URL;
     chrome.tabs.create({
-      url: `http://localhost:3000/demo/${demoId}`,
+      url: `${siteUrl}demo/${demoId}`,
     });
   } catch (error) {
     console.error("❌ uploadAndCreateDemo error:", error);

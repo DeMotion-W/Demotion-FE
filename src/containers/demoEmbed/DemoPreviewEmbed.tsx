@@ -2,8 +2,10 @@
 
 import { ScreenshotData } from "@/types";
 import { useEffect, useState } from "react";
-import ThumbnailCanvas from "./ThumbnailCanvas";
-import ScreenshotCanvas from "./ScreenshotCanvas";
+import ThumbnailCanvasEmbed from "./ThumbnailCanvasEmbed";
+import ScreenshotCanvasEmbed from "./ScreenshotCanvasEmbed";
+import ThumbnailCanvas from "../demo/ThumbnailCanvas";
+import ScreenshotCanvas from "../demo/ScreenshotCanvas";
 
 type Props = {
   title: string;
@@ -39,9 +41,9 @@ export default function DemoPreviewEmbed({
   };
 
   return (
-    <main className="w-full px-20 py-8 flex flex-col items-center">
+    <main className="w-full px-4 sm:px-6 md:px-10 lg:px-20 py-8 flex flex-col items-center">
       {isThumbnail ? (
-        <ThumbnailCanvas
+        <ThumbnailCanvasEmbed
           demo={{
             demoId: -1,
             title,
@@ -51,7 +53,7 @@ export default function DemoPreviewEmbed({
           onStartClick={handleNextStep}
         />
       ) : (
-        <ScreenshotCanvas
+        <ScreenshotCanvasEmbed
           screenshot={current}
           onClick={handleNextStep}
         />

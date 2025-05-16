@@ -39,17 +39,19 @@ export default function DemoEditView({
   };
 
   return (
-    <div className="flex flex-1 w-full">
-      <aside className="w-[240px] min-h-screen bg-[#FFFFFF] px-5 py-2 border-r-2 border-[#E2E6EB] p-2 overflow-y-auto gap-2.5">
-        <ScreenshotSidebar
-          screenshots={screenshots}
-          selectedIndex={selectedIndex}
-          onSelect={setSelectedIndex}
-        />
+    <div className="w-full min-h-screen flex">
+      <aside className="w-[240px] h-screen shrink-0 overflow-y-auto bg-[#FFFFFF] border-r-2 border-[#E2E6EB]">
+        <div className="h-full px-5 py-2">
+          <ScreenshotSidebar
+            screenshots={screenshots}
+            selectedIndex={selectedIndex}
+            onSelect={setSelectedIndex}
+          />
+        </div>
       </aside>
 
-      <main className="flex-1 bg-white px-10 py-8">
-        <div className="mx-auto w-full min-w-[680px]">
+      <main className="min-w-[680px] flex-1 bg-white px-10 py-8 mx-auto">
+        <div className="mx-auto min-w-0">
           <div className="flex justify-center mb-6">
             <div className="flex gap-4 bg-[#EEF0F2] p-1.5 rounded-full shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)] gap-1">
               <button
@@ -83,7 +85,7 @@ export default function DemoEditView({
         </div>
       </main>
 
-      <aside className="w-[280px] min-h-screen bg-[#FFFFFF] border-l-2 border-[#E2E6EB] p-4 overflow-y-auto">
+      <aside className="w-[280px] shrink-0 bg-[#FFFFFF] border-l-2 border-[#E2E6EB] p-4 overflow-y-auto">
         {isThumbnail ? (
           <ThumbnailEditor
             title={title}

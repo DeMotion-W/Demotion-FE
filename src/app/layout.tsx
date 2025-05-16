@@ -11,11 +11,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className="min-w-[1280px] overflow-x-auto">
-        {children}
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }

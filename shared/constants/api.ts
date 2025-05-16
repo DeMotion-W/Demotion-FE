@@ -10,3 +10,5 @@ export const EMAIL_VERIFICATION_CONFIRM_PATH =
 
 export const PRESIGNED_URL_PATH = "api/presigned-urls";
 export const DEMO_CREATE_PATH = "api/demos";
+
+export const DEMO_VIEW_PATH = "api/demos";

@@ -5,6 +5,7 @@ import { DemoData, ScreenshotData } from "@/types";
 import DemoPreview from "./DemoPreview";
 import DemoEditView from "./DemoEditView";
 import HeaderBar from "./HeaderBar";
+import useWindowSize from "@/hooks/useWindowSize";
 
 export default function DemoDetailView({
   initialData,
@@ -36,6 +37,9 @@ export default function DemoDetailView({
     },
     ...initialData.screenshots,
   ]);
+
+  const { height } = useWindowSize();
+  const shouldScroll = height < 600;
 
   useEffect(() => {
     if (mode === "preview") {
@@ -69,11 +73,15 @@ export default function DemoDetailView({
         (s) => s.screenshotId !== -1
       ),
     };
-    console.log("💾 저장될 데이터:", dataToSave);
+    console.log("저장될 데이터:", dataToSave);
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div
+      className={`flex flex-col ${
+        shouldScroll ? "overflow-y-auto" : ""
+      }`}
+    >
       <HeaderBar
         title={title}
         demoId={demoId}

@@ -13,7 +13,7 @@ export default function ScreenshotSidebar({
   onSelect,
 }: Props) {
   return (
-    <aside className="w-full space-y-2">
+    <div className="space-y-2">
       {screenshots.map((s, i) => (
         <div
           key={s.screenshotId}
@@ -44,6 +44,6 @@ export default function ScreenshotSidebar({
           />
         </div>
       ))}
-    </aside>
+    </div>
   );
 }
