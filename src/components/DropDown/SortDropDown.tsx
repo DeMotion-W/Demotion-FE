@@ -61,15 +61,15 @@ export default function SortDropdown({
           {options.map((option) => (
             <div
               key={option}
+              onClick={() => {
+                onChange(option);
+                setOpen(false);
+              }}
               className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
                 option === selected
                   ? "bg-[#F9FAFB] font-semibold"
                   : ""
               }`}
-              onClick={() => {
-                onChange(option);
-                setOpen(false);
-              }}
             >
               {option}
             </div>

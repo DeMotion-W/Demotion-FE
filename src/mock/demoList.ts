@@ -7,27 +7,27 @@ export const demoList = [
   },
   {
     id: 1,
-    title: "짧은 제목",
+    title: "짧은 제목1",
     date: "2025.04.10",
   },
   {
     id: 2,
-    title: "짧은 제목",
+    title: "짧은 제목2",
     date: "2025.04.10",
   },
   {
     id: 3,
-    title: "짧은 제목",
+    title: "짧은 제목3",
     date: "2025.04.10",
   },
   {
     id: 4,
-    title: "짧은 제목",
+    title: "짧은 제목4",
     date: "2025.04.10",
   },
   {
     id: 5,
-    title: "짧은 제목",
+    title: "짧은 제목5",
     date: "2025.04.10",
   },
   {

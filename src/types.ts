@@ -45,3 +45,15 @@ export interface ScreenshotButtonProps {
 }
 
 export type ButtonStyle = "Point" | "Box";
+
+export interface ScreenshotStat {
+  screenshotId: number;
+  viewCount: number;
+  avgDurationMillis: number;
+}
+
+export interface InsightData {
+  viewCount: number;
+  completionRate: number;
+  screenshotStats: ScreenshotStat[];
+}
