@@ -61,7 +61,7 @@ export default function Page({
   ];
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full flex items-center justify-center">
       <DemoPreviewEmbed
         title={demoMock.title}
         description={demoMock.description}

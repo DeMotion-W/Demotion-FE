@@ -12,7 +12,7 @@ export default function PointStyle({
   const top = (positionY / 1080) * 100;
 
   return (
-    <>
+    <div>
       <div
         className="absolute flex flex-col items-center"
         style={{
@@ -50,6 +50,6 @@ export default function PointStyle({
           cursor: "pointer",
         }}
       />
-    </>
+    </div>
   );
 }

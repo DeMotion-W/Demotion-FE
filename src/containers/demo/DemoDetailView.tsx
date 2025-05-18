@@ -5,7 +5,6 @@ import { DemoData, ScreenshotData } from "@/types";
 import DemoPreview from "./DemoPreview";
 import DemoEditView from "./DemoEditView";
 import HeaderBar from "./HeaderBar";
-import useWindowSize from "@/hooks/useWindowSize";
 
 export default function DemoDetailView({
   initialData,
@@ -37,9 +36,6 @@ export default function DemoDetailView({
     },
     ...initialData.screenshots,
   ]);
-
-  const { height } = useWindowSize();
-  const shouldScroll = height < 600;
 
   useEffect(() => {
     if (mode === "preview") {
@@ -77,11 +73,7 @@ export default function DemoDetailView({
   };
 
   return (
-    <div
-      className={`flex flex-col ${
-        shouldScroll ? "overflow-y-auto" : ""
-      }`}
-    >
+    <div className="flex flex-col">
       <HeaderBar
         title={title}
         demoId={demoId}

@@ -2,11 +2,18 @@ import DemoListView from "@/containers/demotions/DemoListView";
 import EmptyDemoView from "@/containers/demotions/EmptyDemoView";
 import NewDemoButton from "@/containers/demotions/NewDemoButton";
 import NotLoggedInView from "@/containers/demotions/NotLoggedInView";
+import { useAuthStore } from "@/lib/store/auth";
 import { demoList } from "@/mock/demoList";
+import { cookies } from "next/headers";
 
-const isLoggedIn = true;
+export default async function Page() {
+  const cookieStore = await cookies();
+  const refreshToken = cookieStore.get("refreshToken");
 
-export default function Page() {
+  // const loggedIn = !!refreshToken;
+
+  const loggedIn = true;
+
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mt-10 mb-4">
@@ -18,7 +25,7 @@ export default function Page() {
 
       <div className="w-full h-px bg-gray-200 my-6" />
 
-      {!isLoggedIn ? (
+      {!loggedIn ? (
         <NotLoggedInView />
       ) : demoList.length === 0 ? (
         <EmptyDemoView />

@@ -68,7 +68,7 @@ export default function EmbedCodeViewer({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      alert("복사 실패 😥");
+      alert("복사를 실패하였습니다.");
     }
   };
 
@@ -99,7 +99,7 @@ export default function EmbedCodeViewer({
       </div>
 
       {/* 코드 뷰 */}
-      <pre className="whitespace-pre overflow-x-auto text-gray-800">
+      <pre className="whitespace-pre overflow-x-auto text-gray-800 font-['Pretendard']">
         {activeTab === "html"
           ? formattedHTML
           : formattedReact}

@@ -11,16 +11,21 @@ export default function ScreenshotCanvas({
   screenshot: ScreenshotData;
   onClick?: () => void;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
   const baseWidth = 1920;
   const baseHeight = 1080;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
 
   useLayoutEffect(() => {
     const updateScale = () => {
       if (containerRef.current) {
         const width = containerRef.current.clientWidth;
-        const newScale = width / baseWidth;
+
+        const containerHeight = window.innerHeight - 200; // 상단 여백 등 감안
+
+        const scaleWidth = width / baseWidth;
+        const scaleHeight = containerHeight / baseHeight;
+        const newScale = Math.min(scaleWidth, scaleHeight);
         setScale(newScale);
       }
     };
@@ -31,33 +36,33 @@ export default function ScreenshotCanvas({
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full px-10">
+    <div
+      className="w-full flex justify-center items-center overflow-hidden p-1"
+      ref={containerRef}
+    >
       <div
-        className="mx-auto relative shadow-lg rounded-4xl overflow-hidden"
+        className="mx-auto relative shadow-lg rounded-4xl"
         style={{
-          maxHeight: "calc(100vh - 200px)",
-          aspectRatio: "1920 / 1080",
+          width: baseWidth * scale,
+          height: baseHeight * scale,
         }}
       >
-        {/* 고정 사이즈 컨텐츠를 스케일로 줄이기 */}
         <div
           style={{
             transform: `scale(${scale})`,
             transformOrigin: "top left",
-            width: `${baseWidth}px`,
-            height: `${baseHeight}px`,
+            width: baseWidth,
+            height: baseHeight,
             position: "relative",
           }}
         >
           <Image
             src={screenshot.fileUrl}
             alt="ScreenShot"
-            width={baseWidth}
-            height={baseHeight}
+            fill
             draggable={false}
-            className="absolute inset-0 object-contain"
+            className="object-contain"
           />
-
           {screenshot.buttonStyle === "Point" ? (
             <PointStyle {...screenshot} onClick={onClick} />
           ) : (
@@ -66,41 +71,5 @@ export default function ScreenshotCanvas({
         </div>
       </div>
     </div>
-    // <div className="w-full px-10">
-    //   <div
-    //     className="aspect-[1920/1080] mx-auto relative shadow-lg rounded-4xl overflow-hidden"
-    //     style={{
-    //       maxHeight: "calc(100vh - 200px)",
-    //     }}
-    //   >
-    //     <Image
-    //       src={screenshot.fileUrl}
-    //       alt="ScreenShot"
-    //       fill
-    //       draggable={false}
-    //       className="object-contain"
-    //     />
-
-    //     {screenshot.buttonStyle === "Point" ? (
-    //       <PointStyle
-    //         positionX={screenshot.positionX}
-    //         positionY={screenshot.positionY}
-    //         buttonText={screenshot.buttonText}
-    //         buttonBgColor={screenshot.buttonBgColor}
-    //         buttonTextColor={screenshot.buttonTextColor}
-    //         onClick={onClick}
-    //       />
-    //     ) : (
-    //       <BoxStyle
-    //         positionX={screenshot.positionX}
-    //         positionY={screenshot.positionY}
-    //         buttonText={screenshot.buttonText}
-    //         buttonBgColor={screenshot.buttonBgColor}
-    //         buttonTextColor={screenshot.buttonTextColor}
-    //         onClick={onClick}
-    //       />
-    //     )}
-    //   </div>
-    // </div>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import EmbedCodeViewer from "./EmbedCodeViewer";
 
 export default function EmbedCodePopup({
@@ -7,11 +8,31 @@ export default function EmbedCodePopup({
   demoId: string;
   onClose: () => void;
 }) {
+  const link = `${process.env.NEXT_PUBLIC_SITE_URL}embed/${demoId}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(link);
+    alert("복사되었습니다."); //추후 디자인
+  };
+
   return (
     <div className="w-[420px] p-6 bg-white rounded-2xl shadow-xl border border-gray-200">
-      <h3 className="text-xl font-semibold text-[#191F28] mb-4">
-        임베드 코드 복사
+      <h3 className="text-xl font-semibold text-[#191F28] mb-4 font-['Montserrat']">
+        Share
       </h3>
+
+      <div className="w-full justify-between inline-flex items-center rounded-xl border border-gray-200 bg-gray-50 px-4 py-2 mb-4 shadow-sm font-['Pretendard']">
+        <span className="text-sm text-gray-800">
+          {link}
+        </span>
+        <button
+          onClick={handleCopy}
+          className="ml-3 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-100 active:bg-gray-200 transition"
+        >
+          Copy
+        </button>
+      </div>
+
       <EmbedCodeViewer demoId={demoId} />
 
       <button

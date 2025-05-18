@@ -28,6 +28,8 @@ export default function BoxStyle({
         style={{
           backgroundColor: buttonBgColor,
           color: buttonText ? buttonTextColor : "#FFFFFF66",
+          minWidth: "9vw",
+          maxWidth: "12.5vw",
         }}
       >
         <span className="flex-1 break-words text-left text-lg font-semibold font-['Pretendard'] leading-tight">
@@ -37,7 +39,7 @@ export default function BoxStyle({
           onClick={onClick}
           className="w-13 h-9 rounded-full bg-white flex items-center justify-center cursor-pointer"
         >
-          <ChevronRight className="w-5 h-5 text-[#168AFF]" />
+          <ChevronRight className="w-4 h-4 text-[#168AFF]" />
         </button>
       </div>
     </div>

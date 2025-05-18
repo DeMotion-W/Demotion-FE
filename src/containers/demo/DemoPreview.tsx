@@ -43,7 +43,7 @@ export default function DemoPreview({
   const topPercent = (current.positionY / baseHeight) * 100;
 
   return (
-    <main className="w-full px-20 py-8 flex flex-col items-center overflow-y-auto">
+    <main className="w-full px-20 py-8 flex flex-col items-center h-screen overflow-hidden">
       <div className="w-[1120px] mb-6 flex justify-center">
         <div className="flex gap-4 bg-[#EEF0F2] p-1.5 rounded-full shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
           <button

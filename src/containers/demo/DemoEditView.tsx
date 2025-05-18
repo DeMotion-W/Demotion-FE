@@ -39,9 +39,9 @@ export default function DemoEditView({
   };
 
   return (
-    <div className="w-full min-h-screen flex">
-      <aside className="w-[240px] h-screen shrink-0 overflow-y-auto bg-[#FFFFFF] border-r-2 border-[#E2E6EB]">
-        <div className="h-full px-5 py-2">
+    <div className="w-full h-screen flex">
+      <aside className="w-[240px] h-full shrink-0 overflow-y-auto bg-[#FFFFFF] border-r-2 border-[#E2E6EB]">
+        <div className="px-5 py-2">
           <ScreenshotSidebar
             screenshots={screenshots}
             selectedIndex={selectedIndex}
@@ -50,7 +50,7 @@ export default function DemoEditView({
         </div>
       </aside>
 
-      <main className="min-w-[680px] flex-1 bg-white px-10 py-8 mx-auto">
+      <main className="min-w-[680px] flex-1 bg-white px-10 py-8 mx-auto overflow-hidden">
         <div className="mx-auto min-w-0">
           <div className="flex justify-center mb-6">
             <div className="flex gap-4 bg-[#EEF0F2] p-1.5 rounded-full shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)] gap-1">

@@ -55,6 +55,7 @@ export default function VerificationInput({
       );
       setStep("sent");
       setMessage(res.data.message);
+      setCode("");
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
         const { message } = error.response.data;
