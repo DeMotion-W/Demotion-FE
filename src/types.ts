@@ -57,3 +57,14 @@ export interface InsightData {
   completionRate: number;
   screenshotStats: ScreenshotStat[];
 }
+
+export interface InsightData {
+  viewCount: number;
+  completionRate: number;
+  screenshotStats: ScreenshotStat[];
+}
+
+export interface LeadsData {
+  email: string;
+  contactClicked: boolean;
+}

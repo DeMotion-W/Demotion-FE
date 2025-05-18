@@ -28,10 +28,10 @@ export default function InsightChart({
   if (data.length === 0) {
     return (
       <div className="h-80 flex flex-col items-center justify-center border-2 border-[#E2E7EB] rounded-xl gap-2">
-        <div className="text-[#191F28] text-base font-semibold font-['Pretendard'] leading-normal">
+        <div className="text-[#191F28] text-large font-semibold font-['Pretendard'] leading-normal">
           데모를 선택해 보세요!
         </div>
-        <div className="text-[#6B7684] text-xs font-normal font-['Pretendard'] leading-tight">
+        <div className="text-[#6B7684] text-sm font-normal font-['Pretendard'] leading-tight">
           데모를 선택하면 데모별 조회수를 확인할 수 있어요.
         </div>
       </div>

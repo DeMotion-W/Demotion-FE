@@ -30,10 +30,7 @@ export default function DemoInsight() {
         <DemoDropdown
           demos={demoList}
           selected={selectedDemo}
-          onSelect={(demo) => {
-            setSelectedDemo(demo);
-            setInsightData(insightMock[demo.id] ?? null);
-          }}
+          onSelect={handleDemoSelect}
         />
       </div>
       <div className="gap-2">

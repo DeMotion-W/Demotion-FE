@@ -12,7 +12,7 @@ export default async function Page() {
 
   // const loggedIn = !!refreshToken;
 
-  const loggedIn = true;
+  const loggedIn = false;
 
   return (
     <div className="w-full">

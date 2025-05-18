@@ -1,5 +1,17 @@
+import DemoLeadsView from "@/containers/leads/DemoLeadsView";
+
 export default function Page() {
   return (
-    <div className="flex justify-center m-6">리드</div>
+    <div className="w-full">
+      <div className="flex justify-between items-center mt-10 mb-4">
+        <h1 className="text-center justify-start text-[#191F28] text-2xl font-semibold font-['Montserrat'] leading-loose">
+          Leads
+        </h1>
+      </div>
+
+      <div className="w-full h-px bg-gray-200 my-6" />
+
+      <DemoLeadsView />
+    </div>
   );
 }

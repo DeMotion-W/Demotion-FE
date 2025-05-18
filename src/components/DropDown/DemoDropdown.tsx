@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import clsx from "clsx";
 import { ChevronDownIcon } from "lucide-react";
 
 type Demo = {
