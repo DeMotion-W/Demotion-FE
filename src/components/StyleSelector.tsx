@@ -19,7 +19,7 @@ export default function StyleSelector({
           <button
             key={style}
             onClick={() => onSelect(style)}
-            className={`relative flex-1 flex flex-col items-center justify-center w-[96px] h-[72px] bg-white rounded-xl border-[1.8px] transition-all
+            className={`relative flex-1 flex flex-col items-center justify-center w-[96px] h-[72px] bg-white rounded-xl border transition-all
                 ${
                   isSelected
                     ? "border-[#369AFF] shadow-[0_0_0_4px_rgba(54,154,255,0.1)]"

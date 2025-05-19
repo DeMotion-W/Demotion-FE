@@ -1,4 +1,3 @@
-import { useState } from "react";
 import EmbedCodeViewer from "./EmbedCodeViewer";
 
 export default function EmbedCodePopup({
@@ -16,18 +15,18 @@ export default function EmbedCodePopup({
   };
 
   return (
-    <div className="w-[420px] p-6 bg-white rounded-2xl shadow-xl border border-gray-200">
-      <h3 className="text-xl font-semibold text-[#191F28] mb-4 font-['Montserrat']">
+    <div className="w-[350px] p-5 bg-white rounded-2xl shadow-xl border border-gray-200">
+      <h3 className="text-lg font-semibold text-[#191F28] mb-4 font-['Montserrat']">
         Share
       </h3>
 
-      <div className="w-full justify-between inline-flex items-center rounded-xl border border-gray-200 bg-gray-50 px-4 py-2 mb-4 shadow-sm font-['Pretendard']">
-        <span className="text-sm text-gray-800">
+      <div className="w-full justify-between inline-flex items-center rounded-xl border border-gray-200 bg-gray-50 px-4 py-2 mb-4 font-['Pretendard']">
+        <div className="text-xs text-gray-800 whitespace-nowrap overflow-x-auto overflow-y-hidden max-w-full scrollbar-hide">
           {link}
-        </span>
+        </div>
         <button
           onClick={handleCopy}
-          className="ml-3 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-100 active:bg-gray-200 transition"
+          className="ml-4 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-normal text-gray-800 shadow-xs hover:bg-gray-100 active:bg-gray-200 transition"
         >
           Copy
         </button>
@@ -37,7 +36,7 @@ export default function EmbedCodePopup({
 
       <button
         onClick={onClose}
-        className="text-center w-full mt-5 bg-[#369AFF] text-sm font-semibold text-white py-3 rounded-3xl"
+        className="text-center w-full mt-5 bg-[#369AFF] text-xs font-semibold text-white py-3 rounded-3xl"
       >
         닫기
       </button>

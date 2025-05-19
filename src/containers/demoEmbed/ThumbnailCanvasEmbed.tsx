@@ -78,7 +78,7 @@ export default function ThumbnailCanvasEmbed({
                   "부제목을 입력해 주세요."}
               </p>
               <button
-                className="mt-4 text-xl w-96 h-16 px-10 py-3 rounded-full font-semibold"
+                className="mt-4 text-xl w-96 h-16 px-10 py-3 rounded-full font-semibold cursor-pointer"
                 style={{
                   backgroundColor: thumbnail.buttonBgColor,
                   color: thumbnail.buttonTextColor,

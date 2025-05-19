@@ -20,15 +20,15 @@ export default function HeaderBar({
   const router = useRouter();
 
   return (
-    <header className="w-full h-20 px-8 py-5 flex items-center justify-between bg-[#191F28] text-[#FFFFFF]">
+    <header className="w-full h-18 px-8 py-5 flex items-center justify-between bg-[#191F28] text-[#FFFFFF]">
       <div className="flex items-center gap-4">
         <button
           onClick={() => router.back()}
           className="cursor-pointer"
         >
-          <ChevronLeft size={32} strokeWidth={2} />
+          <ChevronLeft size={30} strokeWidth={1} />
         </button>
-        <span className="text-2xl font-semibold font-['Pretendard'] leading-loose text-[#FFFFFF]">
+        <span className="text-xl font-medium font-['Pretendard'] leading-loose text-[#FFFFFF]">
           {title}
         </span>
       </div>

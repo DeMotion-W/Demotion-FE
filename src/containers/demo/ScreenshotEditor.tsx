@@ -1,6 +1,7 @@
 import ColorPickerBox from "@/components/ColorPickerBox";
 import StyleSelector from "@/components/StyleSelector";
 import { ScreenshotData } from "@/types";
+import { useState } from "react";
 
 type Props = {
   screenshot: ScreenshotData;
@@ -11,10 +12,13 @@ export default function ScreenshotEditor({
   screenshot,
   onChange,
 }: Props) {
+  const [openPickerId, setOpenPickerId] = useState<
+    string | null
+  >(null);
   return (
     <aside className="flex flex-col w-full gap-8">
       <div>
-        <label className="self-stretch justify-center block mt-6 mb-2 text-[#191F28] text-base font-semibold font-['Montserrat'] leading-normal">
+        <label className="self-stretch justify-center block mt-6 mb-2 text-[#191F28] text-sm font-semibold font-['Montserrat'] leading-normal">
           Text
         </label>
         <textarea
@@ -27,7 +31,7 @@ export default function ScreenshotEditor({
             })
           }
           placeholder="텍스트를 입력해 주세요."
-          className={`h-28 w-full border-[1.8px] border-[#E2E7EB] px-4 py-3 rounded-lg text-sm font-normal font-['Pretendard'] leading-snug ${
+          className={`h-28 w-full border border-[#E2E7EB] px-4 py-3 rounded-lg text-xs font-normal font-['Pretendard'] leading-snug ${
             screenshot.buttonText
               ? "text-[#191F28]"
               : "text-[#B0B8C1]"
@@ -36,7 +40,7 @@ export default function ScreenshotEditor({
       </div>
 
       <div>
-        <label className="self-stretch justify-center block mb-2 text-[#191F28] text-base font-semibold font-['Montserrat'] leading-normal">
+        <label className="self-stretch justify-center block mb-2 text-[#191F28] text-sm font-semibold font-['Montserrat'] leading-normal">
           Style
         </label>
         <div className="flex gap-2">
@@ -53,7 +57,7 @@ export default function ScreenshotEditor({
       </div>
 
       <div>
-        <label className="self-stretch justify-center block mb-2 text-[#191F28] text-base font-semibold font-['Montserrat'] leading-normal">
+        <label className="self-stretch justify-center block mb-2 text-[#191F28] text-sm font-semibold font-['Montserrat'] leading-normal">
           Color
         </label>
         <div className="flex w-full gap-2">
@@ -61,6 +65,11 @@ export default function ScreenshotEditor({
             id="bg-color-picker"
             label="Background"
             color={screenshot.buttonBgColor}
+            isOpen={openPickerId === "bg-color-picker"}
+            onOpen={() =>
+              setOpenPickerId("bg-color-picker")
+            }
+            onClose={() => setOpenPickerId(null)}
             onChange={(newColor) =>
               onChange({
                 ...screenshot,
@@ -72,6 +81,11 @@ export default function ScreenshotEditor({
             id="text-color-picker"
             label="Text"
             color={screenshot.buttonTextColor}
+            isOpen={openPickerId === "text-color-picker"}
+            onOpen={() =>
+              setOpenPickerId("text-color-picker")
+            }
+            onClose={() => setOpenPickerId(null)}
             onChange={(newColor) =>
               onChange({
                 ...screenshot,

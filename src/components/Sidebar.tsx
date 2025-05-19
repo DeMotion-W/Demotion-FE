@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LayoutGrid, BarChart2, Users } from "lucide-react";
-import Image from "next/image";
 import { user } from "@/mock/user";
 
 const NAV_ITEMS = [

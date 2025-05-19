@@ -1,6 +1,5 @@
-import useWindowSize from "@/hooks/useWindowSize";
-import { DemoData } from "@/types";
 import Image from "next/image";
+import { DemoData } from "@/types";
 import { useLayoutEffect, useRef, useState } from "react";
 
 export default function ThumbnailCanvas({
@@ -42,7 +41,7 @@ export default function ThumbnailCanvas({
       className="w-full flex justify-center items-center overflow-hidden p-1"
     >
       <div
-        className="mx-auto relative rounded-4xl shadow-lg overflow-hidden"
+        className="mx-auto relative rounded-4xl shadow-md overflow-hidden"
         style={{
           width: baseWidth * scale,
           height: baseHeight * scale,

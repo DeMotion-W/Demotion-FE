@@ -73,7 +73,7 @@ export default function DemoDetailView({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <HeaderBar
         title={title}
         demoId={demoId}
@@ -81,7 +81,7 @@ export default function DemoDetailView({
         onChangeTitle={setTitle}
         onSave={handleSave}
       />
-      <div className="flex-1">
+      <div className="flex flex-1 overflow-hidden">
         {mode === "edit" ? (
           <DemoEditView
             title={title}

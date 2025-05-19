@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  EMAIL_VERIFICATION_CONFIRM_PATH,
-  EMAIL_VERIFICATION_REQUEST_PATH,
-} from "@shared/constants/api";
 import { SignupForm } from "@shared/type";
 import { useState } from "react";
 import { UseFormRegister } from "react-hook-form";
-import axios from "axios";
-import { httpClient } from "@/api/httpClient";
 import {
   sendVerificationCode,
   verifyCode,

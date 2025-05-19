@@ -13,15 +13,15 @@ export default function ScreenshotSidebar({
   onSelect,
 }: Props) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       {screenshots.map((s, i) => (
         <div
           key={s.screenshotId}
           onClick={() => onSelect(i)}
-          className={`h-32 items-center relative cursor-pointer rounded-xl overflow-hidden border-2 ${
+          className={`h-32 items-center relative cursor-pointer rounded-xl overflow-hidden ${
             i === selectedIndex
-              ? "border-[#369AFF] shadow-[0_0_0_4px_rgba(54,154,255,0.1)]"
-              : "border-[#E2E7EB]"
+              ? "border-[1.5px] border-[#369AFF] shadow-[0_0_0_4px_rgba(54,154,255,0.1)]"
+              : "border border-[#E2E7EB]"
           }`}
         >
           <span

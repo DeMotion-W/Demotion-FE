@@ -39,9 +39,9 @@ export default function DemoEditView({
   };
 
   return (
-    <div className="w-full h-screen flex">
-      <aside className="w-[240px] h-full shrink-0 overflow-y-auto bg-[#FFFFFF] border-r-2 border-[#E2E6EB]">
-        <div className="px-5 py-2">
+    <div className="w-full h-full flex">
+      <aside className="w-[240px] h-full shrink-0 overflow-y-auto bg-[#FFFFFF] border-r border-[#E2E6EB]">
+        <div className="px-5 py-2 mt-4">
           <ScreenshotSidebar
             screenshots={screenshots}
             selectedIndex={selectedIndex}
@@ -85,7 +85,7 @@ export default function DemoEditView({
         </div>
       </main>
 
-      <aside className="w-[280px] shrink-0 bg-[#FFFFFF] border-l-2 border-[#E2E6EB] p-4 overflow-y-auto">
+      <aside className="w-[280px] shrink-0 bg-[#FFFFFF] border-l border-[#E2E6EB] p-4 overflow-y-auto">
         {isThumbnail ? (
           <ThumbnailEditor
             title={title}

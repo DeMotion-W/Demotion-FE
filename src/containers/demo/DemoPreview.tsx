@@ -1,5 +1,4 @@
 import { ScreenshotData } from "@/types";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import ThumbnailCanvas from "./ThumbnailCanvas";
 import ScreenshotCanvas from "./ScreenshotCanvas";
@@ -36,11 +35,6 @@ export default function DemoPreview({
   if (!current) return null;
 
   const isThumbnail = current.screenshotId === -1;
-  const baseWidth = 1920;
-  const baseHeight = 1080;
-
-  const leftPercent = (current.positionX / baseWidth) * 100;
-  const topPercent = (current.positionY / baseHeight) * 100;
 
   return (
     <main className="w-full px-20 py-8 flex flex-col items-center h-screen overflow-hidden">

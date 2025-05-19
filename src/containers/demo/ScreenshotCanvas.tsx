@@ -1,7 +1,7 @@
 import BoxStyle from "@/components/DemoStyle/BoxStyle";
 import PointStyle from "@/components/DemoStyle/PointStyle";
-import { ScreenshotData } from "@/types";
 import Image from "next/image";
+import { ScreenshotData } from "@/types";
 import { useLayoutEffect, useRef, useState } from "react";
 
 export default function ScreenshotCanvas({
@@ -41,7 +41,7 @@ export default function ScreenshotCanvas({
       ref={containerRef}
     >
       <div
-        className="mx-auto relative shadow-lg rounded-4xl"
+        className="mx-auto relative shadow-md rounded-4xl"
         style={{
           width: baseWidth * scale,
           height: baseHeight * scale,

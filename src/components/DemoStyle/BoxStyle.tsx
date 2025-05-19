@@ -28,8 +28,6 @@ export default function BoxStyle({
         style={{
           backgroundColor: buttonBgColor,
           color: buttonText ? buttonTextColor : "#FFFFFF66",
-          minWidth: "9vw",
-          maxWidth: "12.5vw",
         }}
       >
         <span className="flex-1 break-words text-left text-lg font-semibold font-['Pretendard'] leading-tight">

@@ -73,9 +73,9 @@ export default function EmbedCodeViewer({
   };
 
   return (
-    <div className="relative bg-[#f9f9f9] text-black rounded-xl p-4 font-mono text-sm border border-gray-300 shadow-sm">
+    <div className="relative bg-[#f9f9f9] text-black rounded-xl p-4 font-mono text-sm border border-gray-200">
       {/* 탭 영역 */}
-      <div className="flex gap-2 mb-3 text-xs font-semibold">
+      <div className="flex gap-2 mb-3 text-xs font-medium">
         <button
           className={`px-2.5 py-1 rounded-md ${
             activeTab === "html"
@@ -99,7 +99,7 @@ export default function EmbedCodeViewer({
       </div>
 
       {/* 코드 뷰 */}
-      <pre className="whitespace-pre overflow-x-auto text-gray-800 font-['Pretendard']">
+      <pre className="max-h-[280px] whitespace-pre overflow-x-auto overflow-y-auto text-xs text-gray-800 font-['Pretendard']">
         {activeTab === "html"
           ? formattedHTML
           : formattedReact}
