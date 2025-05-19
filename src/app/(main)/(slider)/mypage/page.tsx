@@ -24,14 +24,14 @@ export default function Page() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center mt-10 mb-4 gap-4">
+      <div className="flex items-center mt-6 mb-4 gap-4">
         <button
           onClick={() => router.back()}
           className="cursor-pointer"
         >
           <ChevronLeft size={32} strokeWidth={1} />
         </button>
-        <h1 className="text-center justify-start text-[#191F28] text-2xl font-semibold font-['Montserrat'] leading-loose">
+        <h1 className="text-center justify-start text-[#191F28] text-xl font-semibold font-['Montserrat'] leading-loose">
           My Page
         </h1>
       </div>

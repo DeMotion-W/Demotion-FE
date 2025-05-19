@@ -47,13 +47,13 @@ export default function DemoListView({
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <p className="text-base text-[#6B7280] font-semibold font-['Pretendard'] leading-normal mt-10 mb-10">
-          총 항목{" "}
-          <span className="text-[#3E82F6] font-semibold">
+      <div className="flex justify-between items-center h-[60px] mb-2">
+        <div className="flex gap-2 items-center justify-center text-sm text-[#6B7280] font-medium font-['Pretendard'] leading-normal">
+          <p>총 항목</p>
+          <p className="text-[#3E82F6]">
             {demoList.length}
-          </span>
-        </p>
+          </p>
+        </div>
         <SortDropdown
           selected={sortOrder}
           onChange={setSortOrder}
@@ -86,7 +86,7 @@ export default function DemoListView({
               )
             }
             disabled={currentPage === 1}
-            className="px-2 text-gray-500 cursor-pointer"
+            className="px-2 text-xs text-gray-500 cursor-pointer"
           >
             〈
           </button>
@@ -95,7 +95,7 @@ export default function DemoListView({
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`w-8 h-8 text-sm cursor-pointer ${
+              className={`w-8 h-8 text-xs cursor-pointer ${
                 currentPage === i + 1
                   ? "text-[#191F28]"
                   : "text-[#8B95A1] hover:bg-gray-100"
@@ -112,7 +112,7 @@ export default function DemoListView({
               )
             }
             disabled={currentPage === totalPages}
-            className="px-2 text-gray-500 cursor-pointer"
+            className="px-2 text-xs text-gray-500 cursor-pointer"
           >
             〉
           </button>

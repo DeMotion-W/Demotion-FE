@@ -29,7 +29,7 @@ export default function DemoLeadsView() {
   return (
     <div className="gap-4">
       <div className="flex flex-col mt-10">
-        <label className="text-[#369AFF] text-base font-semibold font-['Montserrat'] leading-normal">
+        <label className="text-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-normal">
           Select the demo!
         </label>
         <DemoDropdown
@@ -41,10 +41,10 @@ export default function DemoLeadsView() {
 
       {!selectedDemo ? (
         <div className="w-full h-[60vh] flex flex-col items-center justify-center text-center">
-          <p className="text-lg font-bold text-[#191F28] mb-2">
+          <p className="text-base font-bold text-[#191F28] mb-2">
             데모를 선택해 보세요!
           </p>
-          <p className="text-[#6B7684] text-sm font-normal font-['Pretendard'] leading-tight">
+          <p className="text-[#6B7684] text-xs font-normal font-['Pretendard'] leading-tight">
             데모를 선택하면 데모별 고객 리스트를 확인할 수
             있어요.
           </p>
@@ -54,7 +54,7 @@ export default function DemoLeadsView() {
           {/* First time viewer 카드 */}
           <div className="w-1/2 rounded-2xl border border-[#E2E7EB] p-7 gap-2">
             <div className="flex justify-between mb-8">
-              <div className="flex text-xl font-semibold font-['Montserrat'] leading-tight gap-2">
+              <div className="flex text-lg font-semibold font-['Montserrat'] leading-tight gap-2">
                 <span className="text-[#191F28]">
                   First time viewer
                 </span>
@@ -99,7 +99,7 @@ export default function DemoLeadsView() {
           {/* Inquiry Users 카드 */}
           <div className="w-1/2 rounded-2xl border border-[#E2E7EB] p-7 gap-2">
             <div className="flex justify-between mb-8">
-              <div className="flex text-xl font-semibold font-['Montserrat'] leading-tight gap-2">
+              <div className="flex text-lg font-semibold font-['Montserrat'] leading-tight gap-2">
                 <span className="text-[#191F28]">
                   Inquiry Users
                 </span>

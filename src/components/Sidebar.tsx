@@ -44,7 +44,7 @@ export default function Sidebar({
                     key={href}
                     href={href}
                     className={`
-                flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-semibold font-['Montserrat'] leading-tight transition-colors
+                flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold font-['Montserrat'] leading-tight transition-colors
                 ${
                   isActive
                     ? "bg-[#1F2A37] text-[#3182F6]"
@@ -52,7 +52,7 @@ export default function Sidebar({
                 }
               `}
                   >
-                    <Icon size={20} strokeWidth={3} />
+                    <Icon size={18} strokeWidth={2} />
                     <span>{label}</span>
                   </Link>
                 );
@@ -62,23 +62,23 @@ export default function Sidebar({
         </div>
         <Link
           href={isLoggedIn ? "/mypage" : "/login"}
-          className="mt-auto mb-4 px-4 py-3 flex items-center justify-between hover:bg-[#1F2A37] cursor-pointer"
+          className="mt-auto mb-2 px-4 py-3 flex items-center justify-between hover:bg-[#1F2A37] cursor-pointer"
         >
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#374151] rounded-full flex items-center justify-center">
-                <span className="text-sm">👤</span>
+              <div className="w-7 h-7 bg-[#374151] rounded-full flex items-center justify-center">
+                <span className="text-xs">👤</span>
               </div>
-              <span className="text-sm font-semibold text-[#E2E6EB] font-['Pretendard'] leading-tight">
+              <span className="text-xs font-medium text-[#E2E6EB] font-['Pretendard'] leading-tight">
                 {user.name}
               </span>
             </div>
           ) : (
-            <span className="ml-4 text-sm font-semibold text-[#E2E6EB] font-['Pretendard'] leading-tight">
+            <span className="ml-4 text-xs font-medium text-[#E2E6EB] font-['Pretendard'] leading-tight">
               로그인/회원가입
             </span>
           )}
-          <span className="text-[#8B95A1] font-semibold mr-4">{`>`}</span>
+          <span className="text-[#8B95A1] font-medium mr-2">{`>`}</span>
         </Link>
       </div>
     </aside>

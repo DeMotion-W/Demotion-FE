@@ -24,7 +24,7 @@ export default function DemoInsightView() {
   return (
     <div className="gap-4">
       <div className="flex flex-col mt-10">
-        <label className="text-[#369AFF] text-base font-semibold font-['Montserrat'] leading-normal">
+        <label className="text-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-normal">
           Select the demo!
         </label>
         <DemoDropdown

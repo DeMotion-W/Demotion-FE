@@ -22,7 +22,7 @@ export default function DemoCard({
   return (
     <div
       onClick={handleCardClick}
-      className="w-full rounded-2xl border border-gray-200 overflow-hidden shadow-sm bg-white cursor-pointer hover:shadow-md hover:scale-[1.02] transition-transform duration-200 ease-in-out"
+      className="w-full rounded-2xl border border-gray-200 overflow-hidden shadow-xs bg-white cursor-pointer hover:shadow-md hover:scale-[1.02] transition-transform duration-200 ease-in-out"
     >
       <div className="relative h-[140px] bg-gray-50 flex items-center justify-center">
         {thumbnailUrl ? (
@@ -53,10 +53,12 @@ export default function DemoCard({
       </div>
 
       <div className="p-4 border-t border-gray-200 flex flex-col justify-between h-[100px]">
-        <p className="text-sm text-gray-900 font-semibold line-clamp-2 break-words">
+        <p className="text-xs text-gray-900 font-semibold line-clamp-2 break-words">
           {title}
         </p>
-        <p className="text-xs text-gray-500 mt-1">{date}</p>
+        <p className="text-[10px] text-gray-500 mt-1">
+          {date}
+        </p>
       </div>
     </div>
   );

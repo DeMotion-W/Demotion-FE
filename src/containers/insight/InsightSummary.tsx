@@ -9,7 +9,7 @@ export default function InsightSummary({
 }) {
   return (
     <>
-      <div className="p-5 border-2 border-[#E2E7EB] rounded-xl bg-[#FFFFFF]">
+      <div className="p-5 border border-[#E2E7EB] rounded-xl bg-[#FFFFFF]">
         <div className="flex gap-2 items-center text-[#8B95A1]">
           <Eye size={22} />
           <div className="text-[#6B7684] text-sm font-semibold font-['Montserrat'] leading-tight">
@@ -26,11 +26,11 @@ export default function InsightSummary({
             </div>
           </Tooltip>
         </div>
-        <div className="text-3xl font-semibold font-['Montserrat'] leading-10 mt-4">
+        <div className="text-2xl font-semibold font-['Montserrat'] leading-10 mt-4">
           {data ? data.viewCount.toLocaleString() : "-"}
         </div>
       </div>
-      <div className="p-5 border-2 border-[#E2E7EB] rounded-xl bg-[#FFFFFF]">
+      <div className="p-5 border border-[#E2E7EB] rounded-xl bg-[#FFFFFF]">
         <div className="flex gap-2 items-center text-[#8B95A1]">
           <div className="w-5 h-5 px-1 bg-gray-400 rounded-md flex items-center justify-center">
             <Check
@@ -53,7 +53,7 @@ export default function InsightSummary({
             </div>
           </Tooltip>
         </div>
-        <div className="text-3xl font-semibold font-['Montserrat'] leading-10 mt-4">
+        <div className="text-2xl font-semibold font-['Montserrat'] leading-10 mt-4">
           {data ? `${data.completionRate}%` : "-"}
         </div>
       </div>

@@ -27,11 +27,11 @@ export default function InsightChart({
 }) {
   if (data.length === 0) {
     return (
-      <div className="h-80 flex flex-col items-center justify-center border-2 border-[#E2E7EB] rounded-xl gap-2">
-        <div className="text-[#191F28] text-large font-semibold font-['Pretendard'] leading-normal">
+      <div className="h-80 flex flex-col items-center justify-center border border-[#E2E7EB] rounded-xl gap-2">
+        <div className="text-[#191F28] text-base font-semibold font-['Pretendard'] leading-normal">
           데모를 선택해 보세요!
         </div>
-        <div className="text-[#6B7684] text-sm font-normal font-['Pretendard'] leading-tight">
+        <div className="text-[#6B7684] text-xs font-normal font-['Pretendard'] leading-tight">
           데모를 선택하면 데모별 조회수를 확인할 수 있어요.
         </div>
       </div>
@@ -45,14 +45,14 @@ export default function InsightChart({
   }));
 
   return (
-    <div className="flex flex-col justify-center w-full h-[630px] rounded-2xl border-2 border-[#E2E7EB] p-4">
-      <div className="mb-8 ml-5 mt-13 flex items-center gap-6 text-base text-[#4E5968] font-normal font-['Pretendard'] leading-tight">
+    <div className="flex flex-col justify-center w-full h-[480px] rounded-2xl border border-[#E2E7EB] p-4">
+      <div className="mb-8 ml-5 mt-7 flex items-center gap-6 text-xs text-[#4E5968] font-normal font-['Pretendard'] leading-tight">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-[#369AFF]" />
+          <div className="w-3 h-3 rounded-full bg-[#369AFF]" />
           <span>스텝별 조회수</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-[#D7EBFF]" />
+          <div className="w-3 h-3 rounded-full bg-[#D7EBFF]" />
           <span>스텝별 체류시간</span>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function InsightChart({
           <XAxis
             dataKey="name"
             tick={{
-              fontSize: 16,
+              fontSize: 13,
               fill: "#191F28",
               fontFamily: "Montserrat",
               fontWeight: "600",
@@ -120,7 +120,7 @@ export default function InsightChart({
                 width,
               }: LabelPosition) => {
                 const boxWidth = 30;
-                const boxHeight = 28;
+                const boxHeight = 26;
                 const radius = 6;
 
                 const centerX = (x ?? 0) + (width ?? 0) / 2;
@@ -144,7 +144,7 @@ export default function InsightChart({
                       textAnchor="middle" // 가로 정렬
                       dominantBaseline="middle" // 세로 정렬
                       fill="white"
-                      fontSize="12"
+                      fontSize="10"
                       fontWeight="500"
                       fontFamily="Pretendard"
                     >
@@ -172,7 +172,7 @@ export default function InsightChart({
                 width,
               }: LabelPosition) => {
                 const boxWidth = 30;
-                const boxHeight = 28;
+                const boxHeight = 26;
                 const radius = 6;
 
                 const centerX = (x ?? 0) + (width ?? 0) / 2;
@@ -196,7 +196,7 @@ export default function InsightChart({
                       textAnchor="middle" // 가로 정렬
                       dominantBaseline="middle" // 세로 정렬
                       fill="#333D4B"
-                      fontSize="12"
+                      fontSize="10"
                       fontWeight="500"
                       fontFamily="Pretendard"
                     >

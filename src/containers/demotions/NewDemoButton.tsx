@@ -16,13 +16,13 @@ export default function NewDemoButton() {
       <button
         ref={buttonRef}
         onClick={handleClick}
-        className="px-4 py-2 bg-[#333D4B] text-white rounded-full cursor-pointer"
+        className="px-4 py-2 bg-[#333D4B] text-xs font-normal font-['Montserrat'] leading-tight text-white rounded-full cursor-pointer"
       >
         + New Demo
       </button>
 
       {showPopup && (
-        <div className="absolute left-0 mt-2 z-50">
+        <div className="absolute right-0 mt-2 z-50">
           <CreateDemoPopup
             onClose={() => setShowPopup(false)}
           />

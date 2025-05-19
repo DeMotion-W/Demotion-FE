@@ -38,11 +38,11 @@ export default function SortDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="px-4 py-3 border border-[#E2E6EB] rounded-lg bg-white shadow-sm flex items-center justify-center gap-3 min-w-[110px] text-[#191F28] text-base font-medium font-['Pretendard'] leading-tight cursor-pointer"
+        className="px-2 py-2 border border-[#E2E6EB] rounded-lg bg-white shadow-sm flex items-center justify-center gap-3 min-w-[90px] text-[#191F28] text-xs font-medium font-['Pretendard'] leading-tight cursor-pointer"
       >
         {selected}
         <svg
-          className="w-4 h-4 text-[#8B95A1]"
+          className="w-3 h-3 text-[#8B95A1]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -57,7 +57,7 @@ export default function SortDropdown({
       </button>
 
       {open && (
-        <div className="absolute top-full mt-2 w-full bg-white border border-[#E2E6EB] rounded-lg shadow-md z-10">
+        <div className="absolute top-full mt-2 w-full bg-white border border-[#E2E6EB] text-xs rounded-lg shadow-md z-10">
           {options.map((option) => (
             <div
               key={option}
@@ -65,7 +65,7 @@ export default function SortDropdown({
                 onChange(option);
                 setOpen(false);
               }}
-              className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
+              className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${
                 option === selected
                   ? "bg-[#F9FAFB] font-semibold"
                   : ""

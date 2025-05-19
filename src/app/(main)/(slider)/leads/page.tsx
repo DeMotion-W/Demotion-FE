@@ -6,8 +6,8 @@ export default async function Page() {
   const { isLoggedIn } = await getAuthStatus();
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mt-10 mb-4">
-        <h1 className="text-center justify-start text-[#191F28] text-2xl font-semibold font-['Montserrat'] leading-loose">
+      <div className="flex justify-between items-center mt-6 mb-4">
+        <h1 className="text-center justify-start text-[#191F28] text-xl font-semibold font-['Montserrat'] leading-loose">
           Leads
         </h1>
       </div>

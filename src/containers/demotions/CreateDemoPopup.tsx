@@ -6,7 +6,7 @@ export default function CreateDemoPopup({
   onClose: () => void;
 }) {
   return (
-    <div className="w-[360px] p-6 bg-white rounded-[20px] shadow-xl border border-gray-200">
+    <div className="w-[340px] p-6 bg-white rounded-[20px] shadow-xl border border-gray-200">
       <div className="mb-5">
         <Image
           src="/images/demo.png"
@@ -15,7 +15,7 @@ export default function CreateDemoPopup({
           height={33}
         />
       </div>
-      <div className="mb-4 justify-center text-black text-xl font-semibold font-['Montserrat'] leading-7">
+      <div className="mb-4 justify-center text-black text-lg font-semibold font-['Montserrat'] leading-7">
         Create
         <br />
         Demotion Process!
@@ -34,7 +34,7 @@ export default function CreateDemoPopup({
             <div className="w-6 h-6 rounded-lg border border-[#E2E6EB] flex items-center justify-center text-sm font-semibold font-['Montserrat'] leading-tight text-[#191F28]">
               {index + 1}
             </div>
-            <p className="text-center justify-center text-[#191F28] text-sm font-normal font-['Pretendard'] leading-snug">
+            <p className="text-center justify-center text-[#191F28] text-xs font-normal font-['Pretendard'] leading-snug">
               {step}
             </p>
           </div>
@@ -42,11 +42,11 @@ export default function CreateDemoPopup({
       </div>
       <button
         onClick={onClose}
-        className="text-center w-full mt-4 bg-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-tight text-white py-3 rounded-3xl cursor-pointer"
+        className="text-center w-full mt-4 bg-[#369AFF] text-xs font-semibold font-['Montserrat'] leading-tight text-white py-3 rounded-3xl cursor-pointer"
       >
         Got it!
       </button>
-      <p className="text-center justify-center text-xs font-normal text-gray-500 mt-2 font-['Pretendard'] leading-tight">
+      <p className="text-center justify-center text-[11px] font-normal text-gray-500 mt-3 font-['Pretendard'] leading-tight">
         아직 확장 프로그램이 없나요?{" "}
         <a
           href="/download"

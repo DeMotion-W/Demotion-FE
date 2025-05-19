@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import LoginCheckWrapper from "@/components/LoginCheckWrapper";
 
 export const metadata: Metadata = {
   title: "Demotion",

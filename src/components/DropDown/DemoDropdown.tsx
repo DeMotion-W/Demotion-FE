@@ -55,7 +55,7 @@ export default function DemoDropdown({
           <div
             className={`truncate ${
               selected ? "text-[#000000]" : "text-[#8B95A1]"
-            } text-2xl font-semibold font-['Pretendard'] leading-loose`}
+            } text-xl font-semibold font-['Pretendard'] leading-loose`}
           >
             {selected
               ? `${
@@ -70,7 +70,7 @@ export default function DemoDropdown({
       </button>
 
       {isOpen && (
-        <ul className="absolute top-full w-full bg-white border-2 border-[#E2E6EB] rounded-lg z-10">
+        <ul className="absolute top-full w-full bg-white border border-[#E2E6EB] rounded-lg z-10">
           {demos.map((demo) => (
             <li
               key={demo.id}
