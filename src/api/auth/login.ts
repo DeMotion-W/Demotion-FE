@@ -1,4 +1,4 @@
-import { httpClientForCredentials } from "../httpClientForCredentials";
+import { httpClient } from "../httpClient";
 import { LoginForm } from "@shared/type";
 import {
   LOG_IN_PATH,
@@ -10,7 +10,7 @@ import { AxiosError } from "axios";
 
 export async function onLogIn(params: LoginForm) {
   try {
-    const response = await httpClientForCredentials.post(
+    const response = await httpClient.post(
       LOG_IN_PATH,
       params
     );
@@ -32,9 +32,14 @@ export async function onLogIn(params: LoginForm) {
 export async function onSilentRefresh(
   router: AppRouterInstance
 ) {
+  console.log("🔄 refresh 호출됨");
   try {
-    const response = await httpClientForCredentials.post(
-      TOKEN_REFRESH_PATH
+    const response = await httpClient.post(
+      TOKEN_REFRESH_PATH,
+      {},
+      {
+        withCredentials: true,
+      }
     );
     const { accessToken } = response.data;
     if (!accessToken)

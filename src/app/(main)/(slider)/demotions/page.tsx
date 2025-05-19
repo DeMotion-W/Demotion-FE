@@ -1,18 +1,12 @@
 import DemoListView from "@/containers/demotions/DemoListView";
 import EmptyDemoView from "@/containers/demotions/EmptyDemoView";
 import NewDemoButton from "@/containers/demotions/NewDemoButton";
-import NotLoggedInView from "@/containers/demotions/NotLoggedInView";
-import { useAuthStore } from "@/lib/store/auth";
+import NotLoggedInView from "@/components/NotLoggedInView";
 import { demoList } from "@/mock/demoList";
-import { cookies } from "next/headers";
+import { getAuthStatus } from "@/lib/auth";
 
 export default async function Page() {
-  const cookieStore = await cookies();
-  const refreshToken = cookieStore.get("refreshToken");
-
-  // const loggedIn = !!refreshToken;
-
-  const loggedIn = false;
+  const { isLoggedIn } = await getAuthStatus();
 
   return (
     <div className="w-full">
@@ -25,7 +19,7 @@ export default async function Page() {
 
       <div className="w-full h-px bg-gray-200 my-6" />
 
-      {!loggedIn ? (
+      {!isLoggedIn ? (
         <NotLoggedInView />
       ) : demoList.length === 0 ? (
         <EmptyDemoView />

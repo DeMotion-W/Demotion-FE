@@ -9,7 +9,7 @@ import InputField from "@/components/Input/InputField";
 import SignButton from "@/components/Button/SignButton";
 import Image from "next/image";
 import Link from "next/link";
-import { onLogIn } from "@/api/auth/login";
+import { login } from "@/actions/auth";
 
 export default function LoginPage() {
   const {
@@ -24,8 +24,12 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      const response = await onLogIn(data);
-      router.push("/demotions");
+      const response = await login(data);
+      if (response.success) {
+        router.push("/demotions");
+      } else {
+        alert(response.error || "로그인 실패!");
+      }
     } catch (error) {
       alert(
         "로그인 실패: 이메일 또는 비밀번호를 확인하세요."

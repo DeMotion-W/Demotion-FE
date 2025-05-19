@@ -1,4 +1,3 @@
-import { httpClientForCredentials } from "@/api/httpClientForCredentials";
 import DemoDetailView from "@/containers/demo/DemoDetailView";
 import { useAuthStore } from "@/lib/store/auth";
 import { demoMock } from "@/mock/demo";

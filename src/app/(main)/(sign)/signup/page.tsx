@@ -9,7 +9,7 @@ import { useState } from "react";
 import InputField from "@/components/Input/InputField";
 import VerificationInput from "@/components/Input/VerificationInput";
 import SignButton from "@/components/Button/SignButton";
-import { signup } from "@/api/auth/signup";
+import { signup } from "@/actions/auth";
 
 export default function Page() {
   const router = useRouter();
@@ -28,13 +28,18 @@ export default function Page() {
 
   const onSubmit = async (data: SignupForm) => {
     try {
-      await signup({
+      const response = await signup({
         name: data.name,
         email: data.email,
         password: data.password,
       });
-      alert("회원가입 완료! 로그인 페이지로 이동합니다.");
-      router.push("/login");
+
+      if (response.success) {
+        alert("회원가입 완료! 로그인 페이지로 이동합니다.");
+        router.push("/login");
+      } else {
+        alert(response.error || "회원가입에 실패했습니다.");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         alert(err.message);

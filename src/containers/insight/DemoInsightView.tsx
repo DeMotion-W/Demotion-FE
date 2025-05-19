@@ -8,7 +8,7 @@ import InsightSummary from "./InsightSummary";
 import InsightChart from "./InsightChart";
 import DemoDropdown from "@/components/DropDown/DemoDropdown";
 
-export default function DemoInsight() {
+export default function DemoInsightView() {
   const [selectedDemo, setSelectedDemo] =
     useState<Demo | null>(null);
   const [insightData, setInsightData] =

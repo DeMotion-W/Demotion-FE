@@ -1,10 +1,10 @@
 import axios from "axios";
-import { httpClientForCredentials } from "../httpClientForCredentials";
 import {
   AuthCredentials,
   SignupSuccessResponse,
 } from "@shared/type";
 import { SIGNUP_PATH } from "@shared/constants/api";
+import { httpClient } from "../httpClient";
 
 export async function signup({
   name,
@@ -12,10 +12,11 @@ export async function signup({
   password,
 }: AuthCredentials): Promise<SignupSuccessResponse> {
   try {
-    const response = await httpClientForCredentials.post(
-      SIGNUP_PATH,
-      { name, email, password }
-    );
+    const response = await httpClient.post(SIGNUP_PATH, {
+      name,
+      email,
+      password,
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

@@ -1,6 +1,9 @@
+import NotLoggedInView from "@/components/NotLoggedInView";
 import DemoLeadsView from "@/containers/leads/DemoLeadsView";
+import { getAuthStatus } from "@/lib/auth";
 
-export default function Page() {
+export default async function Page() {
+  const { isLoggedIn } = await getAuthStatus();
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mt-10 mb-4">
@@ -11,7 +14,11 @@ export default function Page() {
 
       <div className="w-full h-px bg-gray-200 my-6" />
 
-      <DemoLeadsView />
+      {!isLoggedIn ? (
+        <NotLoggedInView />
+      ) : (
+        <DemoLeadsView />
+      )}
     </div>
   );
 }

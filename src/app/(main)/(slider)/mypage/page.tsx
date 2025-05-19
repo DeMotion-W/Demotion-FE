@@ -1,15 +1,26 @@
 "use client";
 
-import Button from "@/components/Button/Button";
 import { user } from "@/mock/user";
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Button from "@/components/Button/Button";
+import Image from "next/image";
+import { logout } from "@/actions/auth";
 
 export default function Page() {
   const router = useRouter();
 
   const editProfile = () => {};
+  const handleLogout = async () => {
+    try {
+      const result = await logout();
+      if (result.success) {
+        router.push("/login");
+      }
+    } catch (err) {
+      alert("로그아웃 실패");
+    }
+  };
 
   return (
     <div className="w-full">
@@ -54,7 +65,7 @@ export default function Page() {
               bgColor={"#FF5E5E"}
               textColor={"#FFFFFF"}
               width={"140px"}
-              onClick={editProfile}
+              onClick={handleLogout}
             />
           </div>
         </div>

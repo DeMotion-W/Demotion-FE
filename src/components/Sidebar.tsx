@@ -16,7 +16,11 @@ const NAV_ITEMS = [
   { href: "/leads", label: "Leads", icon: Users },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({
+  isLoggedIn,
+}: {
+  isLoggedIn: boolean;
+}) {
   const pathname = usePathname();
 
   return (
@@ -57,10 +61,10 @@ export default function Sidebar() {
           </nav>
         </div>
         <Link
-          href={user.isLoggedIn ? "/mypage" : "/login"}
+          href={isLoggedIn ? "/mypage" : "/login"}
           className="mt-auto mb-4 px-4 py-3 flex items-center justify-between hover:bg-[#1F2A37] cursor-pointer"
         >
-          {user.isLoggedIn ? (
+          {isLoggedIn ? (
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-[#374151] rounded-full flex items-center justify-center">
                 <span className="text-sm">👤</span>

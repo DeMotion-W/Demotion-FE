@@ -1,6 +1,6 @@
 import { ScreenshotData } from "@/types";
-import { httpClientForCredentials } from "../httpClientForCredentials";
 import { DEMO_VIEW_PATH } from "@shared/constants/api";
+import { httpClient } from "../httpClient";
 
 interface DemoResponse {
   demoId: string;
@@ -12,7 +12,7 @@ interface DemoResponse {
 export async function getDemoDetail(
   demoId: string
 ): Promise<DemoResponse> {
-  const response = await httpClientForCredentials.get(
+  const response = await httpClient.get(
     DEMO_VIEW_PATH + demoId
   );
   return response.data;

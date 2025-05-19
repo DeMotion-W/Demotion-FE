@@ -8,7 +8,11 @@ import { SignupForm } from "@shared/type";
 import { useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 import axios from "axios";
-import { httpClientPublic } from "@/api/httpClientPublic";
+import { httpClient } from "@/api/httpClient";
+import {
+  sendVerificationCode,
+  verifyCode,
+} from "@/actions/auth";
 
 type Props = {
   register: UseFormRegister<SignupForm>;
@@ -39,27 +43,38 @@ export default function VerificationInput({
       return;
     }
 
-    try {
-      const res = await httpClientPublic.post(
-        EMAIL_VERIFICATION_REQUEST_PATH,
-        {
-          email,
-        }
-      );
-      setStep("sent");
-      setMessage(res.data.message);
-      setCode("");
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        const { message } = error.response.data;
+    const result = await sendVerificationCode(email);
 
-        setMessage(message);
-        setMessageType("error");
-      } else {
-        setMessage("알 수 없는 오류가 발생했습니다.");
-        setMessageType("error");
-      }
+    if (result.success) {
+      setStep("sent");
+      setCode("");
+      setMessage(result.message);
+      setMessageType("info");
+    } else {
+      setMessage(result.error || "인증번호 전송 실패");
+      setMessageType("error");
     }
+    // try {
+    //   const res = await httpClient.post(
+    //     EMAIL_VERIFICATION_REQUEST_PATH,
+    //     {
+    //       email,
+    //     }
+    //   );
+    //   setStep("sent");
+    //   setMessage(res.data.message);
+    //   setCode("");
+    // } catch (error: unknown) {
+    //   if (axios.isAxiosError(error) && error.response) {
+    //     const { message } = error.response.data;
+
+    //     setMessage(message);
+    //     setMessageType("error");
+    //   } else {
+    //     setMessage("알 수 없는 오류가 발생했습니다.");
+    //     setMessageType("error");
+    //   }
+    // }
   };
 
   const handleVerifyCode = async () => {
@@ -72,32 +87,44 @@ export default function VerificationInput({
       return;
     }
 
-    try {
-      const res = await httpClientPublic.post(
-        EMAIL_VERIFICATION_CONFIRM_PATH,
-        {
-          email,
-          verificationCode: code,
-        }
-      );
+    const result = await verifyCode(email, code);
 
+    if (result.success) {
       setStep("verified");
-      setMessage(res.data.message);
+      setMessage(result.message);
       setMessageType("success");
       setIsVerified(true);
-
-      // res.data.resetToken 필요 시 전달
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        const { message } = error.response.data;
-
-        setMessage(message || "인증 실패");
-        setMessageType("error");
-      } else {
-        setMessage("알 수 없는 오류가 발생했습니다.");
-        setMessageType("error");
-      }
+    } else {
+      setMessage(result.error || "인증 실패");
+      setMessageType("error");
     }
+
+    // try {
+    //   const res = await httpClient.post(
+    //     EMAIL_VERIFICATION_CONFIRM_PATH,
+    //     {
+    //       email,
+    //       verificationCode: code,
+    //     }
+    //   );
+
+    //   setStep("verified");
+    //   setMessage(res.data.message);
+    //   setMessageType("success");
+    //   setIsVerified(true);
+
+    //   // res.data.resetToken 필요 시 전달
+    // } catch (error: unknown) {
+    //   if (axios.isAxiosError(error) && error.response) {
+    //     const { message } = error.response.data;
+
+    //     setMessage(message || "인증 실패");
+    //     setMessageType("error");
+    //   } else {
+    //     setMessage("알 수 없는 오류가 발생했습니다.");
+    //     setMessageType("error");
+    //   }
+    // }
   };
 
   return (
