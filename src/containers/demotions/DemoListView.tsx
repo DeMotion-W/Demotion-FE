@@ -21,10 +21,29 @@ export default function DemoListView({
     demoList.length / ITEMS_PER_PAGE
   );
 
-  const currentItems = demoList.slice(
+  const sortedList = [...demoList].sort((a, b) => {
+    if (sortOrder === "최신순") {
+      return (
+        new Date(b.date).getTime() -
+        new Date(a.date).getTime()
+      );
+    } else {
+      return (
+        new Date(a.date).getTime() -
+        new Date(b.date).getTime()
+      );
+    }
+  });
+
+  const currentItems = sortedList.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
+  // const currentItems = demoList.slice(
+  //   (currentPage - 1) * ITEMS_PER_PAGE,
+  //   currentPage * ITEMS_PER_PAGE
+  // );
 
   return (
     <>

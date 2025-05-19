@@ -26,7 +26,7 @@ export async function fetchWithAuth(
 
   // API 요청
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}${url}`,
+    process.env.NEXT_PUBLIC_API_URL + url,
     {
       ...options,
       headers,
@@ -64,39 +64,96 @@ export async function fetchWithAuth(
   return response.json();
 }
 
+export async function tryFetchWithAuth(
+  url: string,
+  options: RequestInit = {}
+) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth_token")?.value;
+
+  if (!token) return null;
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+    ...options.headers,
+  };
+
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + url,
+      {
+        ...options,
+        headers,
+        credentials: "include",
+      }
+    );
+
+    // ✅ 디버깅용 로그
+    console.log("응답 status", response.status);
+    console.log("응답 헤더", [
+      ...response.headers.entries(),
+    ]);
+
+    const text = await response.text();
+    console.log("응답 본문", text);
+
+    // 다시 파싱 시도 (빈 문자열이면 JSON 파싱 실패하니까 방어적 처리)
+    if (!text) return [];
+
+    return JSON.parse(text);
+  } catch (err) {
+    console.error("tryFetchWithAuth 에러:", err);
+    return null;
+  }
+}
+
 // 토큰 갱신 함수
 async function refreshToken(): Promise<boolean> {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + TOKEN_REFRESH_PATH,
+      `${process.env.NEXT_PUBLIC_SITE_URL}api/auth/login-refresh`,
       {
         method: "POST",
         credentials: "include",
       }
     );
 
-    if (!response.ok) {
-      return false;
-    }
-
-    const data = await response.json();
-
-    const cookieStore = await cookies();
-
-    // 새 토큰을 쿠키에 저장
-    cookieStore.set({
-      name: "auth_token",
-      value: data.accessToken,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 1주일
-    });
-
-    return true;
-  } catch (error) {
-    console.error("토큰 갱신 오류:", error);
+    return response.ok; // ✅ 쿠키는 응답에서 알아서 내려오니까 여기선 true/false만 판단
+  } catch {
     return false;
   }
+  // try {
+  //   const response = await fetch(
+  //     process.env.NEXT_PUBLIC_API_URL + TOKEN_REFRESH_PATH,
+  //     {
+  //       method: "POST",
+  //       credentials: "include",
+  //     }
+  //   );
+
+  //   if (!response.ok) {
+  //     return false;
+  //   }
+
+  //   const data = await response.json();
+
+  //   const cookieStore = await cookies();
+
+  //   // 새 토큰을 쿠키에 저장
+  //   cookieStore.set({
+  //     name: "auth_token",
+  //     value: data.accessToken,
+  //     httpOnly: true,
+  //     secure: process.env.NODE_ENV === "production",
+  //     sameSite: "strict",
+  //     path: "/",
+  //     maxAge: 60 * 60 * 24 * 7, // 1주일
+  //   });
+
+  //   return true;
+  // } catch (error) {
+  //   console.error("토큰 갱신 오류:", error);
+  //   return false;
+  // }
 }
