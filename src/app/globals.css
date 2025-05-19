@@ -5,6 +5,109 @@
   src: url("/fonts/Montserrat-VariableFont_wght.ttf");
 }
 
-html {
-  font-size: 16px;
+/** Point 애니메이션 **/
+@layer utilities {
+  .animate-scale-on-hover {
+    transition: transform 0.2s ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .animate-scale-on-hover:hover {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+}
+
+@layer utilities {
+  .animate-pulse-ring {
+    animation: pulse-ring 1.5s ease-out infinite;
+    background-color: var(
+      --pulse-color,
+      rgba(54, 154, 255, 0.4)
+    );
+    border-radius: 9999px;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .group:hover .animate-pulse-ring {
+    animation-duration: 0.8s;
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.75;
+    }
+    70% {
+      transform: scale(4);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/** Box 애니메이션 **/
+@layer utilities {
+  .animate-pulse-opacity {
+    animation: pulse-opacity-shadow 1.6s ease-in-out
+      infinite;
+  }
+
+  @keyframes pulse-opacity-shadow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 8px rgba(var(--shadow-rgb), 0);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(var(--shadow-rgb), 0.5);
+    }
+  }
+}
+
+@layer utilities {
+  .animate-pulse-shadow {
+    animation: pulse-shadow-custom 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-shadow-custom {
+    0%,
+    100% {
+      box-shadow: 0 0 0 var(--pulse-shadow-color);
+    }
+    50% {
+      box-shadow: 0 0 20px var(--pulse-shadow-color);
+    }
+  }
+}
+
+@layer utilities {
+  .animate-stretch-horizontal {
+    animation: stretch-horizontal 1.6s ease-in-out infinite;
+  }
+
+  @keyframes stretch-horizontal {
+    0%,
+    100% {
+      width: 52px;
+    }
+    50% {
+      width: 72px;
+    }
+  }
+}
+
+@layer utilities {
+  .group-hover-scale {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .group:hover .group-hover-scale {
+    transform: scale(1.05);
+  }
 }
