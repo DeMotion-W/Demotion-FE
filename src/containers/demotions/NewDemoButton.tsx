@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import CreateDemoPopup from "./CreateDemoPopup";
+import CreateDemoPopup from "../../components/Popup/CreateDemoPopup";
 
 export default function NewDemoButton() {
   const [showPopup, setShowPopup] = useState(false);

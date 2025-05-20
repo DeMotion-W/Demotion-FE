@@ -5,7 +5,10 @@ import {
   useState,
 } from "react";
 import { CaptureData } from "../type";
-import { AuthDispatchContext } from "../context/AuthContext";
+import {
+  AuthDispatchContext,
+  AuthStateContext,
+} from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import CapturedImageList from "../components/CapturedImageList";
 import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
@@ -20,6 +23,7 @@ import { LOG_OUT_PATH } from "../../../../shared/constants/api";
 
 export default function Capture() {
   const dispatch = useContext(AuthDispatchContext);
+  const auth = useContext(AuthStateContext);
   const nav = useNavigate();
   const [captures, setCaptures] = useState<CaptureData[]>(
     []
@@ -100,7 +104,11 @@ export default function Capture() {
 
   const completeCapture = async () => {
     try {
-      await uploadAndCreateDemo(captures);
+      await uploadAndCreateDemo(
+        captures,
+        auth?.email,
+        auth?.password
+      );
 
       const tabs = await chrome.tabs.query({});
       tabs.forEach((tab) => {
@@ -134,7 +142,7 @@ export default function Capture() {
         className="w-full p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
         onClick={startCapture}
       >
-        📸 화면 캡처 시작!
+        화면 캡처 시작
       </button>
       <CapturedImageList
         captures={captures}

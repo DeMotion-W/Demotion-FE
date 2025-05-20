@@ -1,3 +1,4 @@
+import AutoLoginHandler from "@/components/AutoLoginHandler";
 import DemoDetailView from "@/containers/demo/DemoDetailView";
 import { useAuthStore } from "@/lib/store/auth";
 import { demoMock } from "@/mock/demo";
@@ -41,6 +42,7 @@ export default async function Page({
 
   return (
     <>
+      <AutoLoginHandler />
       <DemoDetailView initialData={demoMock} demoId={id} />
     </>
   );

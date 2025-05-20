@@ -1,6 +1,6 @@
 "use client";
 
-import EmbedCodePopup from "@/containers/demoEmbed/EmbedCodePopup";
+import EmbedCodePopup from "@/components/Popup/EmbedCodePopup";
 import { useState, useRef } from "react";
 
 export default function DemoShareButton({

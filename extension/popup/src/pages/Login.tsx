@@ -29,7 +29,12 @@ export default function Login() {
       const response = await onLogIn(data);
       const token = response?.data.accessToken;
 
-      dispatch?.({ type: "LOGIN", token });
+      dispatch?.({
+        type: "LOGIN",
+        token,
+        email: data.email,
+        password: data.password,
+      });
       nav("/capture");
     } catch (error) {
       alert(

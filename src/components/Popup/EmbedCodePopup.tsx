@@ -1,4 +1,4 @@
-import EmbedCodeViewer from "./EmbedCodeViewer";
+import EmbedCodeViewer from "../../containers/demoEmbed/EmbedCodeViewer";
 
 export default function EmbedCodePopup({
   demoId,

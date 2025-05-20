@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
     request.cookies.get("auth_token")?.value;
 
   // 보호된 경로 목록
-  const protectedPaths = ["/demo", "/mypage"];
+  const protectedPaths = ["/mypage"];
 
   // 현재 경로가 보호된 경로인지 확인
   const isProtectedPath = protectedPaths.some((path) =>
@@ -33,5 +33,8 @@ export function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 지정
 export const config = {
-  matcher: ["/login", "/signup", "/mypage", "/demo/:path*"],
+  matcher: ["/login", "/signup", "/mypage"],
 };
+
+//"/demo/:path*"
+//"/demo"

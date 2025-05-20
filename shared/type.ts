@@ -24,8 +24,15 @@ export interface SignupSuccessResponse {
 export interface AuthState {
   token: string | null;
   loggedIn: boolean;
+  email?: string;
+  password?: string;
 }
 
 export type AuthAction =
-  | { type: "LOGIN"; token: string }
+  | {
+      type: "LOGIN";
+      token: string;
+      email: string;
+      password: string;
+    }
   | { type: "LOGOUT" };

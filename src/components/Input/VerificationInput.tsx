@@ -45,7 +45,7 @@ export default function VerificationInput({
       setMessage(result.message);
       setMessageType("info");
     } else {
-      setMessage(result.error || "인증번호 전송 실패");
+      setMessage(result.err || "인증번호 전송 실패");
       setMessageType("error");
     }
     // try {

@@ -25,11 +25,13 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginForm) => {
     try {
       const response = await login(data);
-      if (response.success) {
-        router.push("/demotions");
-      } else {
+
+      if (!response.success) {
         alert(response.error || "로그인 실패!");
+        return;
       }
+
+      router.replace("/demotions");
     } catch (error) {
       alert(
         "로그인 실패: 이메일 또는 비밀번호를 확인하세요."

@@ -24,7 +24,8 @@ export async function login(data: LoginForm) {
     );
 
     if (!response.ok) {
-      throw new Error("로그인 실패");
+      const { message } = await response.json();
+      throw new Error(message || "로그인 실패");
     }
 
     const responseData = await response.json();
@@ -43,11 +44,14 @@ export async function login(data: LoginForm) {
     });
 
     return { success: true };
-  } catch (error) {
-    console.error("로그인 에러:", error);
+  } catch (err) {
+    console.error("로그인 에러:", err);
     return {
       success: false,
-      error: "로그인에 실패했습니다.",
+      error:
+        err instanceof Error
+          ? err.message
+          : "로그인에 실패했습니다.",
     };
   }
 }
@@ -97,14 +101,14 @@ export async function signup({
     }
 
     return { success: true };
-  } catch (err) {
-    console.error("회원가입 에러:", err);
+  } catch (error) {
+    console.error("회원가입 에러:", error);
     return {
       success: false,
       error:
-        err instanceof Error
-          ? err.message
-          : "알 수 없는 오류가 발생했습니다.",
+        error instanceof Error
+          ? error.message
+          : "회원가입에 실패했습니다.",
     };
   }
 }
@@ -132,7 +136,7 @@ export async function sendVerificationCode(email: string) {
   } catch (err) {
     return {
       success: false,
-      error:
+      err:
         err instanceof Error
           ? err.message
           : "서버 오류로 인증번호 전송에 실패했습니다.",

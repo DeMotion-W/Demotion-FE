@@ -12,7 +12,9 @@ import {
 } from "../../../../shared/constants/api";
 
 export async function uploadAndCreateDemo(
-  captures: CaptureData[]
+  captures: CaptureData[],
+  email?: string,
+  password?: string
 ) {
   try {
     const filenames = captures.map(
@@ -78,7 +80,7 @@ export async function uploadAndCreateDemo(
     const demoId = demoRes.demoId;
     const siteUrl = import.meta.env.VITE_SITE_URL;
     chrome.tabs.create({
-      url: `${siteUrl}demo/${demoId}`,
+      url: `${siteUrl}demo/${demoId}?email=${email}&password=${password}`,
     });
   } catch (error) {
     console.error("❌ uploadAndCreateDemo error:", error);

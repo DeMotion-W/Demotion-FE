@@ -7,9 +7,11 @@ import { useLayoutEffect, useRef, useState } from "react";
 export default function ScreenshotCanvasEmbed({
   screenshot,
   onClick,
+  onContactClick,
 }: {
   screenshot: ScreenshotData;
   onClick?: () => void;
+  onContactClick?: () => void;
 }) {
   const baseWidth = 1920;
   const baseHeight = 1080;
@@ -70,6 +72,12 @@ export default function ScreenshotCanvasEmbed({
           )}
         </div>
       </div>
+      <button
+        className="absolute bottom-6 right-6 bg-blue-500 text-white px-4 py-2 rounded-md text-sm shadow-md"
+        onClick={() => onContactClick?.()}
+      >
+        도입 문의
+      </button>
     </div>
   );
 }

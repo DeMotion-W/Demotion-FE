@@ -38,17 +38,17 @@ export default function DemoPreview({
 
   return (
     <main className="w-full px-20 py-8 flex flex-col items-center h-screen overflow-hidden">
-      <div className="w-[1120px] mb-6 flex justify-center">
+      <div className="w-[1120px] pl-20 pr-30 mb-6 flex justify-center">
         <div className="flex gap-4 bg-[#EEF0F2] p-1.5 rounded-full shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
           <button
             onClick={() => setMode("edit")}
-            className="px-4 py-2 rounded-full text-[#8B95A1] text-sm font-semibold font-['Montserrat'] leading-tight"
+            className="px-3 py-2 rounded-full text-[#8B95A1] text-xs font-semibold font-['Montserrat'] leading-tight"
           >
             Edit
           </button>
           <button
             onClick={() => setMode("preview")}
-            className="px-4 py-2 rounded-full bg-[#FFFFFF] text-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-tight"
+            className="px-3 py-2 rounded-full bg-[#FFFFFF] text-[#369AFF] text-xs font-semibold font-['Montserrat'] leading-tight"
           >
             Preview
           </button>

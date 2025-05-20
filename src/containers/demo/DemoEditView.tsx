@@ -56,13 +56,13 @@ export default function DemoEditView({
             <div className="flex gap-4 bg-[#EEF0F2] p-1.5 rounded-full shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)] gap-1">
               <button
                 onClick={() => setMode("edit")}
-                className="px-4 py-2 rounded-full bg-[#FFFFFF] text-[#369AFF] text-sm font-semibold font-['Montserrat'] leading-tight"
+                className="px-3 py-2 rounded-full bg-[#FFFFFF] text-[#369AFF] text-xs font-semibold font-['Montserrat'] leading-tight"
               >
                 Edit
               </button>
               <button
                 onClick={() => setMode("preview")}
-                className="px-4 py-2 rounded-full text-[#8B95A1] text-sm font-semibold font-['Montserrat'] leading-tight"
+                className="px-3 py-2 rounded-full text-[#8B95A1] text-xs font-semibold font-['Montserrat'] leading-tight"
               >
                 Preview
               </button>

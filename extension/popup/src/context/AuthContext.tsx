@@ -13,12 +13,18 @@ function reducer(state: AuthState, action: AuthAction) {
   switch (action.type) {
     case "LOGIN":
       return {
-        ...state,
         token: action.token,
         loggedIn: true,
+        email: action.email,
+        password: action.password,
       };
     case "LOGOUT":
-      return { token: null, loggedIn: false };
+      return {
+        token: null,
+        loggedIn: false,
+        email: undefined,
+        password: undefined,
+      };
     default:
       return state;
   }
@@ -37,6 +43,8 @@ export default function AuthProvider({
   const [state, dispatch] = useReducer(reducer, {
     token: null,
     loggedIn: false,
+    email: undefined,
+    password: undefined,
   });
 
   return (
