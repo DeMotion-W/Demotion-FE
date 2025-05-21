@@ -71,22 +71,6 @@ export default function CapturedImageList({
                 />
               );
             })()}
-          {/* {c.width && c.height && imgRefs.current[i] && (
-            <div
-              className="absolute w-3 h-3 bg-red-500 rounded-full"
-              style={{
-                top: `${
-                  (c.y * imgRefs.current[i]!.offsetHeight) /
-                  c.height
-                }px`,
-                left: `${
-                  (c.x * imgRefs.current[i]!.offsetWidth) /
-                  c.width
-                }px`,
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-          )} */}
         </div>
       ))}
     </div>

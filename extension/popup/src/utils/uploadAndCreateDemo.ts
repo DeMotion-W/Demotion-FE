@@ -17,11 +17,13 @@ export async function uploadAndCreateDemo(
   password?: string
 ) {
   try {
+    // 데모별 고유 아이디 값으로 저장
+    const timestamp = Date.now();
     const filenames = captures.map(
-      (_, i) => `uuid-step${i + 1}.png`
+      (_, i) => `screenshot-${timestamp}-${i + 1}.png`
     );
 
-    // const { data: presigned }: { data: PresignedResponse } =
+    // presigned url 가져오기
     const res = await httpClientForCredentials.post(
       PRESIGNED_URL_PATH,
       { fileNames: filenames },
@@ -32,10 +34,9 @@ export async function uploadAndCreateDemo(
       }
     );
 
-    console.log("🔥 API 응답 구조:", res.data);
-
     const presigned = res.data as PresignedResponse;
 
+    // 이미지 업로드
     await Promise.all(
       presigned.files.map(async (file, i) => {
         const blob = await fetch(captures[i].image).then(
@@ -49,16 +50,13 @@ export async function uploadAndCreateDemo(
       })
     );
 
+    // 데모 생성
     const screenshots: ScreenshotMetadata[] =
       presigned.files.map((file, i) => {
         const cap = captures[i];
 
-        const absoluteX = Math.round(
-          cap.x * cap.viewportWidth
-        );
-        const absoluteY = Math.round(
-          cap.y * cap.viewportHeight
-        );
+        const absoluteX = cap.x * 1920;
+        const absoluteY = cap.y * 1080;
         return {
           fileUrl: file.fileUrl,
           buttonText: "",
@@ -95,7 +93,7 @@ export async function uploadAndCreateDemo(
       url: `${siteUrl}demo/${demoId}?email=${email}&password=${password}`,
     });
   } catch (error) {
-    console.error("❌ uploadAndCreateDemo error:", error);
+    console.error("uploadAndCreateDemo error:", error);
     alert("데모 생성 중 오류가 발생했습니다.");
   }
 }

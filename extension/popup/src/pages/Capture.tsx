@@ -10,16 +10,15 @@ import {
   AuthStateContext,
 } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import CapturedImageList from "../components/CapturedImageList";
 import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
 import { httpClientForCredentials } from "../api/httpClientForCredentials";
-import axios from "axios";
 import {
   clearAccessToken,
   getAccessToken,
 } from "../utils/auth";
 import { LOG_OUT_PATH } from "../../../../shared/constants/api";
-//import { uploadAndCreateDemoTestMode } from "../utils/uploadAndCreateDemoTestMode";
+import CapturedImageList from "../components/CapturedImageList";
+import axios from "axios";
 
 export default function Capture() {
   const dispatch = useContext(AuthDispatchContext);
@@ -75,7 +74,6 @@ export default function Capture() {
 
     chrome.runtime.onMessage.addListener((msg) => {
       if (msg.type === "captured-image") {
-        // setCaptures((prev) => [...prev, msg.data]);
         const { image, x, y, vw, vh } = msg.data;
         setCaptures((prev) => [
           ...prev,
@@ -91,6 +89,7 @@ export default function Capture() {
     });
   }, []);
 
+  // 캡쳐 시작
   const startCapture = async () => {
     const tabs = await chrome.tabs.query({});
     tabs.forEach((tab) => {
@@ -107,12 +106,13 @@ export default function Capture() {
           }
         );
       } else {
-        //주의 문구 뜨도록
-        //크롬 시작화면이나 설정화면처럼 캡처 못하는 화면들 처리
+        // 주의 문구 뜨도록
+        // 크롬 시작화면이나 설정화면처럼 캡처 못하는 화면들 처리
       }
     });
   };
 
+  // 캡쳐 완료
   const completeCapture = async () => {
     try {
       await uploadAndCreateDemo(
