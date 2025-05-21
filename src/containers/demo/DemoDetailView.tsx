@@ -17,8 +17,14 @@ export default function DemoDetailView({
     "preview"
   );
   const [title, setTitle] = useState(initialData.title);
-  const [description, setDescription] = useState(
-    initialData.description
+  const [subtitle, setSubtitle] = useState(
+    initialData.subtitle
+  );
+  const [buttonBgColor, setButtonBgColor] = useState(
+    initialData.buttonBgColor
+  );
+  const [buttonTextColor, setButtonTextColor] = useState(
+    initialData.buttonTextColor
   );
   const [screenshots, setScreenshots] = useState<
     ScreenshotData[]
@@ -26,7 +32,6 @@ export default function DemoDetailView({
     {
       screenshotId: -1,
       fileUrl: initialData.screenshots[0].fileUrl,
-      order: 0,
       buttonText: "",
       buttonBgColor: "#168AFF",
       buttonStyle: "Box",
@@ -46,7 +51,6 @@ export default function DemoDetailView({
           {
             screenshotId: -1,
             fileUrl: prev[0]?.fileUrl || "",
-            order: 0,
             buttonText: "",
             buttonBgColor: "#168AFF",
             buttonStyle: "Box",
@@ -64,7 +68,9 @@ export default function DemoDetailView({
     const dataToSave: DemoData = {
       demoId: initialData.demoId,
       title,
-      description,
+      subtitle,
+      buttonBgColor,
+      buttonTextColor,
       screenshots: screenshots.filter(
         (s) => s.screenshotId !== -1
       ),
@@ -85,17 +91,23 @@ export default function DemoDetailView({
         {mode === "edit" ? (
           <DemoEditView
             title={title}
-            description={description}
+            subtitle={subtitle}
+            buttonBgColor={buttonBgColor}
+            buttonTextColor={buttonTextColor}
             screenshots={screenshots}
             setTitle={setTitle}
-            setDescription={setDescription}
+            setSubtitle={setSubtitle}
+            setButtonBgColor={setButtonBgColor}
+            setButtonTextColor={setButtonTextColor}
             setScreenshots={setScreenshots}
             setMode={setMode}
           />
         ) : (
           <DemoPreview
             title={title}
-            description={description}
+            subtitle={subtitle}
+            buttonBgColor={buttonBgColor}
+            buttonTextColor={buttonTextColor}
             screenshots={screenshots}
             setMode={setMode}
           />

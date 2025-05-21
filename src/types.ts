@@ -1,25 +1,32 @@
 export interface Demo {
-  id: number;
+  demoId: number;
   title: string;
-  date: string;
+  firstScreenshotUrl: string;
+  createdAt: string;
 }
 
-export interface DemoCardProps {
-  id: number;
-  title: string;
-  date: string;
-  thumbnailUrl?: string;
-}
-
-export type DemoCardWithMenuProps = DemoCardProps & {
+export type DemoCardWithMenuProps = Demo & {
   isMenuOpen: boolean;
   onToggleMenu: () => void;
+};
+
+export type DemoEditProps = {
+  title: string;
+  subtitle: string;
+  buttonBgColor: string;
+  buttonTextColor: string;
+  screenshots: ScreenshotData[];
+  setTitle: (value: string) => void;
+  setSubtitle: (value: string) => void;
+  setButtonBgColor: (value: string) => void;
+  setButtonTextColor: (value: string) => void;
+  setScreenshots: (value: ScreenshotData[]) => void;
+  setMode: (mode: "edit" | "preview") => void;
 };
 
 export type ScreenshotData = {
   screenshotId: number;
   fileUrl: string;
-  order: number;
   buttonText: string;
   buttonBgColor: string;
   buttonStyle: ButtonStyle;
@@ -31,7 +38,9 @@ export type ScreenshotData = {
 export type DemoData = {
   demoId: number;
   title: string;
-  description: string;
+  subtitle: string;
+  buttonBgColor: string;
+  buttonTextColor: string;
   screenshots: ScreenshotData[];
 };
 
@@ -50,12 +59,6 @@ export interface ScreenshotStat {
   screenshotId: number;
   viewCount: number;
   avgDurationMillis: number;
-}
-
-export interface InsightData {
-  viewCount: number;
-  completionRate: number;
-  screenshotStats: ScreenshotStat[];
 }
 
 export interface InsightData {

@@ -50,39 +50,43 @@ chrome.sidePanel
 //   );
 // });
 
-chrome.runtime.onMessage.addListener((msg, sender) => {
-  if (msg.type === "capture-click") {
-    chrome.tabs
-      .captureVisibleTab()
-      .then((screenshot) => {
-        chrome.runtime.sendMessage({
-          type: "captured-image",
-          data: {
-            image: screenshot,
-            x: msg.x,
-            y: msg.y,
-          },
+chrome.runtime.onMessage.addListener(
+  (msg, sender, sendResponse) => {
+    if (msg.type === "capture-click") {
+      chrome.tabs
+        .captureVisibleTab()
+        .then((screenshot) => {
+          chrome.runtime.sendMessage({
+            type: "captured-image",
+            data: {
+              image: screenshot,
+              x: msg.x,
+              y: msg.y,
+              vw: msg.vw,
+              vh: msg.vh,
+            },
+          });
+          sendResponse({ success: true });
+        })
+        .catch((err) => {
+          sendResponse({
+            success: false,
+            error: err.message,
+          });
         });
-        sendResponse({ success: true });
-      })
-      .catch((err) => {
-        sendResponse({
-          success: false,
-          error: err.message,
-        });
-      });
 
-    return true;
-  }
+      return true; // 꼭 필요함! (비동기 응답)
+    }
 
-  if (msg.type === "start-capture") {
-    isCapturing = true;
-  }
+    if (msg.type === "start-capture") {
+      isCapturing = true;
+    }
 
-  if (msg.type === "stop-capture") {
-    isCapturing = false;
+    if (msg.type === "stop-capture") {
+      isCapturing = false;
+    }
   }
-});
+);
 
 // 캡처 진행 중 탭 생성했을 때 캡처 처리
 chrome.tabs.onCreated.addListener((tab) => {

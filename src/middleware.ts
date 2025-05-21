@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   // 요청에서 토큰 가져오기
   const authToken =
-    request.cookies.get("auth_token")?.value;
+    request.cookies.get("accesstoken")?.value;
 
   // 보호된 경로 목록
   const protectedPaths = ["/mypage"];

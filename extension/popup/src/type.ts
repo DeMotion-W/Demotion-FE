@@ -2,6 +2,8 @@ export interface CaptureData {
   image: string;
   x: number;
   y: number;
+  viewportWidth: number;
+  viewportHeight: number;
 }
 
 export type PresignedResponse = {
@@ -15,7 +17,7 @@ export type PresignedResponse = {
 export type ScreenshotMetadata = {
   fileUrl: string;
   buttonText: string;
-  buttonColor: string;
+  buttonBgColor: string;
   buttonTextColor: string;
   buttonStyle: "Point" | "Box";
   positionX: number;

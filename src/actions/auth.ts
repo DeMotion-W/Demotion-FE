@@ -1,6 +1,10 @@
 "use server";
 
 import {
+  ACCESS_TOKEN_AGE,
+  REFRESH_TOKEN_AGE,
+} from "@/constants";
+import {
   EMAIL_VERIFICATION_CONFIRM_PATH,
   EMAIL_VERIFICATION_REQUEST_PATH,
   LOG_IN_PATH,
@@ -14,7 +18,7 @@ export async function login(data: LoginForm) {
   try {
     // 백엔드 API에 로그인 요청
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + LOG_IN_PATH,
+      `${process.env.NEXT_PUBLIC_API_URL}${LOG_IN_PATH}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,18 +33,30 @@ export async function login(data: LoginForm) {
     }
 
     const responseData = await response.json();
-    const token = responseData.accessToken;
+    const token = responseData.accessToken?.replace(
+      /^Bearer\s/,
+      ""
+    ); // "Bearer " 제거
 
     const cookieStore = await cookies();
-    // 쿠키에 토큰 저장
     cookieStore.set({
-      name: "auth_token",
+      name: "accesstoken",
       value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 1주일
+      maxAge: ACCESS_TOKEN_AGE,
+    });
+
+    response.headers.getSetCookie().forEach((items) => {
+      const [key, str] = items.split("=");
+      const [value] = str.split("; ");
+      cookieStore.set(key, value, {
+        httpOnly: true,
+        secure: false,
+        maxAge: REFRESH_TOKEN_AGE,
+      });
     });
 
     return { success: true };
@@ -61,7 +77,7 @@ export async function logout() {
   // 백엔드에 로그아웃 알림 (필요한 경우)
   try {
     await fetch(
-      process.env.NEXT_PUBLIC_API_URL + LOG_OUT_PATH,
+      `${process.env.NEXT_PUBLIC_API_URL}${LOG_OUT_PATH}`,
       {
         method: "POST",
         credentials: "include",
@@ -74,7 +90,8 @@ export async function logout() {
   const cookieStore = await cookies();
 
   // 쿠키 삭제
-  cookieStore.delete("auth_token");
+  cookieStore.delete("accesstoken");
+  cookieStore.delete("refreshtoken");
 
   return { success: true };
 }
@@ -86,7 +103,7 @@ export async function signup({
 }: Pick<SignupForm, "name" | "email" | "password">) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + SIGNUP_PATH,
+      `${process.env.NEXT_PUBLIC_API_URL}${SIGNUP_PATH}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,8 +133,7 @@ export async function signup({
 export async function sendVerificationCode(email: string) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL +
-        EMAIL_VERIFICATION_REQUEST_PATH,
+      `${process.env.NEXT_PUBLIC_API_URL}${EMAIL_VERIFICATION_REQUEST_PATH}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -150,8 +166,7 @@ export async function verifyCode(
 ) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL +
-        EMAIL_VERIFICATION_CONFIRM_PATH,
+      `${process.env.NEXT_PUBLIC_API_URL}${EMAIL_VERIFICATION_CONFIRM_PATH}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

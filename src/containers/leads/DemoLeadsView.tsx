@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { Demo, LeadsData } from "@/types";
-import { demoList } from "@/mock/demoList";
 import { leadsMock } from "@/mock/leads";
 import DemoDropdown from "@/components/DropDown/DemoDropdown";
 import Tooltip from "@/components/ToolTip/Tooltip";
 
-export default function DemoLeadsView() {
+export default function DemoLeadsView({
+  demoList,
+}: {
+  demoList: Demo[];
+}) {
   const [selectedDemo, setSelectedDemo] =
     useState<Demo | null>(null);
   const [leadsData, setLeadsData] = useState<
@@ -18,7 +21,7 @@ export default function DemoLeadsView() {
     setSelectedDemo(demo);
 
     // 실제 API 연동 전까지는 목데이터로
-    setLeadsData(leadsMock[demo.id] ?? null);
+    setLeadsData(leadsMock[demo.demoId] ?? null);
   };
 
   const firstTimeViewers =

@@ -50,19 +50,31 @@ export async function uploadAndCreateDemo(
     );
 
     const screenshots: ScreenshotMetadata[] =
-      presigned.files.map((file, i) => ({
-        fileUrl: file.fileUrl,
-        buttonText: "",
-        buttonColor: "#168AFF",
-        buttonTextColor: "#FFFFFF",
-        buttonStyle: "Point",
-        positionX: captures[i].x,
-        positionY: captures[i].y,
-      }));
+      presigned.files.map((file, i) => {
+        const cap = captures[i];
+
+        const absoluteX = Math.round(
+          cap.x * cap.viewportWidth
+        );
+        const absoluteY = Math.round(
+          cap.y * cap.viewportHeight
+        );
+        return {
+          fileUrl: file.fileUrl,
+          buttonText: "",
+          buttonBgColor: "#168AFF",
+          buttonTextColor: "#FFFFFF",
+          buttonStyle: "Point",
+          positionX: absoluteX,
+          positionY: absoluteY,
+        };
+      });
 
     const payload = {
       title: "",
       subtitle: "",
+      buttonBgColor: "#168AFF",
+      buttonTextColor: "#FFFFFF",
       screenshots,
     };
 

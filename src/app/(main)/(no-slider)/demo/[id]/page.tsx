@@ -1,8 +1,12 @@
+import { fetchWithAuth } from "@/actions/api-client";
 import AutoLoginHandler from "@/components/AutoLoginHandler";
 import DemoDetailView from "@/containers/demo/DemoDetailView";
 import { useAuthStore } from "@/lib/store/auth";
 import { demoMock } from "@/mock/demo";
-import { TOKEN_REFRESH_PATH } from "@shared/constants/api";
+import {
+  DEMO_VIEW_PATH,
+  TOKEN_REFRESH_PATH,
+} from "@shared/constants/api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -12,6 +16,10 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
+  const demoData = await fetchWithAuth(
+    `${DEMO_VIEW_PATH}/${id}`
+  );
   //const res = await getDemoDetail(id);
   // const cookieStore = await cookies();
   // const refreshToken =
@@ -43,7 +51,7 @@ export default async function Page({
   return (
     <>
       <AutoLoginHandler />
-      <DemoDetailView initialData={demoMock} demoId={id} />
+      <DemoDetailView initialData={demoData} demoId={id} />
     </>
   );
 }

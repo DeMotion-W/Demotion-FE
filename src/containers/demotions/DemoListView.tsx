@@ -24,13 +24,13 @@ export default function DemoListView({
   const sortedList = [...demoList].sort((a, b) => {
     if (sortOrder === "최신순") {
       return (
-        new Date(b.date).getTime() -
-        new Date(a.date).getTime()
+        new Date(b.createdAt).getTime() -
+        new Date(a.createdAt).getTime()
       );
     } else {
       return (
-        new Date(a.date).getTime() -
-        new Date(b.date).getTime()
+        new Date(a.createdAt).getTime() -
+        new Date(b.createdAt).getTime()
       );
     }
   });
@@ -65,13 +65,14 @@ export default function DemoListView({
           {currentItems.map((demo, i) => (
             <DemoCard
               key={i}
-              id={demo.id}
+              demoId={demo.demoId}
               title={demo.title}
-              date={demo.date}
-              isMenuOpen={openMenuId === demo.id}
+              firstScreenshotUrl={demo.firstScreenshotUrl}
+              createdAt={demo.createdAt}
+              isMenuOpen={openMenuId === demo.demoId}
               onToggleMenu={() =>
                 setOpenMenuId((prev) =>
-                  prev === demo.id ? null : demo.id
+                  prev === demo.demoId ? null : demo.demoId
                 )
               }
             />

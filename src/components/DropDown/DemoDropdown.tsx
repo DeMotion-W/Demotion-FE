@@ -2,12 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { ChevronDownIcon } from "lucide-react";
-
-type Demo = {
-  id: number;
-  title: string;
-  date: string;
-};
+import { Demo } from "@/types";
 
 export default function DemoDropdown({
   demos,
@@ -62,7 +57,7 @@ export default function DemoDropdown({
                   selected.title.length > 30
                     ? selected.title.slice(0, 30) + "..."
                     : selected.title
-                } (${selected.date})`
+                } (${selected.createdAt})`
               : "데모를 선택해 주세요."}
           </div>
           <ChevronDownIcon className="w-5 h-5 text-gray-400 shrink-0 ml-2" />
@@ -73,7 +68,7 @@ export default function DemoDropdown({
         <ul className="absolute top-full w-full bg-white border border-[#E2E6EB] rounded-lg z-10">
           {demos.map((demo) => (
             <li
-              key={demo.id}
+              key={demo.demoId}
               onClick={() => {
                 onSelect(demo);
                 setIsOpen(false);
@@ -81,7 +76,7 @@ export default function DemoDropdown({
               className={`
                 px-4 py-3 cursor-pointer hover:bg-gray-100 text-[#191F28] text-sm font-medium font-['Pretendard'] leading-tight truncate
                 ${
-                  selected?.id === demo.id
+                  selected?.demoId === demo.demoId
                     ? "bg-blue-50 font-semibold"
                     : ""
                 }`}
@@ -89,7 +84,7 @@ export default function DemoDropdown({
               {demo.title.length > 30
                 ? demo.title.slice(0, 30) + "..."
                 : demo.title}{" "}
-              ({demo.date})
+              ({demo.createdAt})
             </li>
           ))}
         </ul>

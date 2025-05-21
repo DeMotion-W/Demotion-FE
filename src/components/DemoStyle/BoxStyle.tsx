@@ -1,4 +1,7 @@
-import { toRgbaWithAlpha, toRgbString } from "@/lib/color";
+import {
+  toRgbaWithAlpha,
+  toRgbString,
+} from "@/utils/color";
 import { ScreenshotButtonProps } from "@/types";
 import { ChevronRight } from "lucide-react";
 

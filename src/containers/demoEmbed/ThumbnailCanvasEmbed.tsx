@@ -3,18 +3,24 @@ import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 
 export default function ThumbnailCanvasEmbed({
-  demo,
+  title,
+  subtitle,
+  buttonBgColor,
+  buttonTextColor,
+  fileUrl,
   onStartClick,
 }: {
-  demo: DemoData;
+  title: string;
+  subtitle: string;
+  buttonBgColor: string;
+  buttonTextColor: string;
+  fileUrl: string;
   onStartClick?: () => void;
 }) {
   const baseWidth = 1920;
   const baseHeight = 1080;
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-
-  const thumbnail = demo.screenshots[0];
 
   useLayoutEffect(() => {
     const updateScale = () => {
@@ -57,7 +63,7 @@ export default function ThumbnailCanvasEmbed({
           }}
         >
           <Image
-            src={thumbnail.fileUrl}
+            src={fileUrl}
             alt="thumbnail preview"
             fill
             draggable={false}
@@ -71,21 +77,20 @@ export default function ThumbnailCanvasEmbed({
           >
             <div className="flex flex-col items-start gap-2">
               <h2 className="mb-2 text-white font-semibold text-5xl">
-                {demo.title || "제목을 입력해 주세요."}
+                {title || "제목을 입력해 주세요."}
               </h2>
               <p className="text-white text-xl">
-                {demo.description ||
-                  "부제목을 입력해 주세요."}
+                {subtitle || "부제목을 입력해 주세요."}
               </p>
               <button
                 className="mt-4 text-xl w-96 h-16 px-10 py-3 rounded-full font-semibold cursor-pointer"
                 style={{
-                  backgroundColor: thumbnail.buttonBgColor,
-                  color: thumbnail.buttonTextColor,
+                  backgroundColor: buttonBgColor,
+                  color: buttonTextColor,
                 }}
                 onClick={onStartClick}
               >
-                {thumbnail.buttonText || "Get Started!"}
+                Get Started!
               </button>
             </div>
           </div>

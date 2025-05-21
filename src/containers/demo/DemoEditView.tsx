@@ -1,6 +1,6 @@
 "use client";
 
-import { ScreenshotData } from "@/types";
+import { DemoEditProps, ScreenshotData } from "@/types";
 import { useState } from "react";
 import ScreenshotSidebar from "./ScreenshotSidebar";
 import ScreenshotCanvas from "./ScreenshotCanvas";
@@ -10,21 +10,17 @@ import ThumbnailEditor from "./ThumbnailEditor";
 
 export default function DemoEditView({
   title,
-  description,
+  subtitle,
+  buttonBgColor,
+  buttonTextColor,
   screenshots,
   setTitle,
-  setDescription,
+  setSubtitle,
+  setButtonBgColor,
+  setButtonTextColor,
   setScreenshots,
   setMode,
-}: {
-  title: string;
-  description: string;
-  screenshots: ScreenshotData[];
-  setTitle: (value: string) => void;
-  setDescription: (value: string) => void;
-  setScreenshots: (value: ScreenshotData[]) => void;
-  setMode: (mode: "edit" | "preview") => void;
-}) {
+}: DemoEditProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selected = screenshots[selectedIndex];
   const isThumbnail = selectedIndex === 0;
@@ -71,12 +67,11 @@ export default function DemoEditView({
           <div className="flex justify-center">
             {isThumbnail ? (
               <ThumbnailCanvas
-                demo={{
-                  demoId: -1,
-                  title,
-                  description,
-                  screenshots,
-                }}
+                title={title}
+                subtitle={subtitle}
+                buttonBgColor={buttonBgColor}
+                buttonTextColor={buttonTextColor}
+                fileUrl={screenshots[0].fileUrl}
               />
             ) : (
               <ScreenshotCanvas screenshot={selected} />
@@ -89,15 +84,13 @@ export default function DemoEditView({
         {isThumbnail ? (
           <ThumbnailEditor
             title={title}
-            subtitle={description}
-            screenshot={screenshots[0]}
+            subtitle={subtitle}
+            buttonBgColor={buttonBgColor}
+            buttonTextColor={buttonTextColor}
             onTitleChange={setTitle}
-            onSubtitleChange={setDescription}
-            onChangeScreenshot={(value) => {
-              const newScreenshots = [...screenshots];
-              newScreenshots[0] = value;
-              setScreenshots(newScreenshots);
-            }}
+            onSubtitleChange={setSubtitle}
+            onButtonBgColorChange={setButtonBgColor}
+            onButtonTextColorChange={setButtonTextColor}
           />
         ) : (
           <ScreenshotEditor

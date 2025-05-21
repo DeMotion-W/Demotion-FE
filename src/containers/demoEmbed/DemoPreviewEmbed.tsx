@@ -4,14 +4,14 @@ import { ScreenshotData } from "@/types";
 import { useEffect, useState } from "react";
 import ThumbnailCanvasEmbed from "./ThumbnailCanvasEmbed";
 import ScreenshotCanvasEmbed from "./ScreenshotCanvasEmbed";
-import ThumbnailCanvas from "../demo/ThumbnailCanvas";
-import ScreenshotCanvas from "../demo/ScreenshotCanvas";
 import EmailPopup from "../../components/Popup/EmailPopup";
 import ContactPopup from "../../components/Popup/ContactPopup";
 
 type Props = {
   title: string;
-  description: string;
+  subtitle: string;
+  buttonBgColor: string;
+  buttonTextColor: string;
   screenshots: ScreenshotData[];
   initialStep?: number;
   onEnd?: () => void;
@@ -19,7 +19,9 @@ type Props = {
 
 export default function DemoPreviewEmbed({
   title,
-  description,
+  subtitle,
+  buttonBgColor,
+  buttonTextColor,
   screenshots,
   initialStep = 0,
   onEnd,
@@ -49,12 +51,11 @@ export default function DemoPreviewEmbed({
     <main className="w-full px-4 sm:px-6 md:px-10 lg:px-20 py-8 flex flex-col items-center">
       {isThumbnail ? (
         <ThumbnailCanvasEmbed
-          demo={{
-            demoId: -1,
-            title,
-            description,
-            screenshots,
-          }}
+          title={title}
+          subtitle={subtitle}
+          buttonBgColor={buttonBgColor}
+          buttonTextColor={buttonTextColor}
+          fileUrl={screenshots[0].fileUrl}
           onStartClick={() => setShowEmailPopup(true)}
         />
       ) : (

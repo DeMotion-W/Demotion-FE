@@ -1,4 +1,4 @@
-import { toRgbaWithAlpha } from "@/lib/color";
+import { toRgbaWithAlpha } from "@/utils/color";
 import { ScreenshotButtonProps } from "@/types";
 
 export default function PointStyle({

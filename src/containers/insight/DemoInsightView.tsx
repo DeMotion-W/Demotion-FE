@@ -1,24 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { insightMock } from "@/mock/insight";
 import { Demo, InsightData } from "@/types";
-import { demoList } from "@/mock/demoList";
 import InsightSummary from "./InsightSummary";
 import InsightChart from "./InsightChart";
 import DemoDropdown from "@/components/DropDown/DemoDropdown";
+import { fetchWithAuth } from "@/actions/api-client";
 
-export default function DemoInsightView() {
+export default function DemoInsightView({
+  demoList,
+}: {
+  demoList: Demo[];
+}) {
   const [selectedDemo, setSelectedDemo] =
     useState<Demo | null>(null);
   const [insightData, setInsightData] =
     useState<InsightData | null>(null);
 
-  const handleDemoSelect = (demo: Demo) => {
-    setSelectedDemo(demo);
+  // const handleDemoSelect = (demo: Demo) => {
+  //   setSelectedDemo(demo);
 
-    // 실제 API 연동 전까지는 목데이터로
-    setInsightData(insightMock[demo.id] ?? null);
+  //   // 실제 API 연동 전까지는 목데이터로
+  //   setInsightData(insightMock[demo.id] ?? null);
+  // };
+
+  const handleDemoSelect = async (demo: Demo) => {
+    setSelectedDemo(demo);
+    const data: InsightData = await fetchWithAuth(
+      `/api/demos/${demo.demoId}/insight/stat`
+    );
+    setInsightData(data);
   };
 
   return (

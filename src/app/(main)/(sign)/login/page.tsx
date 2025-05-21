@@ -10,6 +10,9 @@ import SignButton from "@/components/Button/SignButton";
 import Image from "next/image";
 import Link from "next/link";
 import { login } from "@/actions/auth";
+import { DEMO_VIEW_PATH } from "@shared/constants/api";
+import { fetchWithAuth } from "@/actions/api-client";
+import { useDemoStore } from "@/lib/store/demoStore";
 
 export default function LoginPage() {
   const {
@@ -25,7 +28,6 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginForm) => {
     try {
       const response = await login(data);
-
       if (!response.success) {
         alert(response.error || "로그인 실패!");
         return;
@@ -39,6 +41,36 @@ export default function LoginPage() {
       console.error("❌ 로그인 오류:", error);
     }
   };
+  // const onSubmit = async (data: LoginForm) => {
+  //   try {
+  //     const response = await fetch(
+  //       process.env.NEXT_PUBLIC_API_URL + LOG_IN_PATH,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify(data),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       const { message } = await response.json();
+  //       alert(message || "로그인 실패");
+  //       return;
+  //     }
+
+  //     const { accessToken } = await response.json();
+
+  //     // // ✅ accessToken 수동 저장
+  //     // document.cookie = `auth_token=${accessToken}; path=/; SameSite=Strict`;
+
+  //     router.replace("/demotions");
+  //   } catch (error) {
+  //     alert(
+  //       "로그인 실패: 이메일 또는 비밀번호를 확인하세요."
+  //     );
+  //     console.error("❌ 로그인 오류:", error);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">

@@ -5,19 +5,23 @@ import { useState } from "react";
 type Props = {
   title: string;
   subtitle: string;
-  screenshot: ScreenshotData;
+  buttonBgColor: string;
+  buttonTextColor: string;
   onTitleChange: (value: string) => void;
   onSubtitleChange: (value: string) => void;
-  onChangeScreenshot: (value: ScreenshotData) => void;
+  onButtonBgColorChange: (value: string) => void;
+  onButtonTextColorChange: (value: string) => void;
 };
 
 export default function ThumbnailEditor({
   title,
   subtitle,
-  screenshot,
+  buttonBgColor,
+  buttonTextColor,
   onTitleChange,
   onSubtitleChange,
-  onChangeScreenshot,
+  onButtonBgColorChange,
+  onButtonTextColorChange,
 }: Props) {
   const [openPickerId, setOpenPickerId] = useState<
     string | null
@@ -63,35 +67,25 @@ export default function ThumbnailEditor({
           <ColorPickerBox
             id="bg-color-picker"
             label="Button"
-            color={screenshot.buttonBgColor}
+            color={buttonBgColor}
             isOpen={openPickerId === "bg-color-picker"}
             onOpen={() =>
               setOpenPickerId("bg-color-picker")
             }
             onClose={() => setOpenPickerId(null)}
-            onChange={(newColor) =>
-              onChangeScreenshot({
-                ...screenshot,
-                buttonBgColor: newColor,
-              })
-            }
+            onChange={onButtonBgColorChange}
           />
 
           <ColorPickerBox
             id="text-color-picker"
             label="Button Text"
-            color={screenshot.buttonTextColor}
+            color={buttonTextColor}
             isOpen={openPickerId === "text-color-picker"}
             onOpen={() =>
               setOpenPickerId("text-color-picker")
             }
             onClose={() => setOpenPickerId(null)}
-            onChange={(newColor) =>
-              onChangeScreenshot({
-                ...screenshot,
-                buttonTextColor: newColor,
-              })
-            }
+            onChange={onButtonTextColorChange}
           />
         </div>
       </div>

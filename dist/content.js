@@ -9,6 +9,8 @@ if (!window.__demotionInitialized) {
       type: "capture-click",
       x: e.clientX / viewportWidth,
       y: e.clientY / viewportHeight,
+      vw: viewportWidth,
+      vh: viewportHeight,
     });
   };
 

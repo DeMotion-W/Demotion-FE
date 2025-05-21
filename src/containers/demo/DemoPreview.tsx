@@ -5,12 +5,16 @@ import ScreenshotCanvas from "./ScreenshotCanvas";
 
 export default function DemoPreview({
   title,
-  description,
+  subtitle,
+  buttonBgColor,
+  buttonTextColor,
   screenshots,
   setMode,
 }: {
   title: string;
-  description: string;
+  subtitle: string;
+  buttonBgColor: string;
+  buttonTextColor: string;
   screenshots: ScreenshotData[];
   setMode: (mode: "edit" | "preview") => void;
 }) {
@@ -56,12 +60,11 @@ export default function DemoPreview({
       </div>
       {isThumbnail ? (
         <ThumbnailCanvas
-          demo={{
-            demoId: -1,
-            title,
-            description,
-            screenshots,
-          }}
+          title={title}
+          subtitle={subtitle}
+          buttonBgColor={buttonBgColor}
+          buttonTextColor={buttonTextColor}
+          fileUrl={screenshots[0].fileUrl}
           onStartClick={() => {
             if (step < screenshots.length - 1) {
               setStep(step + 1);

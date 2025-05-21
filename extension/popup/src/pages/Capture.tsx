@@ -75,7 +75,18 @@ export default function Capture() {
 
     chrome.runtime.onMessage.addListener((msg) => {
       if (msg.type === "captured-image") {
-        setCaptures((prev) => [...prev, msg.data]);
+        // setCaptures((prev) => [...prev, msg.data]);
+        const { image, x, y, vw, vh } = msg.data;
+        setCaptures((prev) => [
+          ...prev,
+          {
+            image,
+            x,
+            y,
+            viewportWidth: vw,
+            viewportHeight: vh,
+          },
+        ]);
       }
     });
   }, []);

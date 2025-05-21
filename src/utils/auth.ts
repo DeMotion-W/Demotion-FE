@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 // 인증 상태 확인 함수
 export async function getAuthStatus() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("auth_token")?.value;
+  const token = cookieStore.get("accesstoken")?.value;
 
   return {
     isLoggedIn: !!token,

@@ -4,10 +4,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function DemoCard({
-  id,
+  demoId,
   title,
-  date,
-  thumbnailUrl,
+  createdAt,
+  firstScreenshotUrl,
   isMenuOpen,
   onToggleMenu,
 }: DemoCardWithMenuProps) {
@@ -15,7 +15,7 @@ export default function DemoCard({
 
   const handleCardClick = () => {
     if (!isMenuOpen) {
-      router.push(`/demo/${id}`);
+      router.push(`/demo/${demoId}`);
     }
   };
 
@@ -25,18 +25,12 @@ export default function DemoCard({
       className="w-full rounded-2xl border border-gray-200 overflow-hidden shadow-xs bg-white cursor-pointer hover:shadow-md hover:scale-[1.02] transition-transform duration-200 ease-in-out"
     >
       <div className="relative h-[140px] bg-gray-50 flex items-center justify-center">
-        {thumbnailUrl ? (
-          <Image
-            src={thumbnailUrl}
-            alt="Demo Thumbnail"
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="text-gray-300 font-semibold text-lg">
-            🎬 emotion
-          </div>
-        )}
+        <Image
+          src={firstScreenshotUrl}
+          alt="Demo Thumbnail"
+          fill
+          className="object-cover"
+        />
 
         <button
           onClick={(e) => {
@@ -57,7 +51,7 @@ export default function DemoCard({
           {title}
         </p>
         <p className="text-[10px] text-gray-500 mt-1">
-          {date}
+          {createdAt}
         </p>
       </div>
     </div>
