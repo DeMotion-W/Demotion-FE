@@ -113,9 +113,7 @@ export default function DemoDetailView({
     <div className="flex flex-col h-screen">
       <HeaderBar
         title={title}
-        demoId={demoId}
-        editable={mode === "edit"}
-        onChangeTitle={setTitle}
+        publicId={demo.publicId}
         onSave={handleSave}
       />
       <div className="flex flex-1 overflow-hidden">

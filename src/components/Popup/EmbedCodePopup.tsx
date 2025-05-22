@@ -1,13 +1,13 @@
 import EmbedCodeViewer from "../../containers/demoEmbed/EmbedCodeViewer";
 
 export default function EmbedCodePopup({
-  demoId,
+  publicId,
   onClose,
 }: {
-  demoId: string;
+  publicId: string;
   onClose: () => void;
 }) {
-  const link = `${process.env.NEXT_PUBLIC_SITE_URL}embed/${demoId}`;
+  const link = `${process.env.NEXT_PUBLIC_SITE_URL}embed/${publicId}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(link);
@@ -32,7 +32,7 @@ export default function EmbedCodePopup({
         </button>
       </div>
 
-      <EmbedCodeViewer demoId={demoId} />
+      <EmbedCodeViewer publicId={publicId} />
 
       <button
         onClick={onClose}

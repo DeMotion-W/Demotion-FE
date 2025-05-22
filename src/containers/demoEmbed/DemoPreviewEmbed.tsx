@@ -29,6 +29,8 @@ export default function DemoPreviewEmbed({
   onEnd,
 }: Props) {
   const [step, setStep] = useState(initialStep);
+  const [emailSubmitted, setEmailSubmitted] =
+    useState(false);
   const [showEmailPopup, setShowEmailPopup] =
     useState(false);
   const [showContactPopup, setShowContactPopup] =
@@ -44,24 +46,20 @@ export default function DemoPreviewEmbed({
     setStep(initialStep);
   }, [initialStep]);
 
-  // const handleNextStep = () => {
-  //   if (step < screenshots.length - 1) {
-  //     setStep((prev) => prev + 1);
-  //   } else {
-  //     onEnd?.();
-  //   }
-  // };
-
   const handleNextStep = async () => {
     // 현재 스크린샷 정보
     const currentScreenshot = screenshots[step];
     const isThumbnail =
       currentScreenshot?.screenshotId === -1;
 
+    const screenshotIdToSend = isThumbnail
+      ? 0
+      : currentScreenshot.screenshotId;
+
     // 세션 ID가 있고 썸네일이 아닌 경우에만 기록 전송
-    if (sessionId && !isThumbnail) {
+    if (sessionId) {
       try {
-        const res = await fetch(
+        const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/step`,
           {
             method: "POST",
@@ -70,14 +68,14 @@ export default function DemoPreviewEmbed({
             },
             body: JSON.stringify({
               sessionId,
-              screenshotId: currentScreenshot.screenshotId,
+              screenshotId: screenshotIdToSend,
               timestampMillis: Date.now(),
             }),
           }
         );
 
-        if (!res.ok) {
-          const err = await res.text();
+        if (!response.ok) {
+          const err = await response.text();
           console.error("step 기록 실패:", err);
         }
       } catch (err) {
@@ -102,7 +100,13 @@ export default function DemoPreviewEmbed({
           buttonBgColor={buttonBgColor}
           buttonTextColor={buttonTextColor}
           fileUrl={screenshots[0].fileUrl}
-          onStartClick={() => setShowEmailPopup(true)}
+          onStartClick={async () => {
+            if (!emailSubmitted) {
+              setShowEmailPopup(true); // 처음은 이메일 입력
+            } else {
+              await handleNextStep(); // 이후는 step 기록 및 다음 스텝
+            }
+          }}
         />
       ) : (
         <ScreenshotCanvasEmbed
@@ -132,23 +136,15 @@ export default function DemoPreviewEmbed({
               );
 
               if (!response.ok) {
-                const errorText = await response.text();
-                console.error(
-                  "이메일 제출 실패:",
-                  errorText
-                );
                 alert("이메일 제출에 실패했습니다.");
                 return;
               }
 
               const { sessionId } = await response.json();
-              console.log("세션 ID:", sessionId);
               setSessionId(sessionId);
-
+              setEmailSubmitted(true);
               setShowEmailPopup(false);
-              handleNextStep(); // 다음 스텝으로 진행
-            } catch (error) {
-              console.error("API 호출 에러:", error);
+            } catch (err) {
               alert("네트워크 오류가 발생했습니다.");
             }
           }}
@@ -161,39 +157,27 @@ export default function DemoPreviewEmbed({
           onClose={() => setShowContactPopup(false)}
           onConfirm={async () => {
             console.log("문의 접수 완료");
+            try {
+              const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/contact`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ sessionId }),
+                }
+              );
 
-            // try {
-            //   const response = await fetch(
-            //     `${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/start`,
-            //     {
-            //       method: "POST",
-            //       headers: {
-            //         "Content-Type": "application/json",
-            //       },
-            //       body: JSON.stringify({ email }),
-            //     }
-            //   );
+              if (!response.ok) {
+                alert("도입문의에 실패하였습니다.");
+                return;
+              }
 
-            //   if (!response.ok) {
-            //     const errorText = await response.text();
-            //     console.error(
-            //       "이메일 제출 실패:",
-            //       errorText
-            //     );
-            //     alert("이메일 제출에 실패했습니다.");
-            //     return;
-            //   }
-
-            //   const { sessionId } = await response.json();
-            //   console.log("세션 ID:", sessionId);
-            //   setSessionId(sessionId);
-
-            //   setShowContactPopup(false);
-            //   handleNextStep(); // 다음 스텝으로 진행
-            // } catch (error) {
-            //   console.error("API 호출 에러:", error);
-            //   alert("네트워크 오류가 발생했습니다.");
-            // }
+              setShowContactPopup(false);
+            } catch (error) {
+              alert("네트워크 오류가 발생했습니다.");
+            }
           }}
         />
       )}

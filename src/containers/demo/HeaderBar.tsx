@@ -4,17 +4,13 @@ import DemoShareButton from "@/components/Button/DemoShareButton";
 
 type Props = {
   title: string;
-  demoId: string;
-  editable?: boolean;
-  onChangeTitle?: (value: string) => void;
+  publicId: string;
   onSave?: () => void;
 };
 
 export default function HeaderBar({
   title,
-  demoId,
-  editable = false,
-  onChangeTitle,
+  publicId,
   onSave,
 }: Props) {
   const router = useRouter();
@@ -23,7 +19,7 @@ export default function HeaderBar({
     <header className="w-full h-18 px-8 py-5 flex items-center justify-between bg-[#191F28] text-[#FFFFFF]">
       <div className="flex items-center gap-4">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push("/demotions")}
           className="cursor-pointer"
         >
           <ChevronLeft size={30} strokeWidth={1} />
@@ -34,7 +30,7 @@ export default function HeaderBar({
       </div>
 
       <div className="flex gap-2 items-center">
-        <DemoShareButton demoId={demoId} />
+        <DemoShareButton publicId={publicId} />
         <button
           onClick={onSave}
           className="h-10 px-4 py-1 rounded-full text-sm font-semibold bg-white text-black font-['Montserrat'] leading-tight cursor-pointer"

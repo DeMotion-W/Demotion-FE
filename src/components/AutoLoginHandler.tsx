@@ -1,6 +1,7 @@
 "use client";
 
 import { login } from "@/actions/auth";
+import { useAuthStore } from "@/lib/store/authStore";
 import {
   useSearchParams,
   useRouter,
@@ -10,6 +11,7 @@ import { useEffect } from "react";
 export default function AutoLoginHandler() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { setName, setEmail } = useAuthStore();
 
   useEffect(() => {
     const email = searchParams.get("email");
@@ -20,8 +22,12 @@ export default function AutoLoginHandler() {
 
     // 이메일 비번 있으면 자동 로그인 시도
     login({ email, password })
-      .then((res) => {
-        if (res.success) {
+      .then((response) => {
+        if (response.success) {
+          console.log(response.name);
+          console.log(email);
+          setName(response.name);
+          setEmail(email);
           window.location.href = window.location.pathname;
         } else {
           router.push("/login");

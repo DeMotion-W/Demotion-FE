@@ -12,9 +12,17 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const demoData = await fetchWithAuth(
-    `${DEMO_VIEW_PATH}/${id}`
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}api/public/demos/${id}`
   );
+
+  if (!response.ok) {
+    return {
+      title: `Demo Not Found`,
+    };
+  }
+
+  const demoData = await response.json();
 
   return {
     title: `${demoData.title} - Demo Preview`,
@@ -27,9 +35,25 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const demoData = await fetchWithAuth(
-    `${DEMO_VIEW_PATH}/${id}`
-  );
+  let demoData;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}api/public/demos/${id}`
+    );
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("데모 데이터 로드 실패:", err);
+      throw new Error("Demo not found");
+    }
+
+    demoData = await res.json();
+  } catch (err) {
+    console.error("API 에러:", err);
+    return (
+      <div>데모를 불러오는 중 오류가 발생했습니다.</div>
+    );
+  }
 
   const expandScreenshots: ScreenshotData[] = [
     {
@@ -48,7 +72,7 @@ export default async function Page({
   return (
     <div className="w-full flex items-center justify-center">
       <DemoPreviewEmbed
-        demoId={id}
+        demoId={demoData.demoId}
         title={demoData.title}
         subtitle={demoData.subtitle}
         buttonBgColor={demoData.buttonBgColor}

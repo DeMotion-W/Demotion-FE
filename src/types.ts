@@ -38,6 +38,7 @@ export type ScreenshotData = {
 
 export type DemoData = {
   demoId: number;
+  publicId?: string;
   title: string;
   subtitle: string;
   buttonBgColor: string;

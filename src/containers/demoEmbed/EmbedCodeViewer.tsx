@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Copy } from "lucide-react";
 
 export default function EmbedCodeViewer({
-  demoId,
+  publicId,
 }: {
-  demoId: string;
+  publicId: string;
 }) {
   const [activeTab, setActiveTab] = useState<
     "html" | "react"
@@ -15,12 +15,12 @@ export default function EmbedCodeViewer({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
   // HTML 버전
-  const rawHTML = `<!-- DEMOTION EMBED START --><div style="position: relative; padding-bottom: 56.25%; height: 0; width: 100%;"><iframe src="${siteUrl}embed/${demoId}" title="Demotion Demo" loading="lazy" allow="clipboard-write" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; color-scheme: light;"></iframe></div><!-- DEMOTION EMBED END -->`;
+  const rawHTML = `<!-- DEMOTION EMBED START --><div style="position: relative; padding-bottom: 56.25%; height: 0; width: 100%;"><iframe src="${siteUrl}embed/${publicId}" title="Demotion Demo" loading="lazy" allow="clipboard-write" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; color-scheme: light;"></iframe></div><!-- DEMOTION EMBED END -->`;
 
   const formattedHTML = `<!-- DEMOTION EMBED START -->
 <div style="position: relative; padding-bottom: 56.25%; height: 0; width: 100%;">
   <iframe
-    src="${siteUrl}embed/${demoId}"
+    src="${siteUrl}embed/${publicId}"
     title="Demotion Embed"
     loading="lazy"
     allow="clipboard-write"
@@ -31,7 +31,7 @@ export default function EmbedCodeViewer({
 <!-- DEMOTION EMBED END -->`;
 
   // React 버전
-  const rawReact = `export function DemotionEmbed() {return (<div style={{ position: "relative", paddingBottom: "56.25%", height: 0, width: "100%" }}><iframe src="${siteUrl}embed/${demoId}" title="Demotion Demo" loading="lazy" allow="clipboard-write" allowFullScreen style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none", colorScheme: "light" }} /></div>)}`;
+  const rawReact = `export function DemotionEmbed() {return (<div style={{ position: "relative", paddingBottom: "56.25%", height: 0, width: "100%" }}><iframe src="${siteUrl}embed/${publicId}" title="Demotion Demo" loading="lazy" allow="clipboard-write" allowFullScreen style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none", colorScheme: "light" }} /></div>)}`;
 
   const formattedReact = `export function DemotionEmbed() {
   return (
@@ -42,7 +42,7 @@ export default function EmbedCodeViewer({
       width: "100%",
     }}>
       <iframe
-        src="${siteUrl}embed/${demoId}"
+        src="${siteUrl}embed/${publicId}"
         title="Demotion Demo"
         loading="lazy"
         allow="clipboard-write"

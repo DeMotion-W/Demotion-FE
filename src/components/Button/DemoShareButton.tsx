@@ -4,9 +4,9 @@ import EmbedCodePopup from "@/components/Popup/EmbedCodePopup";
 import { useState, useRef } from "react";
 
 export default function DemoShareButton({
-  demoId,
+  publicId,
 }: {
-  demoId: string;
+  publicId: string;
 }) {
   const [showPopup, setShowPopup] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -28,7 +28,7 @@ export default function DemoShareButton({
       {showPopup && (
         <div className="absolute right-0 mt-2 z-50">
           <EmbedCodePopup
-            demoId={demoId}
+            publicId={publicId}
             onClose={() => setShowPopup(false)}
           />
         </div>
