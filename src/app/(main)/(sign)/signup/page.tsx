@@ -6,15 +6,17 @@ import { signupSchema } from "@shared/schema/signupSchema";
 import { SignupForm } from "@shared/type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signup } from "@/actions/auth";
+import { useToast } from "@/components/UI/Toast";
 import InputField from "@/components/Input/InputField";
 import VerificationInput from "@/components/Input/VerificationInput";
 import SignButton from "@/components/Button/SignButton";
-import { signup } from "@/actions/auth";
 
 export default function Page() {
   const router = useRouter();
   const [isEmailVerified, setIsEmailVerified] =
     useState(false);
+  const { showToast } = useToast();
 
   const {
     register,
@@ -35,16 +37,25 @@ export default function Page() {
       });
 
       if (response.success) {
-        alert("회원가입 완료! 로그인 페이지로 이동합니다.");
         router.push("/login");
       } else {
-        alert(response.error || "회원가입에 실패했습니다.");
+        showToast({
+          type: "error",
+          message:
+            response.error || "회원가입에 실패했습니다.",
+        });
       }
-    } catch (err: unknown) {
+    } catch (err) {
       if (err instanceof Error) {
-        alert(err.message);
+        showToast({
+          type: "error",
+          message: err.message,
+        });
       } else {
-        alert("회원가입 중 오류가 발생했습니다.");
+        showToast({
+          type: "error",
+          message: "회원가입 중 오류가 발생했습니다.",
+        });
       }
     }
   };

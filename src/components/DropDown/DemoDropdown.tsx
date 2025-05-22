@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDownIcon } from "lucide-react";
 import { Demo } from "@/types";
+import { formatDate } from "@/utils/date";
 
 export default function DemoDropdown({
   demos,
@@ -57,7 +58,7 @@ export default function DemoDropdown({
                   selected.title.length > 30
                     ? selected.title.slice(0, 30) + "..."
                     : selected.title
-                } (${selected.createdAt})`
+                } (${formatDate(selected.createdAt)})`
               : "데모를 선택해 주세요."}
           </div>
           <ChevronDownIcon className="w-5 h-5 text-gray-400 shrink-0 ml-2" />
@@ -84,7 +85,7 @@ export default function DemoDropdown({
               {demo.title.length > 30
                 ? demo.title.slice(0, 30) + "..."
                 : demo.title}{" "}
-              ({demo.createdAt})
+              ({formatDate(demo.createdAt)})
             </li>
           ))}
         </ul>

@@ -1,24 +1,39 @@
 "use client";
 
-import { user } from "@/mock/user";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { logout } from "@/actions/auth";
+import { useAuthStore } from "@/lib/store/authStore";
+import { useToast } from "@/components/UI/Toast";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
-import { logout } from "@/actions/auth";
 
 export default function Page() {
   const router = useRouter();
+  const name = useAuthStore((state) => state.name);
+  const email = useAuthStore((state) => state.email);
+  const { showToast } = useToast();
 
   const editProfile = () => {};
   const handleLogout = async () => {
     try {
       const result = await logout();
       if (result.success) {
+        useAuthStore.getState().clearAuth();
         router.push("/login");
       }
     } catch (err) {
-      alert("로그아웃 실패");
+      if (err instanceof Error) {
+        showToast({
+          type: "error",
+          message: err.message,
+        });
+      } else {
+        showToast({
+          type: "error",
+          message: "로그아웃 실패",
+        });
+      }
     }
   };
 
@@ -47,24 +62,24 @@ export default function Page() {
             className="mx-auto"
           />
           <p className="text-center justify-start mt-8 mb-4 text-[#191F28] text-2xl font-semibold font-['Pretendard'] leading-7">
-            {user.name}
+            {name}
           </p>
-          <p className="text-center justify-start mb-15 text-[#4E5968] text-sm font-medium font-['Pretendard'] leading-tight">
-            {user.email}
+          <p className="text-center justify-start mb-12 text-[#4E5968] text-sm font-medium font-['Pretendard'] leading-tight">
+            {email}
           </p>
           <div className="flex justify-center gap-3">
             <Button
               label={"내 정보 수정"}
               bgColor={"#333D4B"}
               textColor={"#FFFFFF"}
-              width={"140px"}
+              width={"120px"}
               onClick={editProfile}
             />
             <Button
               label={"로그아웃"}
               bgColor={"#FF5E5E"}
               textColor={"#FFFFFF"}
-              width={"140px"}
+              width={"120px"}
               onClick={handleLogout}
             />
           </div>

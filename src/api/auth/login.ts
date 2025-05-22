@@ -4,7 +4,6 @@ import {
   LOG_IN_PATH,
   TOKEN_REFRESH_PATH,
 } from "@shared/constants/api";
-import { useAuthStore } from "@/lib/store/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { AxiosError } from "axios";
 
@@ -16,7 +15,6 @@ export async function onLogIn(params: LoginForm) {
     );
     if (response.status === 200) {
       const { accessToken } = response.data;
-      useAuthStore.getState().setAccessToken(accessToken);
       return response;
     }
   } catch (error: unknown) {
@@ -45,7 +43,6 @@ export async function onSilentRefresh(
     if (!accessToken)
       throw new Error("accessToken이 없습니다.");
 
-    useAuthStore.getState().setAccessToken(accessToken);
     console.log("silent refresh 성공:", accessToken);
   } catch (error) {
     const axiosError = error as AxiosError;

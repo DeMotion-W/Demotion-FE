@@ -22,8 +22,7 @@ export default function AutoLoginHandler() {
     login({ email, password })
       .then((res) => {
         if (res.success) {
-          // URL 깔끔하게 정리 (email, password 제거)
-          router.replace(window.location.pathname);
+          window.location.href = window.location.pathname;
         } else {
           router.push("/login");
         }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LayoutGrid, BarChart2, Users } from "lucide-react";
-import { user } from "@/mock/user";
+import { useAuthStore } from "@/lib/store/authStore";
 
 const NAV_ITEMS = [
   {
@@ -22,6 +22,7 @@ export default function Sidebar({
   isLoggedIn: boolean;
 }) {
   const pathname = usePathname();
+  const name = useAuthStore((state) => state.name);
 
   return (
     <aside className="flex flex-col w-[240px] bg-[#191F28] text-white min-h-screen">
@@ -31,6 +32,7 @@ export default function Sidebar({
             <Image
               src="/images/logo.png"
               alt="Demotion Logo"
+              draggable={false}
               width={121}
               height={24}
             />
@@ -70,7 +72,7 @@ export default function Sidebar({
                 <span className="text-xs">👤</span>
               </div>
               <span className="text-xs font-medium text-[#E2E6EB] font-['Pretendard'] leading-tight">
-                {user.name}
+                {name}
               </span>
             </div>
           ) : (

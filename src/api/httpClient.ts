@@ -1,6 +1,6 @@
 import axios from "axios";
 import { TOKEN_REFRESH_PATH } from "@shared/constants/api";
-import { useAuthStore } from "@/lib/store/auth";
+// import { useAuthStore } from "@/lib/store/auth";
 
 export const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -26,9 +26,9 @@ httpClient.interceptors.response.use(
         );
 
         const newAccessToken = response.data.accessToken;
-        useAuthStore
-          .getState()
-          .setAccessToken(newAccessToken);
+        // useAuthStore
+        //   .getState()
+        //   .setAccessToken(newAccessToken);
 
         originalRequest.headers["Authorization"] =
           newAccessToken;

@@ -7,7 +7,7 @@ import { fetchWithAuth } from "@/actions/api-client";
 import { DEMO_VIEW_PATH } from "@shared/constants/api";
 
 export default async function Page() {
-  const { isLoggedIn } = await getAuthStatus();
+  const { isLoggedIn, token } = await getAuthStatus();
 
   if (!isLoggedIn) {
     return (
@@ -48,7 +48,7 @@ export default async function Page() {
       {demos.length === 0 ? (
         <EmptyDemoView />
       ) : (
-        <DemoListView demoList={demos} />
+        <DemoListView demoList={demos} token={token} />
       )}
     </div>
   );

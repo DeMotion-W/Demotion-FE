@@ -15,7 +15,7 @@ export async function fetchWithAuth(
 ) {
   // 쿠키에서 토큰 가져오기
   const cookieStore = await cookies();
-  const token = cookieStore.get("accesstoken")?.value;
+  const token = cookieStore.get("accessToken")?.value;
 
   if (!token) {
     redirect("/login");
@@ -46,7 +46,7 @@ export async function fetchWithAuth(
     // 토큰 갱신 성공한 경우 원래 요청 재시도
     if (refreshed) {
       const newToken =
-        cookieStore.get("accesstoken")?.value;
+        cookieStore.get("accessToken")?.value;
 
       return fetch(
         `${process.env.NEXT_PUBLIC_API_URL}${url}`,
@@ -94,7 +94,7 @@ async function refreshToken(): Promise<boolean> {
 
     // 새 토큰을 쿠키에 저장
     cookieStore.set({
-      name: "accesstoken",
+      name: "accessToken",
       value: newAccessToken,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

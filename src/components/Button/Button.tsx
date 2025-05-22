@@ -8,7 +8,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className="py-3 px-6 text-center justify-center rounded-3xl text-base font-semibold font-['Montserrat'] leading-tight cursor-pointer"
+      className="py-3 px-6 text-center justify-center rounded-3xl text-sm font-semibold font-['Montserrat'] leading-tight cursor-pointer"
       style={{
         backgroundColor: bgColor,
         color: textColor,

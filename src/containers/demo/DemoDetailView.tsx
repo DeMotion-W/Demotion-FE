@@ -5,33 +5,36 @@ import { DemoData, ScreenshotData } from "@/types";
 import DemoPreview from "./DemoPreview";
 import DemoEditView from "./DemoEditView";
 import HeaderBar from "./HeaderBar";
+import { DEMO_VIEW_PATH } from "@shared/constants/api";
+import { useToast } from "@/components/UI/Toast";
 
 export default function DemoDetailView({
-  initialData,
+  demo,
   demoId,
+  token,
 }: {
-  initialData: DemoData;
+  demo: DemoData;
   demoId: string;
+  token: string;
 }) {
+  const { showToast } = useToast();
   const [mode, setMode] = useState<"edit" | "preview">(
     "preview"
   );
-  const [title, setTitle] = useState(initialData.title);
-  const [subtitle, setSubtitle] = useState(
-    initialData.subtitle
-  );
+  const [title, setTitle] = useState(demo.title);
+  const [subtitle, setSubtitle] = useState(demo.subtitle);
   const [buttonBgColor, setButtonBgColor] = useState(
-    initialData.buttonBgColor
+    demo.buttonBgColor
   );
   const [buttonTextColor, setButtonTextColor] = useState(
-    initialData.buttonTextColor
+    demo.buttonTextColor
   );
   const [screenshots, setScreenshots] = useState<
     ScreenshotData[]
   >([
     {
       screenshotId: -1,
-      fileUrl: initialData.screenshots[0].fileUrl,
+      fileUrl: demo.screenshots[0].fileUrl,
       buttonText: "",
       buttonBgColor: "#168AFF",
       buttonStyle: "Box",
@@ -39,7 +42,7 @@ export default function DemoDetailView({
       positionX: 0,
       positionY: 0,
     },
-    ...initialData.screenshots,
+    ...demo.screenshots,
   ]);
 
   useEffect(() => {
@@ -66,7 +69,7 @@ export default function DemoDetailView({
 
   const handleSave = async () => {
     const dataToSave: DemoData = {
-      demoId: initialData.demoId,
+      demoId: demo.demoId,
       title,
       subtitle,
       buttonBgColor,
@@ -76,6 +79,34 @@ export default function DemoDetailView({
       ),
     };
     console.log("저장될 데이터:", dataToSave);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}${DEMO_VIEW_PATH}/${demoId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dataToSave),
+      }
+    );
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error("PUT 요청 실패:", error);
+      showToast({
+        type: "error",
+        message: "저장에 실패했습니다.",
+      });
+      return;
+    }
+
+    showToast({
+      type: "success",
+      message: "저장되었습니다.",
+    });
+    setMode("preview");
   };
 
   return (

@@ -6,6 +6,7 @@ import InsightSummary from "./InsightSummary";
 import InsightChart from "./InsightChart";
 import DemoDropdown from "@/components/DropDown/DemoDropdown";
 import { fetchWithAuth } from "@/actions/api-client";
+import { DEMO_VIEW_PATH } from "@shared/constants/api";
 
 export default function DemoInsightView({
   demoList,
@@ -17,17 +18,10 @@ export default function DemoInsightView({
   const [insightData, setInsightData] =
     useState<InsightData | null>(null);
 
-  // const handleDemoSelect = (demo: Demo) => {
-  //   setSelectedDemo(demo);
-
-  //   // 실제 API 연동 전까지는 목데이터로
-  //   setInsightData(insightMock[demo.id] ?? null);
-  // };
-
   const handleDemoSelect = async (demo: Demo) => {
     setSelectedDemo(demo);
     const data: InsightData = await fetchWithAuth(
-      `/api/demos/${demo.demoId}/insight/stat`
+      `${DEMO_VIEW_PATH}/${demo.demoId}/insight/stat`
     );
     setInsightData(data);
   };

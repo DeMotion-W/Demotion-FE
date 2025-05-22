@@ -8,8 +8,10 @@ import { Demo } from "@/types";
 
 export default function DemoListView({
   demoList,
+  token,
 }: {
   demoList: Demo[];
+  token: string;
 }) {
   const [sortOrder, setSortOrder] = useState("최신순");
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,11 +42,6 @@ export default function DemoListView({
     currentPage * ITEMS_PER_PAGE
   );
 
-  // const currentItems = demoList.slice(
-  //   (currentPage - 1) * ITEMS_PER_PAGE,
-  //   currentPage * ITEMS_PER_PAGE
-  // );
-
   return (
     <>
       <div className="flex justify-between items-center h-[60px] mb-2">
@@ -60,6 +57,7 @@ export default function DemoListView({
         />
       </div>
 
+      {/* 데모 리스트 목록 */}
       <div className="w-full flex flex-col justify-between min-h-[600px]">
         <div className="w-full grid grid-cols-4 gap-6">
           {currentItems.map((demo, i) => (
@@ -69,6 +67,7 @@ export default function DemoListView({
               title={demo.title}
               firstScreenshotUrl={demo.firstScreenshotUrl}
               createdAt={demo.createdAt}
+              token={token}
               isMenuOpen={openMenuId === demo.demoId}
               onToggleMenu={() =>
                 setOpenMenuId((prev) =>
@@ -79,6 +78,7 @@ export default function DemoListView({
           ))}
         </div>
 
+        {/* 페이지네이션 */}
         <div className="w-full flex justify-center mt-10 gap-2">
           <button
             onClick={() =>

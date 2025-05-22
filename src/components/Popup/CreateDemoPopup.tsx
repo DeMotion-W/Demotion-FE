@@ -11,6 +11,7 @@ export default function CreateDemoPopup({
         <Image
           src="/images/demo.png"
           alt="Demotion Logo"
+          draggable={false}
           width={37}
           height={33}
         />

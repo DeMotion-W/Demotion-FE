@@ -6,6 +6,7 @@ export interface Demo {
 }
 
 export type DemoCardWithMenuProps = Demo & {
+  token: string;
   isMenuOpen: boolean;
   onToggleMenu: () => void;
 };

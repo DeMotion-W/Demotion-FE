@@ -1,4 +1,4 @@
-import ColorPickerBox from "@/components/ColorPickerBox";
+import ColorPickerBox from "@/components/UI/ColorPickerBox";
 import { ScreenshotData } from "@/types";
 import { useState } from "react";
 
@@ -34,7 +34,7 @@ export default function ThumbnailEditor({
           Title
         </label>
         <textarea
-          id={title}
+          id="title"
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}
           placeholder="제목을 입력해 주세요."
@@ -49,7 +49,7 @@ export default function ThumbnailEditor({
           Subtitle
         </label>
         <textarea
-          id={subtitle}
+          id="subtitle"
           value={subtitle}
           onChange={(e) => onSubtitleChange(e.target.value)}
           placeholder="부제목을 입력해 주세요."

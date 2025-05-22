@@ -64,7 +64,9 @@ export default function ThumbnailCanvas({
           <Image
             src={fileUrl}
             alt="thumbnail preview"
+            priority
             fill
+            sizes="100vw"
             draggable={false}
             className="object-contain blur-sm"
           />

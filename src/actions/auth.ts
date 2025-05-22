@@ -37,10 +37,11 @@ export async function login(data: LoginForm) {
       /^Bearer\s/,
       ""
     ); // "Bearer " 제거
+    const name = responseData.name;
 
     const cookieStore = await cookies();
     cookieStore.set({
-      name: "accesstoken",
+      name: "accessToken",
       value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -59,7 +60,7 @@ export async function login(data: LoginForm) {
       });
     });
 
-    return { success: true };
+    return { success: true, name: name };
   } catch (err) {
     console.error("로그인 에러:", err);
     return {
@@ -74,7 +75,6 @@ export async function login(data: LoginForm) {
 
 // 로그아웃 함수
 export async function logout() {
-  // 백엔드에 로그아웃 알림 (필요한 경우)
   try {
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}${LOG_OUT_PATH}`,
@@ -90,8 +90,8 @@ export async function logout() {
   const cookieStore = await cookies();
 
   // 쿠키 삭제
-  cookieStore.delete("accesstoken");
-  cookieStore.delete("refreshtoken");
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
 
   return { success: true };
 }

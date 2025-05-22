@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/UI/Sidebar";
 import { getAuthStatus } from "@/utils/auth";
 
 export default async function SliderLayout({

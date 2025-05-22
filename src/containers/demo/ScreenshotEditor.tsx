@@ -1,5 +1,5 @@
-import ColorPickerBox from "@/components/ColorPickerBox";
-import StyleSelector from "@/components/StyleSelector";
+import ColorPickerBox from "@/components/UI/ColorPickerBox";
+import StyleSelector from "@/components/UI/StyleSelector";
 import { ScreenshotData } from "@/types";
 import { useState } from "react";
 

@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { Demo, LeadsData } from "@/types";
-import { leadsMock } from "@/mock/leads";
 import DemoDropdown from "@/components/DropDown/DemoDropdown";
 import Tooltip from "@/components/ToolTip/Tooltip";
+import { DEMO_VIEW_PATH } from "@shared/constants/api";
+import { fetchWithAuth } from "@/actions/api-client";
 
 export default function DemoLeadsView({
   demoList,
@@ -17,11 +18,13 @@ export default function DemoLeadsView({
     LeadsData[] | null
   >(null);
 
-  const handleDemoSelect = (demo: Demo) => {
+  const handleDemoSelect = async (demo: Demo) => {
     setSelectedDemo(demo);
-
-    // 실제 API 연동 전까지는 목데이터로
-    setLeadsData(leadsMock[demo.demoId] ?? null);
+    const data: { leads: LeadsData[] } =
+      await fetchWithAuth(
+        `${DEMO_VIEW_PATH}/${demo.demoId}/insight/leads`
+      );
+    setLeadsData(data.leads);
   };
 
   const firstTimeViewers =

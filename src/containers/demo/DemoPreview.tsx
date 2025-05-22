@@ -21,17 +21,6 @@ export default function DemoPreview({
   const [step, setStep] = useState(0);
   const current = screenshots[step];
 
-  // useEffect(() => {
-  //   const handleClick = () => {
-  //     if (step < screenshots.length - 1) {
-  //       setStep((prev) => prev + 1);
-  //     }
-  //   };
-  //   window.addEventListener("click", handleClick);
-  //   return () =>
-  //     window.removeEventListener("click", handleClick);
-  // }, [step, screenshots.length]);
-
   useEffect(() => {
     setStep(0);
   }, []);
@@ -58,6 +47,7 @@ export default function DemoPreview({
           </button>
         </div>
       </div>
+
       {isThumbnail ? (
         <ThumbnailCanvas
           title={title}

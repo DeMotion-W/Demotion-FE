@@ -9,6 +9,7 @@ export default function InsightSummary({
 }) {
   return (
     <>
+      {/* 재생횟수 */}
       <div className="p-5 border border-[#E2E7EB] rounded-xl bg-[#FFFFFF]">
         <div className="flex gap-2 items-center text-[#8B95A1]">
           <Eye size={22} />
@@ -30,6 +31,8 @@ export default function InsightSummary({
           {data ? data.viewCount.toLocaleString() : "-"}
         </div>
       </div>
+
+      {/* 완주율 */}
       <div className="p-5 border border-[#E2E7EB] rounded-xl bg-[#FFFFFF]">
         <div className="flex gap-2 items-center text-[#8B95A1]">
           <div className="w-5 h-5 px-1 bg-gray-400 rounded-md flex items-center justify-center">

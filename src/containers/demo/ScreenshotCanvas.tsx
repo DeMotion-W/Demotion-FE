@@ -60,6 +60,7 @@ export default function ScreenshotCanvas({
             src={screenshot.fileUrl}
             alt="ScreenShot"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 75vw, 1280px"
             draggable={false}
             className="object-contain"
           />
