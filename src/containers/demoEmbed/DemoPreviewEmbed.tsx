@@ -29,15 +29,11 @@ export default function DemoPreviewEmbed({
   onEnd,
 }: Props) {
   const [step, setStep] = useState(initialStep);
-  const [emailSubmitted, setEmailSubmitted] =
-    useState(false);
-  const [showEmailPopup, setShowEmailPopup] =
-    useState(false);
-  const [showContactPopup, setShowContactPopup] =
-    useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(
-    null
-  );
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [hasContacted, setHasContacted] = useState(false);
+  const [showEmailPopup, setShowEmailPopup] = useState(false);
+  const [showContactPopup, setShowContactPopup] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   const current = screenshots[step];
   const isThumbnail = current?.screenshotId === -1;
@@ -49,30 +45,24 @@ export default function DemoPreviewEmbed({
   const handleNextStep = async () => {
     // 현재 스크린샷 정보
     const currentScreenshot = screenshots[step];
-    const isThumbnail =
-      currentScreenshot?.screenshotId === -1;
+    const isThumbnail = currentScreenshot?.screenshotId === -1;
 
-    const screenshotIdToSend = isThumbnail
-      ? 0
-      : currentScreenshot.screenshotId;
+    const screenshotIdToSend = isThumbnail ? 0 : currentScreenshot.screenshotId;
 
     // 세션 ID가 있고 썸네일이 아닌 경우에만 기록 전송
     if (sessionId) {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/step`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              sessionId,
-              screenshotId: screenshotIdToSend,
-              timestampMillis: Date.now(),
-            }),
-          }
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/step`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            sessionId,
+            screenshotId: screenshotIdToSend,
+            timestampMillis: Date.now(),
+          }),
+        });
 
         if (!response.ok) {
           const err = await response.text();
@@ -112,7 +102,11 @@ export default function DemoPreviewEmbed({
         <ScreenshotCanvasEmbed
           screenshot={current}
           onClick={handleNextStep}
-          onContactClick={() => setShowContactPopup(true)}
+          onContactClick={() => {
+            if (!hasContacted) {
+              setShowContactPopup(true);
+            }
+          }}
         />
       )}
 
@@ -124,16 +118,13 @@ export default function DemoPreviewEmbed({
             console.log("입력된 이메일:", email);
 
             try {
-              const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/start`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ email }),
-                }
-              );
+              const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/start`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+              });
 
               if (!response.ok) {
                 alert("이메일 제출에 실패했습니다.");
@@ -158,22 +149,20 @@ export default function DemoPreviewEmbed({
           onConfirm={async () => {
             console.log("문의 접수 완료");
             try {
-              const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/contact`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ sessionId }),
-                }
-              );
+              const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/embed/${demoId}/contact`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ sessionId }),
+              });
 
               if (!response.ok) {
                 alert("도입문의에 실패하였습니다.");
                 return;
               }
 
+              setHasContacted(true);
               setShowContactPopup(false);
             } catch (error) {
               alert("네트워크 오류가 발생했습니다.");

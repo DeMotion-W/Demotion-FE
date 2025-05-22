@@ -8,13 +8,8 @@ type Props = {
   onChange: (updated: ScreenshotData) => void;
 };
 
-export default function ScreenshotEditor({
-  screenshot,
-  onChange,
-}: Props) {
-  const [openPickerId, setOpenPickerId] = useState<
-    string | null
-  >(null);
+export default function ScreenshotEditor({ screenshot, onChange }: Props) {
+  const [openPickerId, setOpenPickerId] = useState<string | null>(null);
   return (
     <aside className="flex flex-col w-full gap-8">
       <div>
@@ -32,9 +27,7 @@ export default function ScreenshotEditor({
           }
           placeholder="텍스트를 입력해 주세요."
           className={`h-28 w-full border border-[#E2E7EB] px-4 py-3 rounded-lg text-xs font-normal font-['Pretendard'] leading-snug ${
-            screenshot.buttonText
-              ? "text-[#191F28]"
-              : "text-[#B0B8C1]"
+            screenshot.buttonText ? "text-[#191F28]" : "text-[#B0B8C1]"
           } resize-none`}
         />
       </div>
@@ -66,9 +59,7 @@ export default function ScreenshotEditor({
             label="Background"
             color={screenshot.buttonBgColor}
             isOpen={openPickerId === "bg-color-picker"}
-            onOpen={() =>
-              setOpenPickerId("bg-color-picker")
-            }
+            onOpen={() => setOpenPickerId("bg-color-picker")}
             onClose={() => setOpenPickerId(null)}
             onChange={(newColor) =>
               onChange({
@@ -82,9 +73,7 @@ export default function ScreenshotEditor({
             label="Text"
             color={screenshot.buttonTextColor}
             isOpen={openPickerId === "text-color-picker"}
-            onOpen={() =>
-              setOpenPickerId("text-color-picker")
-            }
+            onOpen={() => setOpenPickerId("text-color-picker")}
             onClose={() => setOpenPickerId(null)}
             onChange={(newColor) =>
               onChange({

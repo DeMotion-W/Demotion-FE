@@ -1,11 +1,13 @@
 export interface Demo {
   demoId: number;
+  publicId: string;
   title: string;
   firstScreenshotUrl: string;
   createdAt: string;
 }
 
-export type DemoCardWithMenuProps = Demo & {
+export type DemoCardWithMenuProps = {
+  demo: Demo;
   token: string;
   isMenuOpen: boolean;
   onToggleMenu: () => void;
@@ -70,6 +72,12 @@ export interface InsightData {
 }
 
 export interface LeadsData {
+  sessionId: number;
   email: string;
   contactClicked: boolean;
+}
+
+export interface StayTimeData {
+  screenshotId: number;
+  stayTimeMillis: number;
 }

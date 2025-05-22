@@ -6,15 +6,9 @@ import { Metadata } from "next";
 
 export const dynamic = "force-dynamic"; // 공유 시 캐싱 방지용
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}api/public/demos/${id}`
-  );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/public/demos/${id}`);
 
   if (!response.ok) {
     return {
@@ -29,17 +23,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   let demoData;
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}api/public/demos/${id}`
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/public/demos/${id}`);
 
     if (!res.ok) {
       const err = await res.text();
@@ -50,9 +38,7 @@ export default async function Page({
     demoData = await res.json();
   } catch (err) {
     console.error("API 에러:", err);
-    return (
-      <div>데모를 불러오는 중 오류가 발생했습니다.</div>
-    );
+    return <div>데모를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
   const expandScreenshots: ScreenshotData[] = [

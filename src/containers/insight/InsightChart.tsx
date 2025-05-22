@@ -1,17 +1,8 @@
 "use client";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  LabelList,
-  CartesianGrid,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, CartesianGrid } from "recharts";
 import type { ScreenshotStat } from "@/types";
-import GraphTooltip from "@/components/ToolTip/GraphTooltip";
+import ChartTooltip from "@/components/ToolTip/ChartTooltip";
 
 type LabelPosition = {
   x: number;
@@ -20,11 +11,7 @@ type LabelPosition = {
   width: number;
 };
 
-export default function InsightChart({
-  data,
-}: {
-  data: ScreenshotStat[];
-}) {
+export default function InsightChart({ data }: { data: ScreenshotStat[] }) {
   if (data.length === 0) {
     return (
       <div className="h-80 flex flex-col items-center justify-center border border-[#E2E7EB] rounded-xl gap-2">
@@ -67,11 +54,7 @@ export default function InsightChart({
             bottom: 40,
           }}
         >
-          <CartesianGrid
-            stroke="#E5E8EB"
-            strokeDasharray="0"
-            vertical={false}
-          />
+          <CartesianGrid stroke="#E5E8EB" strokeDasharray="0" vertical={false} />
           <XAxis
             dataKey="name"
             tick={{
@@ -101,7 +84,16 @@ export default function InsightChart({
             axisLine={false}
             tickLine={false}
           />
-          <Tooltip content={<GraphTooltip />} />
+          <Tooltip
+            content={
+              <ChartTooltip
+                fields={[
+                  { key: "viewCount", label: "스텝별 조회수", color: "#3B82F6" },
+                  { key: "durationSec", label: "스텝별 체류시간", unit: "s" },
+                ]}
+              />
+            }
+          />
           <Bar
             yAxisId="left"
             dataKey="viewCount"
@@ -113,12 +105,7 @@ export default function InsightChart({
             <LabelList
               dataKey="viewCount"
               position="top"
-              content={({
-                x,
-                y,
-                value,
-                width,
-              }: LabelPosition) => {
+              content={({ x, y, value, width }: LabelPosition) => {
                 const boxWidth = 30;
                 const boxHeight = 26;
                 const radius = 6;
@@ -126,18 +113,8 @@ export default function InsightChart({
                 const centerX = (x ?? 0) + (width ?? 0) / 2;
 
                 return (
-                  <g
-                    transform={`translate(${
-                      centerX - boxWidth / 2
-                    }, ${(y ?? 0) - boxHeight - 6})`}
-                  >
-                    <rect
-                      width={boxWidth}
-                      height={boxHeight}
-                      rx={radius}
-                      ry={radius}
-                      fill="#333D4B"
-                    />
+                  <g transform={`translate(${centerX - boxWidth / 2}, ${(y ?? 0) - boxHeight - 6})`}>
+                    <rect width={boxWidth} height={boxHeight} rx={radius} ry={radius} fill="#333D4B" />
                     <text
                       x={boxWidth / 2}
                       y={boxHeight / 2}
@@ -165,12 +142,7 @@ export default function InsightChart({
           >
             <LabelList
               dataKey="durationSec"
-              content={({
-                x,
-                y,
-                value,
-                width,
-              }: LabelPosition) => {
+              content={({ x, y, value, width }: LabelPosition) => {
                 const boxWidth = 30;
                 const boxHeight = 26;
                 const radius = 6;
@@ -178,18 +150,8 @@ export default function InsightChart({
                 const centerX = (x ?? 0) + (width ?? 0) / 2;
 
                 return (
-                  <g
-                    transform={`translate(${
-                      centerX - boxWidth / 2
-                    }, ${(y ?? 0) - boxHeight - 6})`}
-                  >
-                    <rect
-                      width={boxWidth}
-                      height={boxHeight}
-                      rx={radius}
-                      ry={radius}
-                      fill="#EEF0F2"
-                    />
+                  <g transform={`translate(${centerX - boxWidth / 2}, ${(y ?? 0) - boxHeight - 6})`}>
+                    <rect width={boxWidth} height={boxHeight} rx={radius} ry={radius} fill="#EEF0F2" />
                     <text
                       x={boxWidth / 2}
                       y={boxHeight / 2}

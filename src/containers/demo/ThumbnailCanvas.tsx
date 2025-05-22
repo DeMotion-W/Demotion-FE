@@ -24,8 +24,7 @@ export default function ThumbnailCanvas({
   useLayoutEffect(() => {
     const updateScale = () => {
       if (containerRef.current) {
-        const containerWidth =
-          containerRef.current.clientWidth;
+        const containerWidth = containerRef.current.clientWidth;
         const containerHeight = window.innerHeight - 200;
 
         const scaleWidth = containerWidth / baseWidth;
@@ -36,15 +35,11 @@ export default function ThumbnailCanvas({
     };
     updateScale();
     window.addEventListener("resize", updateScale);
-    return () =>
-      window.removeEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full flex justify-center items-center overflow-hidden p-1"
-    >
+    <div ref={containerRef} className="w-full flex justify-center items-center overflow-hidden p-1">
       <div
         className="mx-auto relative rounded-4xl shadow-md overflow-hidden"
         style={{
@@ -66,7 +61,7 @@ export default function ThumbnailCanvas({
             alt="thumbnail preview"
             priority
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 75vw, 1280px"
             draggable={false}
             className="object-contain blur-sm"
           />
@@ -77,17 +72,14 @@ export default function ThumbnailCanvas({
             }}
           >
             <div className="flex flex-col items-start gap-4 font-['Pretendard']">
-              <h2 className="mb-2 text-white font-semibold text-7xl">
-                {title || "제목을 입력해 주세요."}
-              </h2>
-              <p className="text-white text-3xl">
-                {subtitle || "부제목을 입력해 주세요."}
-              </p>
+              <h2 className="mb-2 text-white font-semibold text-7xl">{title || "제목을 입력해 주세요."}</h2>
+              <p className="text-white text-3xl">{subtitle || "부제목을 입력해 주세요."}</p>
               <button
                 className="mt-4 text-2xl w-120 h-20 px-10 py-3 rounded-full font-semibold"
                 style={{
                   backgroundColor: buttonBgColor,
                   color: buttonTextColor,
+                  cursor: "pointer",
                 }}
                 onClick={onStartClick}
               >

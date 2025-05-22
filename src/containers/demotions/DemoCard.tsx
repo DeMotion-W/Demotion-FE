@@ -6,30 +6,22 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/UI/Toast";
 import { DEMO_VIEW_PATH } from "@shared/constants/api";
 
-export default function DemoCard({
-  demoId,
-  title,
-  createdAt,
-  firstScreenshotUrl,
-  token,
-  isMenuOpen,
-  onToggleMenu,
-}: DemoCardWithMenuProps) {
+export default function DemoCard({ demo, token, isMenuOpen, onToggleMenu }: DemoCardWithMenuProps) {
   const router = useRouter();
   const { showToast } = useToast();
 
   const handleCardClick = () => {
     if (!isMenuOpen) {
-      router.push(`/demo/${demoId}`);
+      router.push(`/demo/${demo.demoId}`);
     }
   };
 
   const handleEdit = () => {
-    router.push(`/demo/${demoId}`);
+    router.push(`/demo/${demo.demoId}`);
   };
 
   const handleShare = () => {
-    const url = `${window.location.origin}/embed/${demoId}`;
+    const url = `${process.env.NEXT_PUBLIC_SITE_URL}embed/${demo.publicId}`;
     navigator.clipboard.writeText(url).then(() => {
       showToast({
         type: "success",
@@ -43,16 +35,13 @@ export default function DemoCard({
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}${DEMO_VIEW_PATH}/${demoId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${DEMO_VIEW_PATH}/${demo.demoId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.ok) {
         window.location.reload();
       } else {
@@ -76,7 +65,7 @@ export default function DemoCard({
     >
       <div className="relative h-[130px] bg-gray-50 flex items-center justify-center">
         <Image
-          src={firstScreenshotUrl}
+          src={demo.firstScreenshotUrl}
           alt="Demo Thumbnail"
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -91,26 +80,14 @@ export default function DemoCard({
           }}
           className="absolute top-3 right-3 w-6 h-6 rounded-md bg-gray-100 flex items-center justify-center hover:bg-gray-200"
         >
-          <span className="text-xl leading-none text-gray-500">
-            ⋯
-          </span>
+          <span className="text-xl leading-none text-gray-500">⋯</span>
         </button>
-        {isMenuOpen && (
-          <DemoCardMenu
-            onEdit={handleEdit}
-            onShare={handleShare}
-            onDelete={handleDelete}
-          />
-        )}
+        {isMenuOpen && <DemoCardMenu onEdit={handleEdit} onShare={handleShare} onDelete={handleDelete} />}
       </div>
 
       <div className="p-4 border-t border-gray-200 flex flex-col justify-between h-[100px]">
-        <p className="text-xs text-gray-900 font-semibold line-clamp-2 break-words">
-          {title}
-        </p>
-        <p className="text-[10px] text-gray-500 mt-1">
-          {formatDate(createdAt)}
-        </p>
+        <p className="text-xs text-gray-900 font-semibold line-clamp-2 break-words">{demo.title}</p>
+        <p className="text-[10px] text-gray-500 mt-1">{formatDate(demo.createdAt)}</p>
       </div>
     </div>
   );

@@ -16,11 +16,7 @@ const NAV_ITEMS = [
   { href: "/leads", label: "Leads", icon: Users },
 ];
 
-export default function Sidebar({
-  isLoggedIn,
-}: {
-  isLoggedIn: boolean;
-}) {
+export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const pathname = usePathname();
   const name = useAuthStore((state) => state.name);
 
@@ -29,37 +25,25 @@ export default function Sidebar({
       <div className="flex flex-col flex-1 justify-between">
         <div>
           <div className="p-4 flex items-center justify-start mt-4 ml-4">
-            <Image
-              src="/images/logo.png"
-              alt="Demotion Logo"
-              draggable={false}
-              width={121}
-              height={24}
-            />
+            <Image src="/images/logo.png" alt="Demotion Logo" draggable={false} priority width={121} height={24} />
           </div>
           <nav className="mt-6 m-4 flex flex-col">
-            {NAV_ITEMS.map(
-              ({ href, label, icon: Icon }) => {
-                const isActive = pathname === href;
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className={`
+            {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`
                 flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold font-['Montserrat'] leading-tight transition-colors
-                ${
-                  isActive
-                    ? "bg-[#1F2A37] text-[#3182F6]"
-                    : "text-[#9CA3AF] hover:text-white"
-                }
+                ${isActive ? "bg-[#1F2A37] text-[#3182F6]" : "text-[#9CA3AF] hover:text-white"}
               `}
-                  >
-                    <Icon size={18} strokeWidth={2} />
-                    <span>{label}</span>
-                  </Link>
-                );
-              }
-            )}
+                >
+                  <Icon size={18} strokeWidth={2} />
+                  <span>{label}</span>
+                </Link>
+              );
+            })}
           </nav>
         </div>
         <Link
@@ -71,9 +55,7 @@ export default function Sidebar({
               <div className="w-7 h-7 bg-[#374151] rounded-full flex items-center justify-center">
                 <span className="text-xs">👤</span>
               </div>
-              <span className="text-xs font-medium text-[#E2E6EB] font-['Pretendard'] leading-tight">
-                {name}
-              </span>
+              <span className="text-xs font-medium text-[#E2E6EB] font-['Pretendard'] leading-tight">{name}</span>
             </div>
           ) : (
             <span className="ml-4 text-xs font-medium text-[#E2E6EB] font-['Pretendard'] leading-tight">
