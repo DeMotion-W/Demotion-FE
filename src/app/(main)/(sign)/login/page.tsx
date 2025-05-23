@@ -57,9 +57,18 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Image src="/images/logo.png" alt="Demotion Logo" width={244} height={48} className="mb-18" />
+      <Image
+        src="/images/logo.png"
+        alt="Demotion Logo"
+        width={244}
+        height={48}
+        className="mb-18"
+      />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-4 w-full max-w-md px-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col justify-center gap-4 w-full max-w-md px-4"
+      >
         <InputField
           label="이메일"
           type="text"
@@ -78,11 +87,17 @@ export default function LoginPage() {
       </form>
 
       <div className="flex text-center justify-center mt-6 text-[#6B7684] text-sm font-normal font-['Pretendard'] leading-snug gap-2">
-        <Link href="/signup" className="hover:underline text-gray-800">
+        <Link
+          href="/signup"
+          className="hover:underline text-gray-800"
+        >
           회원가입
         </Link>
         <span className="text-[#D0D7DD]">|</span>
-        <Link href="/findpassword" className="hover:underline text-gray-800">
+        <Link
+          href="/findpassword"
+          className="hover:underline text-gray-800"
+        >
           비밀번호 찾기
         </Link>
       </div>

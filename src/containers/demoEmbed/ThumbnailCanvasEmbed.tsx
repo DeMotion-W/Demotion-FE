@@ -9,6 +9,7 @@ export default function ThumbnailCanvasEmbed({
   buttonTextColor,
   fileUrl,
   onStartClick,
+  children,
 }: {
   title: string;
   subtitle: string;
@@ -16,6 +17,7 @@ export default function ThumbnailCanvasEmbed({
   buttonTextColor: string;
   fileUrl: string;
   onStartClick?: () => void;
+  children?: React.ReactNode;
 }) {
   const baseWidth = 1920;
   const baseHeight = 1080;
@@ -25,9 +27,8 @@ export default function ThumbnailCanvasEmbed({
   useLayoutEffect(() => {
     const updateScale = () => {
       if (containerRef.current) {
-        const containerWidth =
-          containerRef.current.clientWidth;
-        const containerHeight = window.innerHeight - 100;
+        const containerWidth = containerRef.current.clientWidth;
+        const containerHeight = window.innerHeight - 50;
 
         const scaleWidth = containerWidth / baseWidth;
         const scaleHeight = containerHeight / baseHeight;
@@ -37,8 +38,7 @@ export default function ThumbnailCanvasEmbed({
     };
     updateScale();
     window.addEventListener("resize", updateScale);
-    return () =>
-      window.removeEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
   }, []);
 
   return (
@@ -69,21 +69,24 @@ export default function ThumbnailCanvasEmbed({
             draggable={false}
             className="object-contain blur-sm"
           />
+
+          {children}
+
           <div
             className="absolute inset-0 flex items-end px-16 pb-16 text-left"
             style={{
               backgroundColor: "rgba(0, 0, 0, 0.4)",
             }}
           >
-            <div className="flex flex-col items-start gap-2">
-              <h2 className="mb-2 text-white font-semibold text-5xl">
+            <div className="flex flex-col items-start gap-2 ml-2 font-['Pretendard']">
+              <h2 className="mb-4 text-white font-semibold text-7xl">
                 {title || "제목을 입력해 주세요."}
               </h2>
-              <p className="text-white text-xl">
+              <p className="text-white text-4xl">
                 {subtitle || "부제목을 입력해 주세요."}
               </p>
               <button
-                className="mt-4 text-xl w-96 h-16 px-10 py-3 rounded-full font-semibold cursor-pointer"
+                className="flex justify-center mt-4 text-2xl w-170 h-20 px-10 py-7 items-center rounded-full font-semibold cursor-pointer font-['Montserrat']"
                 style={{
                   backgroundColor: buttonBgColor,
                   color: buttonTextColor,

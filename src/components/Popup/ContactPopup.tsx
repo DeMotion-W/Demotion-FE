@@ -6,25 +6,23 @@ export default function ContactPopup({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-[400px] shadow-xl text-center">
-        <p className="text-lg font-medium mb-6">
-          도입 문의를 남기시겠습니까?
-        </p>
-        <div className="flex justify-center gap-4">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-300 rounded-md"
-          >
-            아니오
-          </button>
-          <button
-            onClick={onConfirm}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            네
-          </button>
-        </div>
+    <div className="bg-transparent z-40 flex flex-col items-center justify-center w-full h-full">
+      <p className="text-6xl font-bold font-['Pretendard'] text-[#FFFFFF] mb-16 font-['Montserrat']">
+        도입 문의를 남기시겠습니까?
+      </p>
+      <div className="flex justify-center gap-6">
+        <button
+          onClick={onClose}
+          className="w-40 px-4 py-4 text-xl bg-gray-300 font-semibold rounded-md"
+        >
+          아니오
+        </button>
+        <button
+          onClick={onConfirm}
+          className="w-40 px-4 py-4 bg-[#191F28] text-xl text-white font-semibold rounded-md"
+        >
+          네
+        </button>
       </div>
     </div>
   );

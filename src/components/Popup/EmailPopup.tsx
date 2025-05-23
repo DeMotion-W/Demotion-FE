@@ -1,43 +1,58 @@
 "use client";
-import { useState } from "react";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { emailSchema } from "@shared/schema/emailSchema";
 
 export default function EmailPopup({
   onSubmit,
-  onClose,
 }: {
   onSubmit: (email: string) => void;
-  onClose: () => void;
 }) {
-  const [email, setEmail] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{ email: string }>({
+    resolver: yupResolver(emailSchema),
+  });
+
+  const handleFormSubmit = (data: { email: string }) => {
+    onSubmit(data.email);
+  };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-[400px] shadow-xl">
-        <h3 className="text-xl font-semibold mb-4">
-          이메일을 입력해 주세요
-        </h3>
+    <div className="bg-transparent z-20 flex items-center justify-center w-full h-full">
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        className="px-10 py-12 w-[850px] text-center relative"
+      >
+        <h2 className="text-6xl font-bold font-['Pretendard'] text-[#191F28] mb-4 font-['Montserrat']">
+          지금 바로 데모를 확인하세요 👋🏻
+        </h2>
+        <p className="text-2xl text-[#191F28] mb-10 font-['Montserrat']">
+          이메일을 입력하면 데모를 체험하실 수 있습니다.
+        </p>
+
         <input
-          type="email"
-          value={email}
-          placeholder="example@email.com"
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full border px-4 py-2 rounded-md mb-4"
+          type="text"
+          placeholder="이메일 주소를 입력하세요"
+          {...register("email")}
+          className="w-[700px] px-7 py-4 bg-[#FFFFFF] rounded-md text-base border border-[#D1D5DB] mb-2 font-['Pretendard'] focus:outline-none focus:ring-2 focus:ring-[#369AFF]"
         />
-        <div className="flex justify-end gap-2">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-300 rounded-md"
-          >
-            취소
-          </button>
-          <button
-            onClick={() => onSubmit(email)}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            확인
-          </button>
-        </div>
-      </div>
+        {errors.email && (
+          <p className="text-sm text-red-500 mb-3">
+            {errors.email.message}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          className="w-full py-5 mt-5 rounded-xl bg-[#191F28] text-xl text-white font-semibold font-['Montserrat'] hover:bg-[#121418] transition"
+        >
+          시작하기
+        </button>
+      </form>
     </div>
   );
 }

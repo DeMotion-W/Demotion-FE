@@ -7,6 +7,7 @@ import { useAuthStore } from "@/lib/store/authStore";
 import { useToast } from "@/components/UI/Toast";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
+import SlackAuthButton from "@/components/Button/SlackAuthButton";
 
 export default function Page() {
   const router = useRouter();
@@ -40,10 +41,7 @@ export default function Page() {
   return (
     <div className="w-full">
       <div className="flex items-center mt-6 mb-4 gap-4">
-        <button
-          onClick={() => router.back()}
-          className="cursor-pointer"
-        >
+        <button onClick={() => router.back()} className="cursor-pointer">
           <ChevronLeft size={32} strokeWidth={1} />
         </button>
         <h1 className="text-center justify-start text-[#191F28] text-xl font-semibold font-['Montserrat'] leading-loose">
@@ -54,14 +52,8 @@ export default function Page() {
 
       <div className="flex flex-col justify-center items-center min-h-[calc(100vh-300px)] p-6">
         <div className="w-full max-w-md px-10 py-12 rounded-[20px] border border-[#E2E7EB] shadow-sm">
-          <Image
-            src="/images/profile_default.png"
-            alt="Profile Image"
-            width={128}
-            height={128}
-            className="mx-auto"
-          />
-          <p className="text-center justify-start mt-8 mb-4 text-[#191F28] text-2xl font-semibold font-['Pretendard'] leading-7">
+          <Image src="/images/profile_default.png" alt="Profile Image" width={128} height={128} className="mx-auto" />
+          <p className="text-center justify-start mt-8 mb-4 text-[#191F28] text-xl font-semibold font-['Pretendard'] leading-7">
             {name}
           </p>
           <p className="text-center justify-start mb-12 text-[#4E5968] text-sm font-medium font-['Pretendard'] leading-tight">
@@ -82,6 +74,9 @@ export default function Page() {
               width={"120px"}
               onClick={handleLogout}
             />
+          </div>
+          <div className="flex justify-center mt-10">
+            <SlackAuthButton />
           </div>
         </div>
       </div>

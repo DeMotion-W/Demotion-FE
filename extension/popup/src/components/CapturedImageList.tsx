@@ -2,12 +2,8 @@ import { CaptureData } from "../type";
 
 interface Props {
   captures: CaptureData[];
-  imgRefs: React.MutableRefObject<
-    (HTMLImageElement | null)[]
-  >;
-  setCaptures: React.Dispatch<
-    React.SetStateAction<CaptureData[]>
-  >;
+  imgRefs: React.MutableRefObject<(HTMLImageElement | null)[]>;
+  setCaptures: React.Dispatch<React.SetStateAction<CaptureData[]>>;
 }
 
 export default function CapturedImageList({
@@ -48,10 +44,8 @@ export default function CapturedImageList({
             imgRefs.current[i] &&
             (() => {
               const img = imgRefs.current[i]!;
-              const frameWidth =
-                img.parentElement!.offsetWidth;
-              const frameHeight =
-                img.parentElement!.offsetHeight;
+              const frameWidth = img.parentElement!.offsetWidth;
+              const frameHeight = img.parentElement!.offsetHeight;
 
               const offsetX =
                 c.x * img.offsetWidth +
@@ -62,7 +56,7 @@ export default function CapturedImageList({
 
               return (
                 <div
-                  className="absolute w-3 h-3 bg-red-500 rounded-full"
+                  className="absolute w-3 h-3 bg-[#369AFF] rounded-full"
                   style={{
                     top: `${offsetY}px`,
                     left: `${offsetX}px`,

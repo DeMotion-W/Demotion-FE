@@ -8,25 +8,18 @@ type Props = {
   onSave?: () => void;
 };
 
-export default function HeaderBar({
-  title,
-  publicId,
-  onSave,
-}: Props) {
+export default function HeaderBar({ title, publicId, onSave }: Props) {
   const router = useRouter();
+
+  console.log(publicId);
 
   return (
     <header className="w-full h-18 px-8 py-5 flex items-center justify-between bg-[#191F28] text-[#FFFFFF]">
       <div className="flex items-center gap-4">
-        <button
-          onClick={() => router.push("/demotions")}
-          className="cursor-pointer"
-        >
+        <button onClick={() => router.push("/demotions")} className="cursor-pointer">
           <ChevronLeft size={30} strokeWidth={1} />
         </button>
-        <span className="text-xl font-medium font-['Pretendard'] leading-loose text-[#FFFFFF]">
-          {title}
-        </span>
+        <span className="text-xl font-medium font-['Pretendard'] leading-loose text-[#FFFFFF]">{title}</span>
       </div>
 
       <div className="flex gap-2 items-center">

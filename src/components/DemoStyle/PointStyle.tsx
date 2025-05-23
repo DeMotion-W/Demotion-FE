@@ -1,5 +1,5 @@
-import { toRgbaWithAlpha } from "@/utils/color";
 import { ScreenshotButtonProps } from "@/types";
+import { toRgbaWithAlpha } from "@/utils/color";
 
 export default function PointStyle({
   positionX,
@@ -13,42 +13,68 @@ export default function PointStyle({
   const top = (positionY / 1080) * 100;
 
   const shadowColor = toRgbaWithAlpha(buttonBgColor, 0.5);
+  const openUpward = top > 85;
 
   return (
     <div>
-      <div
-        className="absolute flex flex-col items-center"
-        style={{
-          left: `${left}%`,
-          top: `${top + 2}%`,
-          transform: "translate(-50%, 0)",
-        }}
-      >
+      {/* 텍스트가 있을 때만 말풍선 + 꼬리 렌더 */}
+      {buttonText && (
         <div
-          className="w-3 h-3 rotate-45 mb-[-6px] z-0"
+          className="absolute flex flex-col items-center"
           style={{
-            backgroundColor: buttonBgColor,
+            left: `${left}%`,
+            top: openUpward ? `${top - 2.5}%` : `${top + 2.5}%`,
+            transform: `translate(-50%, ${
+              openUpward ? "-100%" : "0"
+            })`,
           }}
-        />
-        <div
-          className="px-5 py-4 text-base rounded-xl max-w-[240px] text-center z-10 transition-shadow hover:shadow-[var(--tw-shadow)]"
-          style={
-            {
-              backgroundColor: buttonBgColor,
-              color: buttonText
-                ? buttonTextColor
-                : "#FFFFFF66",
-              "--tw-shadow": `0 0 0 8px ${shadowColor}`,
-            } as React.CSSProperties
-          }
         >
-          {buttonText || "텍스트를 입력해 주세요."}
+          {/* 꼬리 (아래로) */}
+          {!openUpward && (
+            <div
+              className="w-4 h-4 z-0"
+              style={{
+                backgroundColor: buttonBgColor,
+                transform: "rotate(225deg)",
+                marginBottom: "-8px",
+              }}
+            />
+          )}
+
+          {/* 말풍선 박스 */}
+          <div
+            className="px-5 py-4 text-lg rounded-xl break-words text-center z-10 transition-shadow hover:shadow-[var(--tw-shadow)]"
+            style={
+              {
+                maxWidth: "300px",
+                backgroundColor: buttonBgColor,
+                color: buttonTextColor,
+                "--tw-shadow": `0 0 0 8px ${shadowColor}`,
+              } as React.CSSProperties
+            }
+          >
+            {buttonText}
+          </div>
+
+          {/* 꼬리 (위로) */}
+          {openUpward && (
+            <div
+              className="w-4 h-4 z-0"
+              style={{
+                backgroundColor: buttonBgColor,
+                transform: "rotate(45deg)",
+                marginTop: "-8px",
+              }}
+            />
+          )}
         </div>
-      </div>
+      )}
+
+      {/* 항상 표시되는 클릭용 포인트 버튼 */}
       <div className="group">
         <button
           onClick={onClick}
-          className="absolute w-5 h-5 rounded-full z-20 group-hover:animate-none animate-scale-on-hover"
+          className="absolute w-7 h-7 rounded-full z-20 group-hover:animate-none animate-scale-on-hover"
           style={
             {
               left: `${left}%`,

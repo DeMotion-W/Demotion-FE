@@ -31,17 +31,13 @@ export default function ScreenshotCanvas({
     };
     updateScale();
     window.addEventListener("resize", updateScale);
-    return () =>
-      window.removeEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
   }, []);
 
   return (
-    <div
-      className="w-full flex justify-center items-center overflow-hidden p-1"
-      ref={containerRef}
-    >
+    <div className="w-full flex justify-center items-center overflow-hidden p-1" ref={containerRef}>
       <div
-        className="mx-auto relative shadow-md rounded-4xl"
+        className="mx-auto relative shadow-md rounded-4xl overflow-hidden"
         style={{
           width: baseWidth * scale,
           height: baseHeight * scale,
@@ -59,6 +55,7 @@ export default function ScreenshotCanvas({
           <Image
             src={screenshot.fileUrl}
             alt="ScreenShot"
+            priority
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 75vw, 1280px"
             draggable={false}

@@ -3,14 +3,8 @@
 import { useState } from "react";
 import { Copy } from "lucide-react";
 
-export default function EmbedCodeViewer({
-  publicId,
-}: {
-  publicId: string;
-}) {
-  const [activeTab, setActiveTab] = useState<
-    "html" | "react"
-  >("html");
+export default function EmbedCodeViewer({ publicId }: { publicId: string }) {
+  const [activeTab, setActiveTab] = useState<"html" | "react">("html");
   const [copied, setCopied] = useState(false);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -78,9 +72,7 @@ export default function EmbedCodeViewer({
       <div className="flex gap-2 mb-3 text-xs font-medium">
         <button
           className={`px-2.5 py-1 rounded-md ${
-            activeTab === "html"
-              ? "bg-white border border-gray-300"
-              : "text-gray-400"
+            activeTab === "html" ? "bg-white border border-gray-300" : "text-gray-400"
           }`}
           onClick={() => setActiveTab("html")}
         >
@@ -88,9 +80,7 @@ export default function EmbedCodeViewer({
         </button>
         <button
           className={`px-2.5 py-1 rounded-md ${
-            activeTab === "react"
-              ? "bg-white border border-gray-300"
-              : "text-gray-400"
+            activeTab === "react" ? "bg-white border border-gray-300" : "text-gray-400"
           }`}
           onClick={() => setActiveTab("react")}
         >
@@ -100,9 +90,7 @@ export default function EmbedCodeViewer({
 
       {/* 코드 뷰 */}
       <pre className="max-h-[280px] whitespace-pre overflow-x-auto overflow-y-auto text-xs text-gray-800 font-['Pretendard']">
-        {activeTab === "html"
-          ? formattedHTML
-          : formattedReact}
+        {activeTab === "html" ? formattedHTML : formattedReact}
       </pre>
 
       {/* 복사 버튼 */}

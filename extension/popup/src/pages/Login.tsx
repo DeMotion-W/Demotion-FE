@@ -18,9 +18,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({
-    resolver: yupResolver(
-      loginSchema
-    ) as Resolver<LoginForm>,
+    resolver: yupResolver(loginSchema) as Resolver<LoginForm>,
   });
 
   const onSubmit = async (data: LoginForm) => {
@@ -37,9 +35,7 @@ export default function Login() {
       });
       nav("/capture");
     } catch (error) {
-      alert(
-        "로그인 실패! 이메일 또는 비밀번호를 확인해주세요."
-      );
+      alert("로그인 실패! 이메일 또는 비밀번호를 확인해주세요.");
       console.error(error);
     }
   };
@@ -74,16 +70,24 @@ export default function Login() {
 
           <Button label="로그인하기" type="submit" />
         </form>
-
-        <p className="text-center text-sm text-gray-600 mt-4">
-          아직 계정이 없으신가요?{" "}
+        <div className="flex text-center justify-center mt-3 text-[#6B7684] text-xs font-normal font-['Pretendard'] leading-snug gap-2">
           <Link
-            to="/signup"
-            className="text-blue-500 hover:underline"
+            to="/Signup"
+            className="hover:underline text-gray-800"
           >
             회원가입
           </Link>
-        </p>
+          <span className="text-[#D0D7DD]">|</span>
+          <div className="hover:underline text-gray-800">
+            비밀번호 찾기
+          </div>
+          {/* <Link
+            to="/Findpassword"
+            className="hover:underline text-gray-800"
+          >
+            비밀번호 찾기
+          </Link> */}
+        </div>
       </div>
     </div>
   );

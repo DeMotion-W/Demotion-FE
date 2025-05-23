@@ -8,10 +8,12 @@ export default function ScreenshotCanvasEmbed({
   screenshot,
   onClick,
   onContactClick,
+  children,
 }: {
   screenshot: ScreenshotData;
   onClick?: () => void;
   onContactClick?: () => void;
+  children?: React.ReactNode;
 }) {
   const baseWidth = 1920;
   const baseHeight = 1080;
@@ -23,7 +25,7 @@ export default function ScreenshotCanvasEmbed({
       if (containerRef.current) {
         const width = containerRef.current.clientWidth;
 
-        const containerHeight = window.innerHeight - 100; // 상단 여백 등 감안
+        const containerHeight = window.innerHeight - 50;
 
         const scaleWidth = width / baseWidth;
         const scaleHeight = containerHeight / baseHeight;
@@ -33,17 +35,16 @@ export default function ScreenshotCanvasEmbed({
     };
     updateScale();
     window.addEventListener("resize", updateScale);
-    return () =>
-      window.removeEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
   }, []);
 
   return (
     <div
-      className="w-full flex justify-center items-center overflow-hidden p-2"
+      className="w-full flex justify-center items-center overflow-hidden"
       ref={containerRef}
     >
       <div
-        className="mx-auto relative shadow-lg rounded-4xl"
+        className="mx-auto relative shadow-lg overflow-hidden rounded-4xl"
         style={{
           width: baseWidth * scale,
           height: baseHeight * scale,
@@ -62,6 +63,7 @@ export default function ScreenshotCanvasEmbed({
             src={screenshot.fileUrl}
             alt="ScreenShot"
             fill
+            priority
             draggable={false}
             className="object-contain"
           />
@@ -70,14 +72,15 @@ export default function ScreenshotCanvasEmbed({
           ) : (
             <BoxStyle {...screenshot} onClick={onClick} />
           )}
+          {children}
         </div>
+        <button
+          className="absolute bottom-6 right-6 bg-[#191F28] text-white px-4 py-2 rounded-lg text-sm shadow-lg z-10"
+          onClick={() => onContactClick?.()}
+        >
+          도입 문의
+        </button>
       </div>
-      <button
-        className="absolute bottom-6 right-6 bg-blue-500 text-white px-4 py-2 rounded-md text-sm shadow-md"
-        onClick={() => onContactClick?.()}
-      >
-        도입 문의
-      </button>
     </div>
   );
 }
