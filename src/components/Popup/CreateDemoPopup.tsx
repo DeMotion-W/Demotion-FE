@@ -28,10 +28,7 @@ export default function CreateDemoPopup({
           "녹화 중인 화면 클릭",
           "‘Complete Capture’ 버튼을 클릭하여 종료",
         ].map((step, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-3"
-          >
+          <div key={index} className="flex items-center gap-3">
             <div className="w-6 h-6 rounded-lg border border-[#E2E6EB] flex items-center justify-center text-sm font-semibold font-['Montserrat'] leading-tight text-[#191F28]">
               {index + 1}
             </div>
@@ -50,7 +47,7 @@ export default function CreateDemoPopup({
       <p className="text-center justify-center text-[11px] font-normal text-gray-500 mt-3 font-['Pretendard'] leading-tight">
         아직 확장 프로그램이 없나요?{" "}
         <a
-          href="/download"
+          href="https://chromewebstore.google.com/detail/demotion/ijehlfjghemebnlpinlgnedhljlamohp?hl=ko&utm_source=ext_sidebar"
           className="text-blue-500 underline leading-none"
         >
           다운로드하기

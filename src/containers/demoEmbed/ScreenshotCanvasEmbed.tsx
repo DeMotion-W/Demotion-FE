@@ -64,6 +64,7 @@ export default function ScreenshotCanvasEmbed({
             alt="ScreenShot"
             fill
             priority
+            loading="eager"
             draggable={false}
             className="object-contain"
           />
@@ -73,13 +74,13 @@ export default function ScreenshotCanvasEmbed({
             <BoxStyle {...screenshot} onClick={onClick} />
           )}
           {children}
+          <button
+            className="absolute bottom-6 right-8 bg-[#191F28] text-white px-5 py-4 rounded-lg text-base shadow-lg z-10"
+            onClick={() => onContactClick?.()}
+          >
+            도입 문의
+          </button>
         </div>
-        <button
-          className="absolute bottom-6 right-6 bg-[#191F28] text-white px-4 py-2 rounded-lg text-sm shadow-lg z-10"
-          onClick={() => onContactClick?.()}
-        >
-          도입 문의
-        </button>
       </div>
     </div>
   );

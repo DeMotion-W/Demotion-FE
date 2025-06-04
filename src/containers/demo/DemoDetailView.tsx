@@ -7,6 +7,7 @@ import DemoEditView from "./DemoEditView";
 import HeaderBar from "./HeaderBar";
 import { DEMO_VIEW_PATH } from "@shared/constants/api";
 import { useToast } from "@/components/UI/Toast";
+import useImagePreloader from "@/hooks/useImagePreloader";
 
 export default function DemoDetailView({
   demo,
@@ -18,9 +19,7 @@ export default function DemoDetailView({
   token: string;
 }) {
   const { showToast } = useToast();
-  const [mode, setMode] = useState<"edit" | "preview">(
-    "preview"
-  );
+  const [mode, setMode] = useState<"edit" | "preview">("preview");
   const [title, setTitle] = useState(demo.title);
   const [subtitle, setSubtitle] = useState(demo.subtitle);
   const [buttonBgColor, setButtonBgColor] = useState(
@@ -29,9 +28,7 @@ export default function DemoDetailView({
   const [buttonTextColor, setButtonTextColor] = useState(
     demo.buttonTextColor
   );
-  const [screenshots, setScreenshots] = useState<
-    ScreenshotData[]
-  >([
+  const [screenshots, setScreenshots] = useState<ScreenshotData[]>([
     {
       screenshotId: -1,
       fileUrl: demo.screenshots[0].fileUrl,
@@ -44,6 +41,9 @@ export default function DemoDetailView({
     },
     ...demo.screenshots,
   ]);
+
+  // 이미지 preload
+  useImagePreloader(screenshots);
 
   useEffect(() => {
     if (mode === "preview") {
@@ -74,9 +74,7 @@ export default function DemoDetailView({
       subtitle,
       buttonBgColor,
       buttonTextColor,
-      screenshots: screenshots.filter(
-        (s) => s.screenshotId !== -1
-      ),
+      screenshots: screenshots.filter((s) => s.screenshotId !== -1),
     };
     console.log("저장될 데이터:", dataToSave);
 

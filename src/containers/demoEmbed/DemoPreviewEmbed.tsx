@@ -6,6 +6,8 @@ import ThumbnailCanvasEmbed from "./ThumbnailCanvasEmbed";
 import ScreenshotCanvasEmbed from "./ScreenshotCanvasEmbed";
 import EmailPopup from "../../components/Popup/EmailPopup";
 import ContactPopup from "../../components/Popup/ContactPopup";
+import useImagePreloader from "@/hooks/useImagePreloader";
+import { useToast } from "@/components/UI/Toast";
 
 type Props = {
   demoId: string;
@@ -33,9 +35,12 @@ export default function DemoPreviewEmbed({
   const [showEmailPopup, setShowEmailPopup] = useState(true);
   const [showContactPopup, setShowContactPopup] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const current = screenshots[step];
   const isThumbnail = current?.screenshotId === -1;
+
+  useImagePreloader(screenshots);
 
   useEffect(() => {
     setStep(initialStep);
@@ -172,6 +177,11 @@ export default function DemoPreviewEmbed({
 
                     setHasContacted(true);
                     setShowContactPopup(false);
+                    showToast({
+                      type: "success",
+                      message: "도입문의가 완료되었습니다.",
+                      position: "center",
+                    });
                   } catch (error) {
                     alert("네트워크 오류가 발생했습니다.");
                   }

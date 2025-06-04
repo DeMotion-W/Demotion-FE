@@ -1,18 +1,30 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { TOKEN_REFRESH_PATH } from "@shared/constants/api";
+import { ACCESS_TOKEN_AGE } from "@/constants";
 
 export async function POST() {
+  const cookieStore = await cookies();
+  const refreshToken = cookieStore.get("refreshToken")?.value;
+  console.log("✅ 서버가 받은 refreshToken:", refreshToken);
+
+  if (!refreshToken) {
+    return NextResponse.json(
+      { error: "refreshToken이 없습니다." },
+      { status: 401 }
+    );
+  }
+
   try {
     // 서버 API에 토큰 갱신 요청
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + TOKEN_REFRESH_PATH,
+      `${process.env.NEXT_PUBLIC_API_URL}${TOKEN_REFRESH_PATH}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Cookie: `refreshToken=${refreshToken}`,
         },
-        // 기존 리프레시 토큰이 있는 쿠키 포함
         credentials: "include",
       }
     );
@@ -30,13 +42,13 @@ export async function POST() {
 
     // 쿠키에 새 토큰 설정
     responseObj.cookies.set({
-      name: "auth_token",
+      name: "accessToken",
       value: data.accessToken,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 1주일
+      maxAge: ACCESS_TOKEN_AGE,
     });
 
     return responseObj;

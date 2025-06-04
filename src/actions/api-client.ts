@@ -1,9 +1,6 @@
 "use server";
 
-import {
-  ACCESS_TOKEN_AGE,
-  REFRESH_TOKEN_AGE,
-} from "@/constants";
+import { ACCESS_TOKEN_AGE, REFRESH_TOKEN_AGE } from "@/constants";
 import { TOKEN_REFRESH_PATH } from "@shared/constants/api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -15,7 +12,14 @@ export async function fetchWithAuth(
 ) {
   // 쿠키에서 토큰 가져오기
   const cookieStore = await cookies();
-  const token = cookieStore.get("accessToken")?.value;
+  let token = cookieStore.get("accessToken")?.value;
+
+  // accessToken 없으면 refresh 시도
+  if (!token && cookieStore.get("refreshToken")?.value) {
+    const refreshedToken = await refreshToken();
+    if (!refreshedToken) redirect("/login");
+    token = refreshedToken; // refreshToken 성공 시 새 토큰으로 교체
+  }
 
   if (!token) {
     redirect("/login");
@@ -41,24 +45,18 @@ export async function fetchWithAuth(
   if (response.status === 401) {
     console.log("401에러");
     // 토큰 갱신 시도
-    const refreshed = await refreshToken();
+    const newAccessToken = await refreshToken();
 
     // 토큰 갱신 성공한 경우 원래 요청 재시도
-    if (refreshed) {
-      const newToken =
-        cookieStore.get("accessToken")?.value;
-
-      return fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}${url}`,
-        {
-          ...options,
-          headers: {
-            ...headers,
-            Authorization: `Bearer ${newToken}`,
-          },
-          credentials: "include",
-        }
-      ).then((res) => res.json());
+    if (newAccessToken) {
+      return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+        ...options,
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${newAccessToken}`,
+        },
+        credentials: "include",
+      }).then((res) => res.json());
     } else {
       // 토큰 갱신 실패 - 로그인 페이지로 리다이렉트
       redirect("/login");
@@ -70,7 +68,7 @@ export async function fetchWithAuth(
 }
 
 // 토큰 갱신 함수
-async function refreshToken(): Promise<boolean> {
+async function refreshToken(): Promise<string | null> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}${TOKEN_REFRESH_PATH}`,
@@ -81,14 +79,11 @@ async function refreshToken(): Promise<boolean> {
     );
 
     if (!response.ok) {
-      return false;
+      return null;
     }
 
     const data = await response.json();
-    const newAccessToken = data.accessToken?.replace(
-      /^Bearer\s/,
-      ""
-    ); // "Bearer " 제거
+    const newAccessToken = data.accessToken?.replace(/^Bearer\s/, ""); // "Bearer " 제거
 
     const cookieStore = await cookies();
 
@@ -113,9 +108,9 @@ async function refreshToken(): Promise<boolean> {
       });
     });
 
-    return true;
-  } catch (error) {
-    console.error("토큰 갱신 오류:", error);
-    return false;
+    return newAccessToken;
+  } catch (err) {
+    console.error("토큰 갱신 오류:", err);
+    return null;
   }
 }

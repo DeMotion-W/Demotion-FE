@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   // 요청에서 토큰 가져오기
-  const authToken =
-    request.cookies.get("accessToken")?.value;
+  const accessToken = request.cookies.get("accessToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
 
   // 보호된 경로 목록
   const protectedPaths = ["/mypage"];
@@ -14,18 +14,19 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   );
 
+  // accessToken 없고 refreshToken 있을 때 -> 자동 로그인 시도
+  if (!accessToken && refreshToken) {
+    return NextResponse.redirect(new URL("/autoLogin", request.url));
+  }
+
   // 보호된 경로에 접근하려고 하는데 인증되지 않은 경우
-  if (isProtectedPath && !authToken) {
-    return NextResponse.redirect(
-      new URL("/login", request.url)
-    );
+  if (isProtectedPath && !accessToken) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   // 이미 로그인된 상태에서 로그인 페이지로 접근하는 경우
-  if (request.nextUrl.pathname === "/login" && authToken) {
-    return NextResponse.redirect(
-      new URL("/demotions", request.url)
-    );
+  if (request.nextUrl.pathname === "/login" && accessToken) {
+    return NextResponse.redirect(new URL("/demotions", request.url));
   }
 
   return NextResponse.next();
