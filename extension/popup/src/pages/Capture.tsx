@@ -1,15 +1,15 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { CaptureData } from "../type";
+import { CaptureData } from "@/type";
 import {
   AuthDispatchContext,
   AuthStateContext,
-} from "../context/AuthContext";
+} from "@context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { uploadAndCreateDemo } from "../utils/uploadAndCreateDemo";
-import { httpClientForCredentials } from "../api/httpClientForCredentials";
-import { clearAccessToken, getAccessToken } from "../utils/auth";
-import { LOG_OUT_PATH } from "../../../../shared/constants/api";
-import CapturedImageList from "../components/CapturedImageList";
+import { uploadAndCreateDemo } from "@utils/uploadAndCreateDemo";
+import { httpClientForCredentials } from "@api/httpClientForCredentials";
+import { clearAccessToken } from "@utils/auth";
+import { LOG_OUT_PATH } from "@shared/constants/api";
+import CapturedImageList from "@components/CapturedImageList";
 import axios from "axios";
 
 export default function Capture() {
@@ -35,7 +35,6 @@ export default function Capture() {
         {},
         { withCredentials: true }
       );
-      console.log("로그아웃 성공");
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
         const { message } = error.response.data;
@@ -44,14 +43,6 @@ export default function Capture() {
     }
 
     clearAccessToken();
-    console.log("accessToken after logout:", getAccessToken());
-    console.log(
-      "Authorization header after logout:",
-      httpClientForCredentials.defaults.headers.common[
-        "Authorization"
-      ]
-    );
-
     dispatch?.({ type: "LOGOUT" });
     nav("/");
   };

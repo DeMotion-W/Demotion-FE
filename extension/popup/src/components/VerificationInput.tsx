@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { SignupForm } from "../../../../shared/type";
 import { UseFormRegister } from "react-hook-form";
+import axios from "axios";
 import {
   EMAIL_VERIFICATION_CONFIRM_PATH,
   EMAIL_VERIFICATION_REQUEST_PATH,
-} from "../../../../shared/constants/api";
-import axios from "axios";
-import { httpClientPublic } from "../api/httpClientPublic";
+} from "@shared/constants/api";
+import { httpClientPublic } from "@api/httpClientPublic";
+import { SignupForm } from "@shared/type";
 
 type Props = {
   register: UseFormRegister<SignupForm>;
@@ -22,9 +22,9 @@ export default function VerificationInput({
   setIsVerified,
 }: Props) {
   const [code, setCode] = useState("");
-  const [step, setStep] = useState<
-    "idle" | "sent" | "verified"
-  >("idle");
+  const [step, setStep] = useState<"idle" | "sent" | "verified">(
+    "idle"
+  );
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<
     "info" | "error" | "success"
@@ -140,15 +140,11 @@ export default function VerificationInput({
           }`}
         >
           인증번호{" "}
-          {step === "sent" || step === "verified"
-            ? "재전송"
-            : "전송"}
+          {step === "sent" || step === "verified" ? "재전송" : "전송"}
         </button>
       </div>
 
-      {error && (
-        <p className="text-red-500 text-xs">{error}</p>
-      )}
+      {error && <p className="text-red-500 text-xs">{error}</p>}
 
       {step !== "idle" && (
         <div className="flex gap-2">

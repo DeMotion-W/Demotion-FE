@@ -1,4 +1,4 @@
-import { CaptureData } from "../type";
+import { CaptureData } from "@/type";
 
 interface Props {
   captures: CaptureData[];

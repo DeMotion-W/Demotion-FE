@@ -1,7 +1,7 @@
 import { fetchWithAuth } from "@/actions/api-client";
 import AutoLoginHandler from "@/components/AutoLoginHandler";
 import DemoDetailView from "@/containers/demo/DemoDetailView";
-import { getAuthStatus } from "@/utils/auth";
+import { getAuthStatus } from "@/utils/authServer";
 import { DEMO_VIEW_PATH } from "@shared/constants/api";
 
 export default async function Page({
@@ -24,17 +24,11 @@ export default async function Page({
     );
   }
 
-  const demoData = await fetchWithAuth(
-    `${DEMO_VIEW_PATH}/${id}`
-  );
+  const demoData = await fetchWithAuth(`${DEMO_VIEW_PATH}/${id}`);
   console.log(demoData);
   return (
     <>
-      <DemoDetailView
-        demo={demoData}
-        demoId={id}
-        token={token}
-      />
+      <DemoDetailView demo={demoData} demoId={id} token={token} />
     </>
   );
 }

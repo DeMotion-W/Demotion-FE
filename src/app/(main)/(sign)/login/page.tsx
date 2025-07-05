@@ -22,7 +22,7 @@ export default function LoginPage() {
     resolver: yupResolver(loginSchema),
   });
   const router = useRouter();
-  const { setName, setEmail } = useAuthStore();
+  const { setName, setEmail, setIsLoggedIn } = useAuthStore();
   const { showToast } = useToast();
 
   const onSubmit = async (data: LoginForm) => {
@@ -30,6 +30,7 @@ export default function LoginPage() {
       const response = await login(data);
       setName(response.name);
       setEmail(data.email);
+      setIsLoggedIn(true);
 
       if (!response.success) {
         showToast({

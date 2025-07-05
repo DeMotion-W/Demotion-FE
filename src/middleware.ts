@@ -14,9 +14,20 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   );
 
+  // 이미 로그인된 상태에서 로그인 페이지로 접근하는 경우
+  if (request.nextUrl.pathname === "/login" && accessToken) {
+    return NextResponse.redirect(new URL("/demotions", request.url));
+  }
+
   // accessToken 없고 refreshToken 있을 때 -> 자동 로그인 시도
-  if (!accessToken && refreshToken) {
-    return NextResponse.redirect(new URL("/autoLogin", request.url));
+  if (
+    !accessToken &&
+    refreshToken &&
+    request.nextUrl.pathname !== "/api/auto-login"
+  ) {
+    return NextResponse.redirect(
+      new URL("/api/auto-login", request.url)
+    );
   }
 
   // 보호된 경로에 접근하려고 하는데 인증되지 않은 경우
@@ -24,17 +35,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // 이미 로그인된 상태에서 로그인 페이지로 접근하는 경우
-  if (request.nextUrl.pathname === "/login" && accessToken) {
-    return NextResponse.redirect(new URL("/demotions", request.url));
-  }
-
   return NextResponse.next();
 }
 
 // 미들웨어가 실행될 경로 지정
 export const config = {
-  matcher: ["/login", "/signup", "/mypage"],
+  matcher: ["/login", "/signup", "/mypage", "/api/auto-login"],
 };
 
 //"/demo/:path*"

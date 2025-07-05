@@ -1,7 +1,7 @@
 import { fetchWithAuth } from "@/actions/api-client";
 import NotLoggedInView from "@/components/NotLoggedInView";
 import DemoInsightView from "@/containers/insight/DemoInsightView";
-import { getAuthStatus } from "@/utils/auth";
+import { getAuthStatus } from "@/utils/authServer";
 import { DEMO_VIEW_PATH } from "@shared/constants/api";
 
 export default async function Page() {

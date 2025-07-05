@@ -1,15 +1,13 @@
 "use server";
 
-import {
-  ACCESS_TOKEN_AGE,
-  REFRESH_TOKEN_AGE,
-} from "@/constants";
+import { ACCESS_TOKEN_AGE, REFRESH_TOKEN_AGE } from "@/constants";
 import {
   EMAIL_VERIFICATION_CONFIRM_PATH,
   EMAIL_VERIFICATION_REQUEST_PATH,
   LOG_IN_PATH,
   LOG_OUT_PATH,
   SIGNUP_PATH,
+  TOKEN_REFRESH_PATH,
 } from "@shared/constants/api";
 import { LoginForm, SignupForm } from "@shared/type";
 import { cookies } from "next/headers";
@@ -33,10 +31,7 @@ export async function login(data: LoginForm) {
     }
 
     const responseData = await response.json();
-    const token = responseData.accessToken?.replace(
-      /^Bearer\s/,
-      ""
-    ); // "Bearer " 제거
+    const token = responseData.accessToken?.replace(/^Bearer\s/, ""); // "Bearer " 제거
     const name = responseData.name;
 
     const cookieStore = await cookies();
@@ -66,23 +61,17 @@ export async function login(data: LoginForm) {
     return {
       success: false,
       error:
-        err instanceof Error
-          ? err.message
-          : "로그인에 실패했습니다.",
+        err instanceof Error ? err.message : "로그인에 실패했습니다.",
     };
   }
 }
 
-// 로그아웃 함수
 export async function logout() {
   try {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}${LOG_OUT_PATH}`,
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}${LOG_OUT_PATH}`, {
+      method: "POST",
+      credentials: "include",
+    });
   } catch (error) {
     console.error("로그아웃 API 에러:", error);
   }
@@ -160,10 +149,7 @@ export async function sendVerificationCode(email: string) {
   }
 }
 
-export async function verifyCode(
-  email: string,
-  code: string
-) {
+export async function verifyCode(email: string, code: string) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}${EMAIL_VERIFICATION_CONFIRM_PATH}`,

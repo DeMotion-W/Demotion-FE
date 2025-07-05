@@ -1,28 +1,18 @@
 import { ReactNode, useContext } from "react";
-import AuthProvider, {
-  AuthStateContext,
-} from "./context/AuthContext";
 import {
   HashRouter,
   Navigate,
   Route,
   Routes,
 } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Capture from "./pages/Capture";
+import AuthProvider, { AuthStateContext } from "@context/AuthContext";
+import Login from "@pages/Login";
+import Signup from "@pages/Signup";
+import Capture from "@pages/Capture";
 
-function ProtectedRoute({
-  children,
-}: {
-  children: ReactNode;
-}) {
+function ProtectedRoute({ children }: { children: ReactNode }) {
   const auth = useContext(AuthStateContext);
-  return auth?.loggedIn ? (
-    children
-  ) : (
-    <Navigate to="/" replace />
-  );
+  return auth?.loggedIn ? children : <Navigate to="/" replace />;
 }
 
 export default function App() {

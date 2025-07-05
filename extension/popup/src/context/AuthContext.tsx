@@ -4,10 +4,7 @@ import {
   ReactNode,
   useReducer,
 } from "react";
-import {
-  AuthAction,
-  AuthState,
-} from "../../../../shared/type";
+import { AuthAction, AuthState } from "@shared/type";
 
 function reducer(state: AuthState, action: AuthAction) {
   switch (action.type) {
@@ -30,8 +27,7 @@ function reducer(state: AuthState, action: AuthAction) {
   }
 }
 
-export const AuthStateContext =
-  createContext<AuthState | null>(null);
+export const AuthStateContext = createContext<AuthState | null>(null);
 export const AuthDispatchContext =
   createContext<Dispatch<AuthAction> | null>(null);
 

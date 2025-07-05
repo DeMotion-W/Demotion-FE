@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { Resolver } from "react-hook-form";
-import { AuthDispatchContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthDispatchContext } from "@context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../../../../shared/schema/loginSchema";
-import { LoginForm } from "../../../../shared/type";
-import InputField from "../components/InputField";
-import Button from "../components/Button";
-import { onLogIn } from "../api/auth/login";
+import { loginSchema } from "@shared/schema/loginSchema";
+import { LoginForm } from "@shared/type";
+import InputField from "@components/InputField";
+import Button from "@components/Button";
+import { onLogIn } from "@api/auth/login";
 
 export default function Login() {
   const dispatch = useContext(AuthDispatchContext);

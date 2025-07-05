@@ -12,8 +12,32 @@ export default defineConfig({
     outDir: "dist",
   },
   resolve: {
-    alias: {
-      "@shared": path.resolve(__dirname, "../../shared"),
-    },
+    alias: [
+      { find: "@", replacement: path.resolve(__dirname, "src") },
+      {
+        find: "@shared",
+        replacement: path.resolve(__dirname, "../../shared"),
+      },
+      {
+        find: "@api",
+        replacement: path.resolve(__dirname, "src/api"),
+      },
+      {
+        find: "@components",
+        replacement: path.resolve(__dirname, "src/components"),
+      },
+      {
+        find: "@context",
+        replacement: path.resolve(__dirname, "src/context"),
+      },
+      {
+        find: "@pages",
+        replacement: path.resolve(__dirname, "src/pages"),
+      },
+      {
+        find: "@utils",
+        replacement: path.resolve(__dirname, "src/utils"),
+      },
+    ],
   },
 });

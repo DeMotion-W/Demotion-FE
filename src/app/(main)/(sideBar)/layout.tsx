@@ -1,14 +1,17 @@
 import Sidebar from "@/components/UI/Sidebar";
-import { getAuthStatus } from "@/utils/auth";
 
-export default async function SideBarLayout({ children }: { children: React.ReactNode }) {
-  const { isLoggedIn } = await getAuthStatus();
-
+export default async function SideBarLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex w-full min-h-screen">
-      <Sidebar isLoggedIn={isLoggedIn} />
+      <Sidebar />
       <main className="flex-1 flex justify-center">
-        <div className="w-full max-w-[1280px] px-[40px]">{children}</div>
+        <div className="w-full max-w-[1280px] px-[40px]">
+          {children}
+        </div>
       </main>
     </div>
   );

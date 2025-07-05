@@ -1,27 +1,24 @@
 import { useForm, Resolver } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signupSchema } from "../../../../shared/schema/signupSchema";
-import { signup } from "../api/auth/signup";
-import { SignupForm } from "../../../../shared/type";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import VerificationInput from "../components/VerificationInput";
-import InputField from "../components/InputField";
-import Button from "../components/Button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signupSchema } from "@shared/schema/signupSchema";
+import { signup } from "@api/auth/signup";
+import { SignupForm } from "@shared/type";
+import VerificationInput from "@components/VerificationInput";
+import InputField from "@components/InputField";
+import Button from "@components/Button";
 
 export default function Signup() {
   const nav = useNavigate();
-  const [isEmailVerified, setIsEmailVerified] =
-    useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     watch,
   } = useForm<SignupForm>({
-    resolver: yupResolver(
-      signupSchema
-    ) as Resolver<SignupForm>,
+    resolver: yupResolver(signupSchema) as Resolver<SignupForm>,
     mode: "onChange",
   });
 

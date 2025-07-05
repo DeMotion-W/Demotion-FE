@@ -2,14 +2,14 @@ import {
   CaptureData,
   PresignedResponse,
   ScreenshotMetadata,
-} from "../type";
-import { getAccessToken } from "../utils/auth";
-import { httpClientForCredentials } from "../api/httpClientForCredentials";
+} from "@/type";
+import { getAccessToken } from "@utils/auth";
+import { httpClientForCredentials } from "@api/httpClientForCredentials";
 import axios from "axios";
 import {
   DEMO_CREATE_PATH,
   PRESIGNED_URL_PATH,
-} from "../../../../shared/constants/api";
+} from "@shared/constants/api";
 
 export async function uploadAndCreateDemo(
   captures: CaptureData[],
@@ -39,8 +39,8 @@ export async function uploadAndCreateDemo(
     // 이미지 업로드
     await Promise.all(
       presigned.files.map(async (file, i) => {
-        const blob = await fetch(captures[i].image).then(
-          (res) => res.blob()
+        const blob = await fetch(captures[i].image).then((res) =>
+          res.blob()
         );
         await axios.put(file.uploadUrl, blob, {
           headers: {
@@ -51,8 +51,8 @@ export async function uploadAndCreateDemo(
     );
 
     // 데모 생성
-    const screenshots: ScreenshotMetadata[] =
-      presigned.files.map((file, i) => {
+    const screenshots: ScreenshotMetadata[] = presigned.files.map(
+      (file, i) => {
         const cap = captures[i];
 
         const absoluteX = cap.x * 1920;
@@ -66,7 +66,8 @@ export async function uploadAndCreateDemo(
           positionX: absoluteX,
           positionY: absoluteY,
         };
-      });
+      }
+    );
 
     const payload = {
       title: "",
@@ -76,16 +77,15 @@ export async function uploadAndCreateDemo(
       screenshots,
     };
 
-    const { data: demoRes } =
-      await httpClientForCredentials.post(
-        DEMO_CREATE_PATH,
-        payload,
-        {
-          headers: {
-            Authorization: getAccessToken(),
-          },
-        }
-      );
+    const { data: demoRes } = await httpClientForCredentials.post(
+      DEMO_CREATE_PATH,
+      payload,
+      {
+        headers: {
+          Authorization: getAccessToken(),
+        },
+      }
+    );
 
     const demoId = demoRes.demoId;
     const siteUrl = import.meta.env.VITE_SITE_URL;

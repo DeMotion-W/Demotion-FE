@@ -25,7 +25,6 @@ export async function POST() {
           "Content-Type": "application/json",
           Cookie: `refreshToken=${refreshToken}`,
         },
-        credentials: "include",
       }
     );
 
@@ -55,7 +54,9 @@ export async function POST() {
   } catch (error) {
     console.error("토큰 갱신 API 에러:", error);
     return NextResponse.json(
-      { error: "인증 갱신에 실패했습니다." },
+      {
+        error: "refreshToken이 만료되었거나 유효하지 않습니다.",
+      },
       { status: 401 }
     );
   }
